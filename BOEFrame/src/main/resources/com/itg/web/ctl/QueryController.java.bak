@@ -1,0 +1,224 @@
+package com.itg.web.ctl;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.businessobjects.dsws.session.Session;
+import com.businessobjects.sdk.biar.BIARException.SDKException;
+import com.crystaldecisions.sdk.framework.IEnterpriseSession;
+import com.crystaldecisions.sdk.occa.security.ILogonTokenMgr;
+import com.itg.dao.IMenuItemDAO;
+import com.itg.dao.MenuItem;
+import com.itg.security.BOELogon;
+
+@Controller
+@SessionAttributes({"entrpriseSession","token", "userName"})
+public class QueryController {
+	private String viewName;
+	
+	private String boeUrl;
+
+    public String getBoeUrl() {
+		return boeUrl;
+	}
+
+	public void setBoeUrl(String boeUrl) {
+		this.boeUrl = boeUrl;
+	}
+
+	private IMenuItemDAO menuItemDAO;
+	
+	public IMenuItemDAO getMenuItemDAO() {
+		return menuItemDAO;
+	}
+
+	public void setMenuItemDAO(IMenuItemDAO menuItemDAO) {
+		this.menuItemDAO = menuItemDAO;
+	}
+
+	private BOELogon boeLogon;
+	
+	public BOELogon getBoeLogon() {
+		return boeLogon;
+	}
+
+	public void setBoeLogon(BOELogon boeLogon) {
+		this.boeLogon = boeLogon;
+	}
+
+	public String getViewName() {
+		return viewName;
+	}
+
+	public void setViewName(String viewName) {
+		this.viewName = viewName;
+	}
+
+	@SuppressWarnings("unchecked")
+    @RequestMapping("/queryReport.do") 
+     public String index(@RequestParam("menuId")int menuItemId, ModelMap map, HttpServletRequest request,HttpServletResponse response){
+		IEnterpriseSession enterpriseSession ;
+		
+		String errMsg = null ;
+        if (map.get("enterpriseSession")==null){
+        	
+        	try {
+        		enterpriseSession = boeLogon.logon();
+        		map.put("enterpriseSession", enterpriseSession);
+			
+        	} catch (com.crystaldecisions.sdk.exception.SDKException e) {
+        		// TODO Auto-generated catch block
+        		errMsg = e.toString();
+        		map.put("errMsg", errMsg);
+        		return viewName;
+        	}
+		
+        }
+        
+        enterpriseSession = (IEnterpriseSession) map.get("enterpriseSession");
+        
+    	ILogonTokenMgr logonTokenMgr;
+    	Cookie cookie = null;
+    	if(map.get("token")==null){
+    		try {
+    			logonTokenMgr = enterpriseSession.getLogonTokenMgr();
+    			String token = logonTokenMgr.createLogonToken("", 60, 100);
+    			cookie = new Cookie("LogonToken", token);
+    			map.put("token", token);
+    		} catch (com.crystaldecisions.sdk.exception.SDKException e) {
+    			// TODO Auto-generated catch block
+    			//	e.printStackTrace();
+    			errMsg += e.toString();
+    			map.put("errMsg", errMsg);
+    			return viewName;
+    		}	
+    	
+    	// Retrieve a logon token and store it in the user's cookie
+    	// file for use later.
+    	
+    	
+    	response.addCookie(cookie);
+    	}
+    	MenuItem m = menuItemDAO.selectMenuItemByID(menuItemId);
+    	String boeUrl2 = "";
+    	boeUrl2 = boeUrl;
+    	boeUrl2 = boeUrl2.replaceAll("~reportId~", m.getReportId());
+    	boeUrl2 = boeUrl2.replaceAll("~token~", (String) map.get("token"));
+    	map.put("openDocumentUrl", boeUrl2);
+    	map.put("menuId", m.getID());
+    	
+    	String boeUrl3 = "";
+    	if ((m.getDefQueryString()!=null)&&(!m.getDefQueryString().equals(""))){
+    	  boeUrl3 = boeUrl;
+    	  boeUrl3 = boeUrl3+m.getDefQueryString();
+    	  boeUrl3 = boeUrl3.replaceAll("~reportId~", m.getReportId());
+    	  boeUrl3 = boeUrl3.replaceAll("~token~", (String) map.get("token"));
+    	}
+    	//map.put("defOpenDocumentUrl", boeUrl3);
+
+    	if(m.getQueryString()==null || m.getQueryString().equals(""))
+    	{
+    		
+    	  map.put("defOpenDocumentUrl", boeUrl2); 
+    	  map.put("hideForm", "true");	
+    	  return viewName;
+    	}
+    	String[] param = m.getQueryString().split("&");
+    	String paramList = "";
+    	boeUrl3 = "";
+    	for(int i = 1; i<param.length; i++){
+    		boolean isMulti;
+    		if (param[i].substring(0,3).equals("lsS")){
+    			isMulti = false;
+    		}else{
+    			isMulti = true;
+    		}
+    		
+			java.util.regex.Pattern p = Pattern.compile("(?<=\\{t:)\\w*?(?=\\})");
+			Matcher m2 = p.matcher(param[i]);
+            
+			java.util.regex.Pattern p4 = Pattern.compile("(?<=\\{l:).*?(?=\\})");
+			Matcher m4 = p4.matcher(param[i]);
+			
+			
+			java.util.regex.Pattern p3 = Pattern.compile("(?<=\\{d:).*?(?=\\})");
+			Matcher m3 = p3.matcher(param[i]);
+			
+			
+			if (m2.find()){
+				
+				   ServletContext context = request.getSession().getServletContext();    
+				   WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context);
+				   
+				   IReportFilter brf = (IReportFilter) ctx.getBean(m2.group()+"_rf");
+				   
+					String prompt="";
+					if (m4.find()){
+					  prompt = m4.group();
+					}
+					
+					if (prompt.equals("")){
+						  prompt = brf.getLabel();
+						}
+					
+					
+					if ((prompt==null)||(prompt.equals(""))){
+					  prompt = param[i].split("=")[0];
+					}
+
+				   
+				   
+				   if (!paramList.equals("")){
+						paramList +=",";
+					}
+				   String defaultValue = "";
+				   if (m3.find()){
+					   
+					   defaultValue = m3.group();
+					   
+				   }
+				   if (!defaultValue.equals("")){
+					   if (brf.getMasterName().equals("datefield")){
+					   
+						   boeUrl3+="+'&"+param[i].split("=")[0]+"=Date'+"+defaultValue+".format('(Y,m,d)')";
+					   
+					   }else
+					   {
+						   boeUrl3+="+'&"+param[i].split("=")[0]+"='+"+defaultValue;
+					   }
+				   }
+
+				   paramList +=brf.renderFilter((String) map.get("userName"), prompt, param[i].split("=")[0], "c-"+i, defaultValue, isMulti)+"\n";
+			
+			}
+    		
+    	}
+    	
+    	if (!paramList.equals("")){
+    		paramList+=",";
+    	}
+    	map.put("hideForm", "false");
+    	map.put("paramList", paramList);
+    	
+    	//map.put("boeUrl3", boeUrl3);
+    	
+    	//map.put("boeUrl3", boeUrl3);
+    	
+    	return viewName;
+    	
+    	
+    }
+}
