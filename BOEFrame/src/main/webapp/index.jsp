@@ -49,6 +49,7 @@
         // can change across page loads, leading to unpredictable results.  The developer
         // should ensure that stable state ids are set for stateful components in real apps.
         Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+        Ext.BLANK_IMAGE_URL = 'js/ext-3.0.0/resources/images/default/s.gif';
         
         //Ext.ux.IFrameComponent = Ext.extend(Ext.BoxComponent, {
         //  onRender : function(ct, position){

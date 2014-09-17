@@ -161,6 +161,11 @@
 			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
 			<version>1.2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-ldap-jaas</artifactId>
+			<version>6.1.22</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>BOEFrame</finalName>
@@ -204,7 +209,7 @@
 
 							<userRealm implementation="org.mortbay.jetty.plus.jaas.JAASUserRealm">
 
-								<name>YourWebApp Protected Area2</name>
+								
 								<name>ldap</name>
 								<loginModuleName>ldaploginmodule</loginModuleName>
 
