@@ -206,7 +206,6 @@
     		<map>
      			<entry key="others" value-ref="boeLogon" />
      			<entry key="scott1198@itg.net" value-ref="boeLogon2" />
-     			<entry key="clw@itg.net" value-ref="boeLogon2" />
      			<entry key="cwlzh@itg.net" value-ref="boeLogon2" />
      			<entry key="linhy@itg.net" value-ref="boeLogon2" />	
     		</map>
@@ -221,7 +220,7 @@
                  <value>prctr</value>
            </property>
            <property name="tableName">
-                 <value>CEPCT</value>
+                 <value>ZTDEPTALL</value>
            </property>
 
            <property name="label">
@@ -249,7 +248,6 @@
            
       </bean>
       
-
       <bean id="bukrs_rf"
             class="com.itg.web.ctl.BaseReportFilter">
            <property name="masterName">
@@ -360,17 +358,17 @@
                  <value>ekorg</value>
            </property>
            <property name="tableName">
-                 <value>ZBOEBM</value>
+                 <value>ZTBUSDEPT</value>
            </property>
            <property name="label">
                  <value>部门</value>
            </property>
            
            <property name="idField">
-                 <value>ZBOEBM</value>
+                 <value>BUSDEP</value>
            </property>
            <property name="textField">
-                 <value>EKOTX</value>
+                 <value>BUSDEP_TXT</value>
            </property>
 
            <property name="authObject">
@@ -582,35 +580,5 @@
            </property>                     
       </bean>
 
-<bean id="zboeprctr_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>zboeprctr</value>
-           </property>
-           <property name="tableName">
-                 <value>ZTBOEPRCTR</value>
-           </property>
-           <property name="label">
-                 <value>利润中心</value>
-           </property>
-           
-           <property name="idField">
-                 <value>ZBOEPRCTR</value>
-           </property>
-           <property name="textField">
-                 <value>ZBOEPRCTRTEXT</value>
-           </property>
-
-           <property name="authObject">
-                 <value>PRCTR_AA</value>
-           </property>
-           <property name="userRoleDAO">
-                 <ref bean="userRolesDAOProxy" />
-           </property>
-
-           <property name="roleDAO">
-                 <ref bean="rolesDAOProxy" />
-           </property>
-      </bean>
 </beans>
 

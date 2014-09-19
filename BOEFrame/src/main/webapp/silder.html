@@ -1,0 +1,76 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/flexslider.css" />
+
+<script src="js/libs/jquery-1.11.1.min.js"></script>
+<script src="js/libs/jquery.flexslider.js"></script>
+<script src="js/libs/jquery-photo-resize.js"></script>
+<script type="text/javascript" charset="utf-8">
+	var verticalCenterer = function() {
+		$(this).css('margin-top',
+				($(this).parent().height() - ($(this).outerHeight())) / 2);
+	};
+
+	var carouselInit = function() {
+		var carouselHeight = $('.flex-viewport').innerHeight();
+		//$('.flex-viewport').css('height', carouselHeight);
+		//carouselHeight = $('.flex-viewport').innerHeight();
+		$("img").attr('height', carouselHeight - 80);
+		$('.slides li').css('height', carouselHeight);
+		$('p').each(
+				function() {
+					$(this)
+							.css(
+									'margin-top',
+									($(this).parent().height() - ($(this)
+											.outerHeight())) / 2);
+				});
+
+	}
+	var resizePhoto = function(slider) {
+
+	}
+
+	$(window).load(function() {
+
+		$('.carousel').flexslider({
+			animation : "slide",
+			slideshowSpeed : 2000,
+			animationSpeed : 500,
+			directionNav : true,
+			pausePlay : true,
+
+			after : resizePhoto,
+			//pauseText : '',
+			//playText : '',
+			start : carouselInit
+		});
+		//alert('Wait a moment');
+	});
+
+	$(window).resize(carouselInit);
+	//$("img", slider).photoResize({
+	//	bottomSpacing : 15
+	//});
+</script>
+<body>
+	<div class="carousel" align="center">
+		<ul class="slides">
+			<li><img height=600 data-id="901" src="images/report/1-1.jpg" /></li>
+			<li><img height=600 data-id="913" src="images/report/1-2.jpg" /></li>
+			<li><img height=600 data-id="907" src="images/report/1-3.jpg" /></li>
+			<li><img height=600 data-id="903" src="images/report/2-1.jpg" /></li>
+			<li><img height=600 data-id="921" src="images/report/2-2.jpg" /></li>
+			<li><img height=600 data-id="918" src="images/report/3-1.jpg" /></li>
+			<li><img height=600 data-id="919" src="images/report/3-2.jpg" /></li>
+			<li><img height=600 data-id="920" src="images/report/3-3.jpg" /></li>
+			<li><img height=600 data-id="923" src="images/report/3-4.jpg" /></li>
+			<li><img height=600 data-id="914" src="images/report/4-1.jpg" /></li>
+			<li><img height=600 data-id="915" src="images/report/4-2.jpg" /></li>
+			<li><img height=600 data-id="917" src="images/report/4-3.jpg" /></li>
+			<li><img height=600 data-id="922" src="images/report/4-4.jpg" /></li>
+			<li><img height=600 data-id="916" src="images/report/4-5.jpg" /></li>
+
+		</ul>
+	</div>
+</body>
