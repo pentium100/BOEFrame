@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.itg.dao.IMenuItemDAO;
 import com.itg.dao.IReportMemoDAO;
@@ -36,16 +37,16 @@ import com.itg.dao.MenuItem;
 import com.itg.security.BOELogon;
 
 @Controller
-@SessionAttributes({"entrpriseSession","token", "userName"})
+@SessionAttributes({ "entrpriseSession", "token", "userName" })
 @RequestMapping("/reportMemo.do")
 public class ReportMemoController {
 	private String viewName;
 	private final String resultOnly = "resultOnly";
-	
+
 	private IUserRolesDAO userRolesDAO;
 	private IRolesDAO rolesDAO;
 	private IReportMemoDAO reportMemoDAO;
-	
+
 	public IUserRolesDAO getUserRolesDAO() {
 		return userRolesDAO;
 	}
@@ -64,7 +65,7 @@ public class ReportMemoController {
 
 	private String boeUrl;
 
-    public String getBoeUrl() {
+	public String getBoeUrl() {
 		return boeUrl;
 	}
 
@@ -72,9 +73,8 @@ public class ReportMemoController {
 		this.boeUrl = boeUrl;
 	}
 
-
 	private BOELogon boeLogon;
-	
+
 	public BOELogon getBoeLogon() {
 		return boeLogon;
 	}
@@ -90,7 +90,7 @@ public class ReportMemoController {
 	public void setViewName(String viewName) {
 		this.viewName = viewName;
 	}
-	
+
 	public IReportMemoDAO getReportMemoDAO() {
 		return reportMemoDAO;
 	}
@@ -99,44 +99,86 @@ public class ReportMemoController {
 		this.reportMemoDAO = reportMemoDAO;
 	}
 
+	@RequestMapping(params = "method=getLastMemo")
+	public String getLastReportMemo(
+			ModelMap map,
+			@RequestParam(value = "keyValue", required = false) String keyValue,
+			HttpServletRequest request) {
 
+		ReportMemo reportMemo = reportMemoDAO.getLastReportMemo(new Date(),
+				keyValue);
+		ArrayList<ReportMemo> memos = new ArrayList<ReportMemo>();
+		memos.add(reportMemo);
+		map.put("result", memos);
 
- 	 @SuppressWarnings("unchecked")
- 	 @RequestMapping(params = "method=getView")
-     public String view(ModelMap map, String keyValue, String keyDate, HttpServletRequest request,HttpServletResponse response){
-	
-		List<UserRole> urs = userRolesDAO.findRolesByID(request.getUserPrincipal().getName());
-		
+		return "resultOnly";
+
+	}
+
+	@RequestMapping(params = "method=addMemo")
+	public String saveReportMemo(
+			ModelMap map,
+			@RequestParam(value = "picFile", required = false) CommonsMultipartFile picFile,
+			@RequestParam(value = "keyValue", required = false) String keyValue,
+			@RequestParam(value = "keyDate", required = false) Date keyDate,
+			@RequestParam(value = "isEnabled", required = false) Boolean isEnabled,
+			@RequestParam(value = "memo", required = false) String memo,
+			HttpServletRequest request
+
+	) {
+
+		ReportMemo reportMemo = reportMemoDAO.getLastReportMemo(keyDate,
+				keyValue);
+
+		if ((reportMemo != null) && (reportMemo.getKeyDate().equals(keyDate))) {
+
+		} else {
+			reportMemo = new ReportMemo();
+			reportMemo.setKeyDate(keyDate);
+			reportMemo.setKeyValue(keyValue);
+
+		}
+
+		reportMemo.setIsEnabled(isEnabled);
+		reportMemo.setMemo(memo);
+		reportMemo.setImage(picFile.getBytes());
+
+		reportMemoDAO.modifyReportMemo(reportMemo);
+
+		map.put("result", "{result:'success'}");
+		return "resultOnly";
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params = "method=getView")
+	public String view(ModelMap map, String keyValue, String keyDate,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		List<UserRole> urs = userRolesDAO.findRolesByID(request
+				.getUserPrincipal().getName());
+
 		List<String> authValue = new ArrayList();
 		List<String> roles = new ArrayList();
-		
-		for(int i = 0; i<urs.size();i++){
+
+		for (int i = 0; i < urs.size(); i++) {
 			roles.add(urs.get(i).getRole());
-			
+
 		}
-		
+
 		authValue.add("1");
-		
-		List<String> l =  rolesDAO.findAuthValue(roles, "WriteMemo", authValue);
-		
-		
-		map.put("p_readOnly", !(l.size()>0));
-	    
-		
-		
-		String errMsg = null ;
+
+		List<String> l = rolesDAO.findAuthValue(roles, "WriteMemo", authValue);
+
+		map.put("p_readOnly", !(l.size() > 0));
+
+		String errMsg = null;
 		map.put("userName", request.getUserPrincipal().getName());
 		map.put("keyValue", keyValue);
 		map.put("keyDate", keyDate);
-		
-    	
-    	return viewName;
-    	
-    	
-    }
- 	 
 
- 	 
- 	 
-	
+		return viewName;
+
+	}
+
 }

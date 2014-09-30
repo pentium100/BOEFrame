@@ -18,6 +18,8 @@
 
 <!-- Custom CSS -->
 <link href="css/thumbnail-gallery.css" rel="stylesheet">
+<link href="css/dashboard.css" rel="stylesheet">
+<link href="css/datepicker3.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -67,6 +69,7 @@ div.c-wrapper {
 					<li class="active"><a href="#home" role="tab"
 						data-toggle="tab">快捷入口</a></li>
 					<li><a href="#slider" role="tab" data-toggle="tab">逐项浏览</a></li>
+					<li><a href="#" id="markMemo">备注说明</a></li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -78,10 +81,7 @@ div.c-wrapper {
 	<div class="container tab-content">
 
 
-		<div class="tab-pane active row－fluid " id="home"></div>
-
-
-
+		<div class="tab-pane active row " id="home"></div>
 
 
 		<div id="slider" class="tab-pane carousel slide " data-ride="carousel">
@@ -118,15 +118,11 @@ div.c-wrapper {
 	</div>
 	<!-- /.container -->
 
+	<div id="modals" tabindex="-1"></div>
+
+
 	<!-- jQuery Version 1.11.0 -->
-	<script src="js/libs/jquery-1.11.1.min.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="js/libs/bootstrap.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="js/dashboard.js"></script>
-
+	<script data-main="js/dashboard" src="js/libs/require.js"></script>
 
 </body>
 

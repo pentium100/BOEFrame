@@ -1,0 +1,10 @@
+.x-view-selected {
+	background-color: rgba(100, 100, 100, .15);
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-top: 0px solid rgba(0, 0, 0, .15);
+}
+
+.datepicker {
+	z-index: 1151 !important;
+}

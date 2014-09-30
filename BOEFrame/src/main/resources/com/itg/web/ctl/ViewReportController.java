@@ -17,7 +17,8 @@ import com.businessobjects.rebean.wi.*;
 import com.itg.security.*;
 
 @Controller
-@SessionAttributes( { "entrpriseSession", "token", "userName" , "ReportEngines", "entry"})
+@SessionAttributes( { "enterpriseSession", "token", "userName" , "ReportEngines", "entry"})
+  
 public class ViewReportController {
 
 	private BOELogon boeLogon;

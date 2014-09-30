@@ -2,615 +2,628 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
-      xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 
       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-      <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
 
-           <property name="driverClassName">
+		<property name="driverClassName">
 
-                 <value>net.sourceforge.jtds.jdbcx.JtdsDataSource</value>
+			<value>net.sourceforge.jtds.jdbcx.JtdsDataSource</value>
 
-            </property>
+		</property>
 
-           <property name="url">
+		<property name="url">
 
-                 <value>jdbc:jtds:sqlserver://172.16.10.54:1433/BOEFrame</value>
+			<value>jdbc:jtds:sqlserver://172.16.10.54:1433/BOEFrame</value>
 
-           </property>
+		</property>
 
-           <property name="username">
+		<property name="username">
 
-                 <value>boe</value>
+			<value>boe</value>
 
-           </property>
+		</property>
 
-           <property name="password">
+		<property name="password">
 
-                 <value>36987</value>
+			<value>36987</value>
 
-           </property>
+		</property>
 
-      </bean>
-
-      
-
-<!-- hibernate3 session Bean-->
-
-      <bean id="sessionFactory"
-
-      class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-
-           <property name="dataSource"> <!-- 注入数据源 -->
-
-                 <ref local="dataSource" />
-
-           </property>
-
-           <property name="annotatedClasses">    <!-- 需要加载的Hibernate实体类(不需要hbm.xml了) -->
-
-                 <list>
-                      <value>com.itg.dao.MenuItem</value>
-                      <value>com.itg.dao.Role</value>
-                      <value>com.itg.dao.UserRole</value>
-                      <value>com.itg.dao.ReportMemo</value>
-                 </list>
-
-           </property>
-
-           <property name="hibernateProperties">
-
-                 <props>
-
-                      <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
-
-                      <prop key="hibernate.show_sql">true</prop>
-                      <prop key="hibernate.hbm2ddl.auto">update</prop>
-                      
-
-                 </props>
-
-           </property>
-
-      </bean>
-
- 
-
-      <!-- 事务管理 -->
-
-      <bean id="transactionManager"
-
-           class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-
-           <property name="sessionFactory">
-
-                 <ref local="sessionFactory" />
-
-           </property>
-
-      </bean>
-
- 
-
-      <!-- UserDAO bean-->
-
-      <bean id="menuItemDAO" class="com.itg.dao.MenuItemDAO">
-           <property name="sessionFactory">
-                 <ref local="sessionFactory" />
-           </property>
-      </bean>
-
- 
-
-      <!-- 带事务处理的userDao 代理 -->
-
-      <bean id="menuItemDAOProxy"
-      class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-           <property name="transactionManager">
-                 <ref bean="transactionManager" />
-           </property>
-           <property name="target">
-                 <ref local="menuItemDAO" />
-           </property>
-           <property name="transactionAttributes">
-                 <props>
-                      <prop key="insert*">PROPAGATION_REQUIRED</prop>
-                      <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
-                 </props>
-           </property>
-      </bean>
-
-
-      <bean id="userRolesDAO" class="com.itg.dao.UserRolesDAO">
-           <property name="sessionFactory">
-                 <ref local="sessionFactory" />
-           </property>
-      </bean>
-
-      <bean id="userRolesDAOProxy"
-      class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-           <property name="transactionManager">
-                 <ref bean="transactionManager" />
-           </property>
-           <property name="target">
-                 <ref local="userRolesDAO" />
-           </property>
-           <property name="transactionAttributes">
-                 <props>
-                      <prop key="insert*">PROPAGATION_REQUIRED</prop>
-                      <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
-                 </props>
-           </property>
-      </bean>
-
-      <bean id="rolesDAO" class="com.itg.dao.RolesDAO">
-           <property name="sessionFactory">
-                 <ref local="sessionFactory" />
-           </property>
-      </bean>
-
-      <bean id="rolesDAOProxy"
-      class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-           <property name="transactionManager">
-                 <ref bean="transactionManager" />
-           </property>
-           <property name="target">
-                 <ref local="rolesDAO" />
-           </property>
-           <property name="transactionAttributes">
-                 <props>
-                      <prop key="insert*">PROPAGATION_REQUIRED</prop>
-                      <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
-                 </props>
-           </property>
-      </bean>
-     
-      <bean id="boeLogon"
-       class="com.itg.security.BOELogon">
-       <property name="userName">
-         <value>BWP~700/BOEUSER</value>
-       </property>
-       <property name="password">
-         <value>gmit2009</value>
-       </property>
-       <property name="CMSName">
-         <value>itgbop.itg.net:6400</value>
-       </property>
-       <property name="authentication">
-         <value>secSAPR3</value>
-       </property>
-      </bean>
-      
-      <bean id="boeLogon2"
-       class="com.itg.security.BOELogon">
-       <property name="userName">
-         <value>BWP~700/BOEUSER2</value>
-       </property>
-       <property name="password">
-         <value>654321</value>
-       </property>
-       <property name="CMSName">
-         <value>itgbop.itg.net:6400</value>
-       </property>
-       <property name="authentication">
-         <value>secSAPR3</value>
-       </property>
-      </bean>
-
-
-	<bean id="boeLogonMap" class="java.util.HashMap">
-   		<constructor-arg>
-    		<map>
-     			<entry key="others" value-ref="boeLogon" />
-     			<entry key="scott1198@itg.net" value-ref="boeLogon2" />
-     			<entry key="clw@itg.net" value-ref="boeLogon2" />
-     			<entry key="cwlzh@itg.net" value-ref="boeLogon2" />
-     			<entry key="linhy@itg.net" value-ref="boeLogon2" />	
-    		</map>
-   		</constructor-arg>
 	</bean>
 
 
 
-      <bean id="prctr_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>prctr</value>
-           </property>
-           <property name="tableName">
-                 <value>CEPCT</value>
-           </property>
+	<!-- hibernate3 session Bean -->
 
-           <property name="label">
-                 <value>利润中心</value>
-           </property>
+	<bean id="sessionFactory"
 
-           <property name="idField">
-                 <value>PRCTR</value>
-           </property>
-           <property name="textField">
-                 <value>KTEXT</value>
-           </property>
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 
-           <property name="authObject">
-                 <value>PRCTR</value>
-           </property>
-           <property name="userRoleDAO">
-                 <ref bean="userRolesDAOProxy" />
-           </property>
+		<property name="dataSource"> <!-- 注入数据源 -->
 
-           <property name="roleDAO">
-                 <ref bean="rolesDAOProxy" />
-           </property>
-           
-           
-      </bean>
-      
+			<ref local="dataSource" />
 
-      <bean id="bukrs_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>bukrs</value>
-           </property>
-           <property name="tableName">
-                 <value>ZT880</value>
-           </property>
-           <property name="tableIdField">
-                 <value>RCOMP</value>
-           </property>
+		</property>
 
-           <property name="idField">
-                 <value>BUKRS_BPS</value>
-           </property>
+		<property name="annotatedClasses">    <!-- 需要加载的Hibernate实体类(不需要hbm.xml了) -->
 
-           <property name="label">
-                 <value>公司代码</value>
-           </property>
-           
-           <property name="textField">
-                 <value>NAME1</value>
-           </property>
-           
-           <property name="authObject">
-                 <value>BUKRS</value>
-           </property>
-           <property name="userRoleDAO">
-                 <ref bean="userRolesDAOProxy" />
-           </property>
+			<list>
+				<value>com.itg.dao.MenuItem</value>
+				<value>com.itg.dao.Role</value>
+				<value>com.itg.dao.UserRole</value>
+				<value>com.itg.dao.ReportMemo</value>
+			</list>
 
-           <property name="roleDAO">
-                 <ref bean="rolesDAOProxy" />
-           </property>
-           
-      </bean>
-          
-      <bean id="bukrs_r3_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>bukrs_r3</value>
-           </property>
-           <property name="tableName">
-                 <value>ZT880</value>
-           </property>
+		</property>
 
-          <property name="tableIdField">
-                 <value>RCOMP</value>
-           </property>
+		<property name="hibernateProperties">
 
-           <property name="idField">
-                 <value>BUKRS_BPS</value>
-           </property>
+			<props>
 
-           <property name="label">
-                 <value>公司代码</value>
-           </property>
-           
-           <property name="textField">
-                 <value>NAME1</value>
-           </property>
-           
-           <property name="authObject">
-                 <value>BUKRS_R3</value>
-           </property>
-           <property name="userRoleDAO">
-                 <ref bean="userRolesDAOProxy" />
-           </property>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
 
-           <property name="roleDAO">
-                 <ref bean="rolesDAOProxy" />
-           </property>
-           
-      </bean>
-      <bean id="zboebm_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>zboebm</value>
-           </property>
-           <property name="tableName">
-                 <value>ZBOEBM</value>
-           </property>
-           <property name="label">
-                 <value>部门</value>
-           </property>
-           
-           <property name="idField">
-                 <value>ZBOEBM</value>
-           </property>
-           <property name="textField">
-                 <value>EKOTX</value>
-           </property>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 
-           <property name="authObject">
-                 <value>EKORG</value>
-           </property>
-           <property name="userRoleDAO">
-                 <ref bean="userRolesDAOProxy" />
-           </property>
 
-           <property name="roleDAO">
-                 <ref bean="rolesDAOProxy" />
-           </property>
-      </bean>
-       <bean id="zboebm_r3_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>ekorg</value>
-           </property>
-           <property name="tableName">
-                 <value>ZBOEBM</value>
-           </property>
-           <property name="label">
-                 <value>部门</value>
-           </property>
-           
-           <property name="idField">
-                 <value>ZBOEBM</value>
-           </property>
-           <property name="textField">
-                 <value>EKOTX</value>
-           </property>
+			</props>
 
-           <property name="authObject">
-                 <value>EKORG_R3</value>
-           </property>
-           <property name="userRoleDAO">
-                 <ref bean="userRolesDAOProxy" />
-           </property>
+		</property>
 
-           <property name="roleDAO">
-                 <ref bean="rolesDAOProxy" />
-           </property>
-      </bean>
+	</bean>
 
-       <bean id="ekorg_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>ekorg</value>
-           </property>
-           <property name="tableName">
-                 <value>ZTBUSDEPT</value>
-           </property>
-           <property name="label">
-                 <value>部门</value>
-           </property>
-           
-           <property name="idField">
-                 <value>BUSDEP</value>
-           </property>
-           <property name="textField">
-                 <value>BUSDEP_TXT</value>
-           </property>
 
-           <property name="authObject">
-                 <value>EKORG</value>
-           </property>
-           <property name="userRoleDAO">
-                 <ref bean="userRolesDAOProxy" />
-           </property>
 
-           <property name="roleDAO">
-                 <ref bean="rolesDAOProxy" />
-           </property>
-      </bean>
-      <bean id="ekgrp_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>ekgrp</value>
-           </property>
-           <property name="tableName">
-                 <value>ZTBUSDEPT</value>
-           </property>
-           <property name="label">
-                 <value>部组</value>
-           </property>
-           
-           <property name="idField">
-                 <value>EKGRP</value>
-           </property>
-           <property name="textField">
-                 <value>BUSGRP_TXT</value>
-           </property>
-      </bean>
-      <bean id="matkl_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>matkl</value>
-           </property>
-           <property name="tableName">
-                 <value>MATKL</value>
-           </property>
-           <property name="label">
-                 <value>物料组</value>
-           </property>
-           
-           <property name="idField">
-                 <value>MATKL</value>
-           </property>
-           <property name="textField">
-                 <value>WGBEZ</value>
-           </property>
-      </bean>
-      <bean id="text_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-            <property name="masterName">
-                 <value>textfield</value>
-           </property>
-            
-      </bean>
-      <bean id="date_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-            <property name="masterName">
-                 <value>datefield</value>
-           </property>
-            
-      </bean>
-      <bean id="number_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-            <property name="masterName">
-                 <value>numberfield</value>
-           </property>
-            
-      </bean>
-      
-      <bean id="kmdm_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>kmdm</value>
-           </property>
-           <property name="tableName">
-                 <value>ZTDCXMLP</value>
-           </property>
-           <property name="label">
-                 <value>项目</value>
-           </property>
-           
-           <property name="idField">
-                 <value>KMDM</value>
-           </property>
-           <property name="textField">
-                 <value>KMMC</value>
-           </property>
-      </bean>
-      
-      <bean id="zbiz_grp_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>biz_grp</value>
-           </property>
-           <property name="tableName">
-                 <value>ZBIZ_GRP</value>
-           </property>
-           <property name="label">
-                 <value>事业群</value>
-           </property>
-           
-           <property name="idField">
-                 <value>ZBIZ_GRP</value>
-           </property>
-           <property name="textField">
-                 <value>ZBIZ_GRP_TXT</value>
-           </property>
+	<!-- 事务管理 -->
 
-           <property name="authObject">
-                 <value>ZBIZ_GRP</value>
-           </property>
-           <property name="userRoleDAO">
-                 <ref bean="userRolesDAOProxy" />
-           </property>
+	<bean id="transactionManager"
 
-           <property name="roleDAO">
-                 <ref bean="rolesDAOProxy" />
-           </property>
-      </bean>    
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 
-      <bean id="zhbfw_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>zhbfw</value>
-           </property>
-           <property name="tableName">
-                 <value>ZTHBFW</value>
-           </property>
-           <property name="label">
-                 <value>合并范围</value>
-           </property>
-           
-           <property name="idField">
-                 <value>ZHBFW</value>
-           </property>
-           <property name="textField">
-                 <value>ZHBFW_TXT</value>
-           </property>
+		<property name="sessionFactory">
 
-           <property name="authObject">
-                 <value>ZHBFW</value>
-           </property>
-           <property name="userRoleDAO">
-                 <ref bean="userRolesDAOProxy" />
-           </property>
+			<ref local="sessionFactory" />
 
-           <property name="roleDAO">
-                 <ref bean="rolesDAOProxy" />
-           </property>
-      </bean> 
-  
-      <bean id="hbunit_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>hbunit</value>
-           </property>
-           <property name="tableName">
-                 <value>ZT880</value>
-           </property>
-           <property name="tableIdField">
-                 <value>RCOMP</value>
-           </property>
+		</property>
 
-           <property name="idField">
-                 <value>BUKRS_BPS</value>
-           </property>
+	</bean>
 
-           <property name="label">
-                 <value>合并单元</value>
-           </property>
-           
-           <property name="textField">
-                 <value>NAME1</value>
-           </property>                     
-      </bean>
 
-<bean id="zboeprctr_rf"
-            class="com.itg.web.ctl.BaseReportFilter">
-           <property name="masterName">
-                 <value>zboeprctr</value>
-           </property>
-           <property name="tableName">
-                 <value>ZTBOEPRCTR</value>
-           </property>
-           <property name="label">
-                 <value>利润中心</value>
-           </property>
-           
-           <property name="idField">
-                 <value>ZBOEPRCTR</value>
-           </property>
-           <property name="textField">
-                 <value>ZBOEPRCTRTEXT</value>
-           </property>
 
-           <property name="authObject">
-                 <value>PRCTR_AA</value>
-           </property>
-           <property name="userRoleDAO">
-                 <ref bean="userRolesDAOProxy" />
-           </property>
+	<!-- UserDAO bean -->
 
-           <property name="roleDAO">
-                 <ref bean="rolesDAOProxy" />
-           </property>
-      </bean>
+	<bean id="menuItemDAO" class="com.itg.dao.MenuItemDAO">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+
+	<!-- 带事务处理的userDao 代理 -->
+
+	<bean id="menuItemDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="menuItemDAO" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+
+
+	<!-- UserDAO bean -->
+
+	<bean id="reportMemoDAO" class="com.itg.dao.ReportMemoDAO">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+
+	<!-- 带事务处理的userDao 代理 -->
+
+	<bean id="reportMemoDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="reportMemoDAO" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="userRolesDAO" class="com.itg.dao.UserRolesDAO">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="userRolesDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="userRolesDAO" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="rolesDAO" class="com.itg.dao.RolesDAO">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="rolesDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="rolesDAO" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="boeLogon" class="com.itg.security.BOELogon">
+		<property name="userName">
+			<value>BWP~700/BOEUSER</value>
+		</property>
+		<property name="password">
+			<value>gmit2009</value>
+		</property>
+		<property name="CMSName">
+			<value>itgbop.itg.net:6400</value>
+		</property>
+		<property name="authentication">
+			<value>secSAPR3</value>
+		</property>
+	</bean>
+
+	<bean id="boeLogon2" class="com.itg.security.BOELogon">
+		<property name="userName">
+			<value>BWP~700/BOEUSER2</value>
+		</property>
+		<property name="password">
+			<value>654321</value>
+		</property>
+		<property name="CMSName">
+			<value>itgbop.itg.net:6400</value>
+		</property>
+		<property name="authentication">
+			<value>secSAPR3</value>
+		</property>
+	</bean>
+
+
+	<bean id="boeLogonMap" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key="others" value-ref="boeLogon" />
+				<entry key="scott1198@itg.net" value-ref="boeLogon2" />
+				<entry key="clw@itg.net" value-ref="boeLogon2" />
+				<entry key="cwlzh@itg.net" value-ref="boeLogon2" />
+				<entry key="linhy@itg.net" value-ref="boeLogon2" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+
+
+	<bean id="prctr_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>prctr</value>
+		</property>
+		<property name="tableName">
+			<value>CEPCT</value>
+		</property>
+
+		<property name="label">
+			<value>利润中心</value>
+		</property>
+
+		<property name="idField">
+			<value>PRCTR</value>
+		</property>
+		<property name="textField">
+			<value>KTEXT</value>
+		</property>
+
+		<property name="authObject">
+			<value>PRCTR</value>
+		</property>
+		<property name="userRoleDAO">
+			<ref bean="userRolesDAOProxy" />
+		</property>
+
+		<property name="roleDAO">
+			<ref bean="rolesDAOProxy" />
+		</property>
+
+
+	</bean>
+
+
+	<bean id="bukrs_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>bukrs</value>
+		</property>
+		<property name="tableName">
+			<value>ZT880</value>
+		</property>
+		<property name="tableIdField">
+			<value>RCOMP</value>
+		</property>
+
+		<property name="idField">
+			<value>BUKRS_BPS</value>
+		</property>
+
+		<property name="label">
+			<value>公司代码</value>
+		</property>
+
+		<property name="textField">
+			<value>NAME1</value>
+		</property>
+
+		<property name="authObject">
+			<value>BUKRS</value>
+		</property>
+		<property name="userRoleDAO">
+			<ref bean="userRolesDAOProxy" />
+		</property>
+
+		<property name="roleDAO">
+			<ref bean="rolesDAOProxy" />
+		</property>
+
+	</bean>
+
+	<bean id="bukrs_r3_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>bukrs_r3</value>
+		</property>
+		<property name="tableName">
+			<value>ZT880</value>
+		</property>
+
+		<property name="tableIdField">
+			<value>RCOMP</value>
+		</property>
+
+		<property name="idField">
+			<value>BUKRS_BPS</value>
+		</property>
+
+		<property name="label">
+			<value>公司代码</value>
+		</property>
+
+		<property name="textField">
+			<value>NAME1</value>
+		</property>
+
+		<property name="authObject">
+			<value>BUKRS_R3</value>
+		</property>
+		<property name="userRoleDAO">
+			<ref bean="userRolesDAOProxy" />
+		</property>
+
+		<property name="roleDAO">
+			<ref bean="rolesDAOProxy" />
+		</property>
+
+	</bean>
+	<bean id="zboebm_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>zboebm</value>
+		</property>
+		<property name="tableName">
+			<value>ZBOEBM</value>
+		</property>
+		<property name="label">
+			<value>部门</value>
+		</property>
+
+		<property name="idField">
+			<value>ZBOEBM</value>
+		</property>
+		<property name="textField">
+			<value>EKOTX</value>
+		</property>
+
+		<property name="authObject">
+			<value>EKORG</value>
+		</property>
+		<property name="userRoleDAO">
+			<ref bean="userRolesDAOProxy" />
+		</property>
+
+		<property name="roleDAO">
+			<ref bean="rolesDAOProxy" />
+		</property>
+	</bean>
+	<bean id="zboebm_r3_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>ekorg</value>
+		</property>
+		<property name="tableName">
+			<value>ZBOEBM</value>
+		</property>
+		<property name="label">
+			<value>部门</value>
+		</property>
+
+		<property name="idField">
+			<value>ZBOEBM</value>
+		</property>
+		<property name="textField">
+			<value>EKOTX</value>
+		</property>
+
+		<property name="authObject">
+			<value>EKORG_R3</value>
+		</property>
+		<property name="userRoleDAO">
+			<ref bean="userRolesDAOProxy" />
+		</property>
+
+		<property name="roleDAO">
+			<ref bean="rolesDAOProxy" />
+		</property>
+	</bean>
+
+	<bean id="ekorg_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>ekorg</value>
+		</property>
+		<property name="tableName">
+			<value>ZTBUSDEPT</value>
+		</property>
+		<property name="label">
+			<value>部门</value>
+		</property>
+
+		<property name="idField">
+			<value>BUSDEP</value>
+		</property>
+		<property name="textField">
+			<value>BUSDEP_TXT</value>
+		</property>
+
+		<property name="authObject">
+			<value>EKORG</value>
+		</property>
+		<property name="userRoleDAO">
+			<ref bean="userRolesDAOProxy" />
+		</property>
+
+		<property name="roleDAO">
+			<ref bean="rolesDAOProxy" />
+		</property>
+	</bean>
+	<bean id="ekgrp_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>ekgrp</value>
+		</property>
+		<property name="tableName">
+			<value>ZTBUSDEPT</value>
+		</property>
+		<property name="label">
+			<value>部组</value>
+		</property>
+
+		<property name="idField">
+			<value>EKGRP</value>
+		</property>
+		<property name="textField">
+			<value>BUSGRP_TXT</value>
+		</property>
+	</bean>
+	<bean id="matkl_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>matkl</value>
+		</property>
+		<property name="tableName">
+			<value>MATKL</value>
+		</property>
+		<property name="label">
+			<value>物料组</value>
+		</property>
+
+		<property name="idField">
+			<value>MATKL</value>
+		</property>
+		<property name="textField">
+			<value>WGBEZ</value>
+		</property>
+	</bean>
+	<bean id="text_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>textfield</value>
+		</property>
+
+	</bean>
+	<bean id="date_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>datefield</value>
+		</property>
+
+	</bean>
+	<bean id="number_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>numberfield</value>
+		</property>
+
+	</bean>
+
+	<bean id="kmdm_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>kmdm</value>
+		</property>
+		<property name="tableName">
+			<value>ZTDCXMLP</value>
+		</property>
+		<property name="label">
+			<value>项目</value>
+		</property>
+
+		<property name="idField">
+			<value>KMDM</value>
+		</property>
+		<property name="textField">
+			<value>KMMC</value>
+		</property>
+	</bean>
+
+	<bean id="zbiz_grp_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>biz_grp</value>
+		</property>
+		<property name="tableName">
+			<value>ZBIZ_GRP</value>
+		</property>
+		<property name="label">
+			<value>事业群</value>
+		</property>
+
+		<property name="idField">
+			<value>ZBIZ_GRP</value>
+		</property>
+		<property name="textField">
+			<value>ZBIZ_GRP_TXT</value>
+		</property>
+
+		<property name="authObject">
+			<value>ZBIZ_GRP</value>
+		</property>
+		<property name="userRoleDAO">
+			<ref bean="userRolesDAOProxy" />
+		</property>
+
+		<property name="roleDAO">
+			<ref bean="rolesDAOProxy" />
+		</property>
+	</bean>
+
+	<bean id="zhbfw_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>zhbfw</value>
+		</property>
+		<property name="tableName">
+			<value>ZTHBFW</value>
+		</property>
+		<property name="label">
+			<value>合并范围</value>
+		</property>
+
+		<property name="idField">
+			<value>ZHBFW</value>
+		</property>
+		<property name="textField">
+			<value>ZHBFW_TXT</value>
+		</property>
+
+		<property name="authObject">
+			<value>ZHBFW</value>
+		</property>
+		<property name="userRoleDAO">
+			<ref bean="userRolesDAOProxy" />
+		</property>
+
+		<property name="roleDAO">
+			<ref bean="rolesDAOProxy" />
+		</property>
+	</bean>
+
+	<bean id="hbunit_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>hbunit</value>
+		</property>
+		<property name="tableName">
+			<value>ZT880</value>
+		</property>
+		<property name="tableIdField">
+			<value>RCOMP</value>
+		</property>
+
+		<property name="idField">
+			<value>BUKRS_BPS</value>
+		</property>
+
+		<property name="label">
+			<value>合并单元</value>
+		</property>
+
+		<property name="textField">
+			<value>NAME1</value>
+		</property>
+	</bean>
+
+	<bean id="zboeprctr_rf" class="com.itg.web.ctl.BaseReportFilter">
+		<property name="masterName">
+			<value>zboeprctr</value>
+		</property>
+		<property name="tableName">
+			<value>ZTBOEPRCTR</value>
+		</property>
+		<property name="label">
+			<value>利润中心</value>
+		</property>
+
+		<property name="idField">
+			<value>ZBOEPRCTR</value>
+		</property>
+		<property name="textField">
+			<value>ZBOEPRCTRTEXT</value>
+		</property>
+
+		<property name="authObject">
+			<value>PRCTR_AA</value>
+		</property>
+		<property name="userRoleDAO">
+			<ref bean="userRolesDAOProxy" />
+		</property>
+
+		<property name="roleDAO">
+			<ref bean="rolesDAOProxy" />
+		</property>
+	</bean>
 </beans>
 

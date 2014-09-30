@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/main/webapp/dashboard.jsp=UTF-8
+encoding//src/main/webapp/js/template/mark-memo.hbs=UTF-8
+encoding//src/main/webapp/js/view/MarkMemoView.js=UTF-8
+encoding//src/main/webapp/js/view/ModalMarkMemoView.js=UTF-8

@@ -1,0 +1,46 @@
+<form class="form-horizontal" role="form">
+
+	<div class="form-group">
+		<label for="indicatorName" class="col-md-2 control-label">指标名称</label>
+		<div class="col-md-8">
+			<p  id="indicatorName" class="form-control-static">{{menu.text}}</p>
+		</div>
+	</div>
+
+	<div class="form-group date">
+		<label for="keyDate" class="col-md-2 control-label">注释日期</label>
+		<div class="col-md-4">
+			<div class="input-group date" >
+			 	<input type="text" name="keyDate" id="keyDate" class="form-control" value="{{memo.keyDate}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+			 </div>
+		</div>
+		<div class="col-md-4 checkbox">
+		  	<label>
+      			<input type="checkbox" name="isEnabled">是否显示
+    		</label>
+			
+		</div>
+	</div>
+	
+	
+	
+	<div class="form-group">
+		<label for="picFile" class="col-md-2 control-label">指标截图</label>
+		<div class="col-md-8">
+			<input type="file" name="picFile" class="form-control" id="picFile" placeholder="上传文件">
+			<input type="hidden" name="keyValue" value="{{menuId}}" id="menuId">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="indicatorMemo" class="col-md-2 control-label">指标注释</label>
+		<div class="col-md-8">
+			<textarea class="form-control" name="memo" id="indicatorMemo" rows="5" placeholder="指标注释...">{{data.memo}}</textarea>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<button type="submit"  class="btn blue">提交</button>
+		</div>
+	</div>
+</form>

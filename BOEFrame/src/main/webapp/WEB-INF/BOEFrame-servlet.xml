@@ -4,99 +4,104 @@
 
 <beans>
 
-<!-- 定义Spring MVC 的模板文件 -->
+	<!-- 定义Spring MVC 的模板文件 -->
 
-      <bean id="viewResolver"
+	<bean id="viewResolver"
+		
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 
-      class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>     <!-- 支持JSTL -->
 
-           <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>     <!-- 支持JSTL -->
+		<property name="prefix" value="WEB-INF/views/" />     <!-- 模板的路径 -->
 
-           <property name="prefix" value="WEB-INF/views/" />     <!-- 模板的路径 -->
+		<property name="suffix" value=".jsp" />                 <!-- 模板文件的后缀-->
 
-           <property name="suffix" value=".jsp" />                 <!-- 模板文件的后缀-->
-
-      </bean>
+	</bean>
 
  
 
-      <!-- 依赖注入到HelloController这个类 -->
+	<!-- 依赖注入到HelloController这个类 -->
 
-      <bean id="menuController" class="com.itg.web.ctl.MenuController">
-           <property name="viewName">  <!-- 设定viewName属性的值为hello -->
-                 <value>getMenu</value>
-           </property>
-           <property name="menuItemDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
-                 <ref bean="menuItemDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
-           </property>
+	<bean id="menuController" class="com.itg.web.ctl.MenuController">
+		<property name="viewName">  <!-- 设定viewName属性的值为hello -->
+			<value>getMenu</value>
+		</property>
+		<property name="menuItemDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="menuItemDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
            
-           <property name="userRolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
-                 <ref bean="userRolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
-           </property>
+		<property name="userRolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="userRolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
            
-           <property name="rolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
-                 <ref bean="rolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
-           </property>
+		<property name="rolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="rolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
            
-      </bean>
+	</bean>
 
-      <!--  QueryControl -->
-      <bean id="queryController" class="com.itg.web.ctl.QueryController">
-           	<property name="viewName">  
-                 <value>queryReport</value>
-           	</property>
-            <property name="boeUrl">
-                  <value>http://itgbop.itg.net:8080/OpenDocument/opendoc/openDocument.jsp?sRefresh=Y&amp;sIDType=CUID&amp;iDocID=~reportId~</value> 
-                 <!--<value>/BOEFrame/viewReport.do?sRefresh=Y&amp;sIDType=CUID&amp;iDocID=~reportId~&amp;token=~token~</value>-->
-           	</property>
+	<!--  QueryControl -->
+	<bean id="queryController" class="com.itg.web.ctl.QueryController">
+		<property name="viewName">  
+			<value>queryReport</value>
+		</property>
+		<property name="boeUrl">
+			<value>http://itgbop.itg.net:8080/OpenDocument/opendoc/openDocument.jsp?sRefresh=Y&amp;sIDType=CUID&amp;iDocID=~reportId~</value> 
+			<!--<value>/BOEFrame/viewReport.do?sRefresh=Y&amp;sIDType=CUID&amp;iDocID=~reportId~&amp;token=~token~</value>-->
+		</property>
            
-      		<property name="boeLogonMap">
-      			<ref bean="boeLogonMap"/>
-      		</property>
+		<property name="boeLogonMap">
+			<ref bean="boeLogonMap"/>
+		</property>
            
-           <property name="menuItemDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
-                 <ref bean="menuItemDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
-           </property>
+		<property name="menuItemDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="menuItemDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
            
-           <property name="userRolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
-                 <ref bean="userRolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
-           </property>
+		<property name="userRolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="userRolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
            
-           <property name="rolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
-                 <ref bean="rolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
-           </property>
+		<property name="rolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="rolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
            
            
-      </bean>
+	</bean>
                                                              
-      <bean id="viewReportController" class="com.itg.web.ctl.ViewReportController">
-           	<property name="viewName">  
-                 <value>viewReport</value>
-           	</property>
+	<bean id="viewReportController" class="com.itg.web.ctl.ViewReportController">
+		<property name="viewName">  
+			<value>viewReport</value>
+		</property>
            
-      		<property name="boeLogon">
-      			<ref bean="boeLogon"/>
-      		</property>
-      </bean>
+		<property name="boeLogon">
+			<ref bean="boeLogon"/>
+		</property>
+	</bean>
       
-      <bean id="reportMemoController" class="com.itg.web.ctl.ReportMemoController">
-           	<property name="viewName">  
-                 <value>reportMemo</value>
-           	</property>
+	<bean id="reportMemoController" class="com.itg.web.ctl.ReportMemoController">
+		<property name="viewName">  
+			<value>reportMemo</value>
+		</property>
            
-      		<property name="boeLogon">
-      			<ref bean="boeLogon"/>
-      		</property>
+		<property name="boeLogon">
+			<ref bean="boeLogon"/>
+		</property>
       		
-           <property name="userRolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
-                 <ref bean="userRolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
-           </property>
+		<property name="userRolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="userRolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
            
-           <property name="rolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
-                 <ref bean="rolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
-           </property>
+		<property name="reportMemoDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="reportMemoDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
+
+
+		<property name="rolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="rolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
       		
-      </bean>
+	</bean>
 </beans>
 
 

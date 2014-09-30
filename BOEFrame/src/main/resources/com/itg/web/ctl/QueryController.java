@@ -43,7 +43,7 @@ import com.itg.dao.MenuItem;
 import com.itg.security.BOELogon;
 
 @Controller
-@SessionAttributes({"entrpriseSession","token", "userName"})
+@SessionAttributes({"enterpriseSession","token", "userName"})
 
 public class QueryController {
 	private String viewName;
