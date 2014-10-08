@@ -16,6 +16,7 @@ public class ReportMemo {
 	private int id;
 	private Date keyDate; // 关键日期
 	private String keyValue; // 关键值
+	@Column(length = 50000)
 	private String memo; // 备注内容
 	private String memoBy; // 备注人
 	private String memoTitle; // 备注人
@@ -24,7 +25,7 @@ public class ReportMemo {
 	private Boolean isEnabled;
 
 	@Lob
-	@Column(name = "image")
+	@Column(name = "image", length = 20971520)
 	private byte[] image;
 
 	public byte[] getImage() {
@@ -95,6 +96,18 @@ public class ReportMemo {
 
 	public void setMemoTitle(String memoTitle) {
 		this.memoTitle = memoTitle;
+	}
+
+	public ReportMemo() {
+
+	}
+
+	public ReportMemo(int id, String keyValue, Date keyDate, String memo) {
+
+		this.id = id;
+		this.keyDate = keyDate;
+		this.keyValue = keyValue;
+		this.memo = memo;
 	}
 
 	public String toJSON() {

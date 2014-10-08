@@ -1,3 +1,3 @@
 {{#each menus}}
-<div class="item {{#if @first}}active{{/if}} center"><img data-id="{{id}}" src="images/report/{{substring text start=0 length=3}}.jpg" alt="" class="img-responsive"></div>
+<div class="item {{#if @first}}active{{/if}} center"><img data-id="{{id}}" src="reportMemo.do?method=getImage&reportMemoId={{id}}" alt="" class="img-responsive"></div>
 {{/each}}

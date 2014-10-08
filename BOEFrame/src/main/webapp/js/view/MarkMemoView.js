@@ -1,6 +1,6 @@
 define(	['backbone', 'underscore', 'handlebars', 'jquery',
 				'text!template/mark-memo.hbs', 'bootstrap-datepicker',
-				'jquery.fileupload'], function(Backbone, _, Handlebars, $,
+				'fileinput'], function(Backbone, _, Handlebars, $,
 				markMemoTemplate) {
 
 			var MarkMemoView = Backbone.View.extend({
@@ -21,6 +21,8 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery',
 										success : this.loadMarkMemoView,
 										context : this
 									});
+
+							this.vents = _.extend({}, Backbone.Events);
 						},
 
 						loadMarkMemoView : function(data) {
@@ -45,29 +47,62 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery',
 										todayHighlight : true
 									});
 
-							$('form', this.el).submit(this.submitForm);
+							$('input[type=file]', this.el).fileinput({
+										'showUpload' : false,
+										'previewFileType' : 'any'
+									});
+
+							$('form', this.el).submit(this, this.submitForm);
+							return this;
 
 						},
 
 						submitForm : function(event, data) {
 
 							event.preventDefault();
-							var $form = $(event.target);
-							var formData = $form.serialize();
-							formData = formData + "&method=addMemo";
+							var self = event.data;
+							var form = event.target;
+							// form.submit();
 
-							$.each($('#picFile', $form)[0].files, function(key,
-											value) {
-										formData = formData + '&filenames[]='
-												+ value;
-									});
+							var formData = new FormData(form);
+
 							$.ajax({
-
-										type : 'post',
 										url : 'reportMemo.do',
+										type : 'POST',
+										data : formData,
+										async : false,
+										success : function(data) {
+											var res = $.parseJSON(data);
 
-										data : formData
+											if (res.result == "success") {
+												self.vents.trigger(
+														'closeModalView', this);
+											}
+										},
+										context : this,
+										cache : false,
+										contentType : false,
+										processData : false
 									});
+
+							return false;
+
+							// var formData = $form.serialize();
+							// formData = formData + "&method=addMemo";
+
+							// $.each($('#picFile', $form)[0].files,
+							// function(key,
+							// value) {
+							// formData = formData + '&filenames[]='
+							// + value;
+							// });
+							// $.ajax({
+
+							// type : 'post',
+							// url : 'reportMemo.do',
+
+							// data : formData
+							// });
 
 						}
 

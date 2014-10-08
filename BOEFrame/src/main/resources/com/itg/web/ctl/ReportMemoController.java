@@ -1,5 +1,8 @@
 package com.itg.web.ctl;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,10 +18,16 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringEscapeUtils;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,6 +54,16 @@ public class ReportMemoController {
 
 	private IUserRolesDAO userRolesDAO;
 	private IRolesDAO rolesDAO;
+	private IMenuItemDAO menuItemDAO;
+
+	public IMenuItemDAO getMenuItemDAO() {
+		return menuItemDAO;
+	}
+
+	public void setMenuItemDAO(IMenuItemDAO menuItemDAO) {
+		this.menuItemDAO = menuItemDAO;
+	}
+
 	private IReportMemoDAO reportMemoDAO;
 
 	public IUserRolesDAO getUserRolesDAO() {
@@ -115,6 +134,107 @@ public class ReportMemoController {
 
 	}
 
+	@RequestMapping(params = "method=getMemoList")
+	public String getReportMemos(ModelMap map,
+			@RequestParam("node") Integer parentNode, HttpServletRequest request) {
+
+		List<MenuItem> menus = getAuthMenu(parentNode, request);
+		List<String> menuIds = new ArrayList<String>();
+		for (MenuItem m : menus) {
+
+			menuIds.add(String.valueOf(m.getID()));
+		}
+
+		List<ReportMemo> memos = reportMemoDAO.getMemoInList(menuIds, true);
+
+		ArrayList<Map> result = new ArrayList<Map>();
+		for (ReportMemo memo : memos) {
+			Map m = new HashMap();
+			m.put("id", memo.getId());
+			m.put("memo", "\"" + StringEscapeUtils.escapeHtml(memo.getMemo())
+					+ "\"");
+			m.put("keyValue", memo.getKeyValue());
+			m.put("keyDate", memo.getKeyDate());
+
+			result.add(m);
+		}
+
+		
+		JSONArray json = JSONArray.fromObject(result);
+		//map.put("menuList", json);
+
+		map.put("menu_json", json);
+		return "BOEFrame";
+	}
+
+	private List<MenuItem> getAuthMenu(Integer parentNode,
+			HttpServletRequest request) {
+
+		// map是用来设置View层数据的
+		MenuItem parent = menuItemDAO.selectMenuItemByID(parentNode);
+
+		List<MenuItem> l = menuItemDAO.selectMenuItem(parent);
+
+		List<MenuItem> menus = new ArrayList<MenuItem>();
+
+		ArrayList al = new ArrayList();
+		String userName = request.getUserPrincipal().getName();
+
+		Pattern pp = Pattern.compile("CN=(\\w+)");
+
+		Matcher matcher = pp.matcher(userName);
+
+		List<UserRole> urs = userRolesDAO.findRolesByID(userName);
+
+		List<String> authValue = new ArrayList<String>();
+		List<String> roles = new ArrayList<String>();
+
+		for (int i = 0; i < urs.size(); i++) {
+			roles.add(urs.get(i).getRole());
+
+		}
+
+		for (int i = 0; i < l.size(); i++) {
+
+			authValue.clear();
+			authValue.add(String.valueOf(l.get(i).getID()));
+
+			if (l.get(i).isLeaf()) {
+
+				List<String> menuList = rolesDAO.findAuthValue(roles, "MENUS",
+						authValue);
+
+				if (menuList.size() == 0) {
+					continue;
+				}
+			}
+
+			menus.add(l.get(i));
+
+		}
+
+		return menus;
+
+	}
+
+	@RequestMapping(params = "method=getImage")
+	public void getReportMemoImage(
+			@RequestParam(value = "reportMemoId") Integer id,
+			HttpServletResponse response) throws IOException {
+		
+		
+		byte[] data = reportMemoDAO.getReportMemoImage(id);
+
+		response.setContentType("application/pdf");
+		 // get your file as InputStream
+	      InputStream is = new ByteArrayInputStream(data);  
+	      // copy it to response's OutputStream
+	      org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+	      response.flushBuffer();
+	      
+	      
+	}
+
 	@RequestMapping(params = "method=addMemo")
 	public String saveReportMemo(
 			ModelMap map,
@@ -145,7 +265,7 @@ public class ReportMemoController {
 
 		reportMemoDAO.modifyReportMemo(reportMemo);
 
-		map.put("result", "{result:'success'}");
+		map.put("result", "{\"result\":\"success\"}");
 		return "resultOnly";
 
 	}
@@ -179,6 +299,13 @@ public class ReportMemoController {
 
 		return viewName;
 
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(
+				dateFormat, false));
 	}
 
 }

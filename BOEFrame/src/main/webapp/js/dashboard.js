@@ -7,6 +7,9 @@ require.config({
 
 				'handlebars' : {
 					exports : 'Handlebars'
+				},
+				'fileinput' : {
+					deps : ['jquery']
 				}
 
 			},
@@ -20,7 +23,7 @@ require.config({
 				underscore : 'libs/underscore',
 				'bootstrap-datepicker' : 'libs/bootstrap-datepicker',
 
-				'jquery.fileupload' : 'libs/jquery.fileupload'
+				'fileinput' : 'libs/fileinput'
 
 			}
 
@@ -28,9 +31,10 @@ require.config({
 
 require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 				'text!template/slide-item.hbs', 'jquery', 'bootstrap',
-				'handlebars', 'jquery', 'collection/menus'], function(menuSrc,
+				'handlebars', 'jquery', 'collection/menus',
+				'collection/reportMemos', 'backbone'], function(menuSrc,
 				slideIndicatorSrc, slideItemSrc, jquery, bootstrap, Handlebars,
-				$, MenuCollection) {
+				$, MenuCollection, ReportMemoCollection, Backbone) {
 			Handlebars.registerHelper('substring', function(passedString,
 					options) {
 
@@ -40,31 +44,21 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 				return new Handlebars.SafeString(theString);
 			});
 
+			var updateMemo = function(target, direction) {
+
+				$('#reportMemo').html();
+
+			};
 			var initForm = function(collection) {
 
 				var data = collection.toJSON();
 
 				var menuTemplate = Handlebars.compile(menuSrc);
-				var slideIndicatorTemplate = Handlebars
-						.compile(slideIndicatorSrc);
-				var slideItemTemplate = Handlebars.compile(slideItemSrc);
-
 				var menuHtml = menuTemplate({
 							menus : data
 						});
-				var slideIndicatorHtml = slideIndicatorTemplate({
-							menus : data
-						});
-				var slideItemHtml = slideItemTemplate({
-							menus : data
-						});
-
-				// $(".slides").append(slideItems.join(""));
-				$(".carousel-indicators").append(slideIndicatorHtml);
-				$(".carousel-inner").append(slideItemHtml);
 
 				$('#home').append(menuHtml);
-				$('.carousel').carousel();
 
 				$("img").on("dblclick", function(evt) {
 					var target = evt.target;
@@ -81,15 +75,51 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
 				});
 
-				$('.carousel img').hover(hoverIn, hoverOut);
 				$('#markMemo').on('click', markMemo);
 				$('.thumb').on('click', setThumbSelected);
 
 			};
 
+			var initSlide = function(collection) {
+
+				var data = collection.toJSON();
+
+				var slideIndicatorTemplate = Handlebars
+						.compile(slideIndicatorSrc);
+				var slideItemTemplate = Handlebars.compile(slideItemSrc);
+
+				var slideIndicatorHtml = slideIndicatorTemplate({
+							menus : data
+						});
+				var slideItemHtml = slideItemTemplate({
+							menus : data
+						});
+
+				$(".carousel-indicators").append(slideIndicatorHtml);
+				$(".carousel-inner").append(slideItemHtml);
+
+				$('.carousel').carousel();
+				$('.carousel').on('slid.bs.carousel', updateMemo);
+
+				$('.carousel img').hover(hoverIn, hoverOut);
+
+			};
+
 			var menus;
 
+			var memos;
 			var loadMenuItem = function() {
+
+				memos = new ReportMemoCollection();
+
+				memos.fetch({
+
+							data : {
+								node : 900,
+								method : "getMemoList"
+							},
+							success : initSlide
+						});
 
 				menus = new MenuCollection();
 
@@ -99,7 +129,9 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 							},
 							success : initForm
 						});
+
 			};
+
 			var setThumbSelected = function(event) {
 
 				$('.x-view-selected').removeClass('x-view-selected');
@@ -117,8 +149,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
 			var markMemo = function() {
 
-				require(['view/ModalMarkMemoView', 'backbone'], function(
-								ModalMarkMemoView, Backbone) {
+				require(['view/ModalMarkMemoView'],
+						function(ModalMarkMemoView) {
 
 							var modalId = _.uniqueId("modal_");
 							var selectedId = $('.x-view-selected')

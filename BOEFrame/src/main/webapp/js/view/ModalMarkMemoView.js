@@ -14,16 +14,20 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery', 'view/MarkMemoView',
 
 							this.markMemoView = new MarkMemoView(options);
 
-							
+							this.markMemoView.vents.on('closeModalView',
+									this.closeModalView, this);
 
 						},
 
-						
+						closeModalView : function() {
+
+							$('#' + this.model.get("modalId"), this.el)
+									.modal('hide');
+						},
 
 						render : function() {
 
-							//this.markMemoView.render();
-							
+							// this.markMemoView.render();
 
 							var renderModel = this.model.attributes;
 							_.extend(renderModel, {

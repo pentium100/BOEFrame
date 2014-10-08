@@ -13,6 +13,10 @@ public interface IReportMemoDAO {
    public void deleteReportMemo(ReportMemo rm);
    public ReportMemo findReportMemoById(Integer id);
    public ReportMemo getLastReportMemo(Date keyDate, String keyValue);
+
+   public List<ReportMemo> getMemoInList(List<String> menuIds, Boolean b);
+
+   public byte[] getReportMemoImage(Integer id);
    
    
 }

@@ -1,4 +1,4 @@
-<form class="form-horizontal" role="form">
+<form class="form-horizontal" role="form" action="reportMemo.do"  method="post"  enctype="multipart/form-data">
 
 	<div class="form-group">
 		<label for="indicatorName" class="col-md-2 control-label">指标名称</label>
@@ -27,8 +27,9 @@
 	<div class="form-group">
 		<label for="picFile" class="col-md-2 control-label">指标截图</label>
 		<div class="col-md-8">
-			<input type="file" name="picFile" class="form-control" id="picFile" placeholder="上传文件">
+			<input type="file" name="picFile" class="form-control file" id="picFile" placeholder="上传文件">
 			<input type="hidden" name="keyValue" value="{{menuId}}" id="menuId">
+			<input type="hidden" name="method" value="addMemo" id="menuId">
 		</div>
 	</div>
 	<div class="form-group">

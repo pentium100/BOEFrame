@@ -20,6 +20,7 @@
 <link href="css/thumbnail-gallery.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <link href="css/datepicker3.css" rel="stylesheet">
+<link href="css/fileinput.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -85,22 +86,23 @@ div.c-wrapper {
 
 
 		<div id="slider" class="tab-pane carousel slide " data-ride="carousel">
-			<!-- Indicators -->
-			<ol class="carousel-indicators">
-
-			</ol>
-
-			<!-- Wrapper for slides -->
-			<div class="carousel-inner"></div>
-
-			<!-- Controls -->
-			<a class="left carousel-control" href="#slider" role="button"
-				data-slide="prev"> <span
-				class="glyphicon glyphicon-chevron-left"></span>
-			</a> <a class="right carousel-control" href="#slider" role="button"
-				data-slide="next"> <span
-				class="glyphicon glyphicon-chevron-right"></span>
-			</a>
+	<div class="row clearfix">
+		<div class="col-md-2 column">
+			<blockquote>
+				<p id="reportMemo">
+					
+				</p> <small></small>
+			</blockquote>
+		</div>
+		<div class="col-md-10 column">
+			<div class="carousel slide" id="carousel-832478">
+				<ol class="carousel-indicators">
+				</ol>
+				<div class="carousel-inner">
+				</div> <a class="left carousel-control" href="#slider" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#slider" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+			</div>
+		</div>
+	</div>
 		</div>
 
 

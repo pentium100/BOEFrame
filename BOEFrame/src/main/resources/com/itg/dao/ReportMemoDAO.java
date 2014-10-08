@@ -75,4 +75,28 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 
 	}
 
+	public List<ReportMemo> getMemoInList(List<String> menuIds, Boolean enabled) {
+
+		String sql = "select new ReportMemo(id, keyValue, keyDate, memo) From ReportMemo where keyValue in (:values) and isEnabled = :isEnabled  Order By ID desc";
+		org.hibernate.Query q = getSession().createQuery(sql);
+		q.setParameterList("values", menuIds);
+		q.setParameter("isEnabled", enabled);
+
+		List<ReportMemo> findByNamedQuery = q.list();
+		return (List<ReportMemo>) findByNamedQuery;
+
+	}
+
+	public byte[] getReportMemoImage(Integer id) {
+
+		String sql = "select image From ReportMemo where id = :id ";
+		org.hibernate.Query q = getSession().createQuery(sql);
+
+		q.setParameter("id", id);
+
+		List<Object> findByNamedQuery = q.list();
+		return (byte[]) findByNamedQuery.get(0);
+
+	}
+
 }
