@@ -136,8 +136,13 @@ public class ReportMemoController {
 
 	@RequestMapping(params = "method=getMemoList")
 	public String getReportMemos(ModelMap map,
-			@RequestParam("node") Integer parentNode, HttpServletRequest request) {
+			@RequestParam("node") Integer parentNode,
+			@RequestParam(value = "enabled", required = false) String enabled,
+			@RequestParam(value = "start", required = false) Integer start,
+			@RequestParam(value = "limit", required = false) Integer limit,
+			HttpServletRequest request) {
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		List<MenuItem> menus = getAuthMenu(parentNode, request);
 		List<String> menuIds = new ArrayList<String>();
 		for (MenuItem m : menus) {
@@ -145,26 +150,67 @@ public class ReportMemoController {
 			menuIds.add(String.valueOf(m.getID()));
 		}
 
-		List<ReportMemo> memos = reportMemoDAO.getMemoInList(menuIds, true);
+		if (limit == null || limit == 0) {
+			limit = 1000000;
+		}
+
+		if (start == null) {
+			start = 0;
+		}
+
+		Boolean isEnabled = null;
+		if (enabled != null) {
+
+			isEnabled = enabled.equals("true");
+		}
+
+		List<ReportMemo> memos = reportMemoDAO.getMemoInList(menuIds,
+				isEnabled, start, limit);
+
+		Long count = reportMemoDAO.getMemoCountInList(menuIds, isEnabled);
 
 		ArrayList<Map> result = new ArrayList<Map>();
 		for (ReportMemo memo : memos) {
 			Map m = new HashMap();
 			m.put("id", memo.getId());
-			m.put("memo", "\"" + StringEscapeUtils.escapeHtml(memo.getMemo())
-					+ "\"");
+			m.put("memo", memo.getMemo());
 			m.put("keyValue", memo.getKeyValue());
-			m.put("keyDate", memo.getKeyDate());
+			m.put("isEnabled", memo.getIsEnabled());
+			m.put("keyDate", sdf.format(memo.getKeyDate()));
+
+			MenuItem menu = findMenu(menus, Integer.valueOf(memo.getKeyValue()));
+
+			if (menu != null) {
+
+				m.put("menuText", menu.getMenuText());
+			}
 
 			result.add(m);
 		}
 
-		
-		JSONArray json = JSONArray.fromObject(result);
-		//map.put("menuList", json);
+		JSONObject json = new JSONObject();
+		json.put("total", count);
+		json.put("rows", result);
+
+		// JSONArray json = JSONArray.fromObject(jsonResult);
+
+		// map.put("menuList", json);
 
 		map.put("menu_json", json);
 		return "BOEFrame";
+	}
+
+	private MenuItem findMenu(List<MenuItem> menus, int menuId) {
+
+		for (MenuItem menu : menus) {
+
+			if (menu.getID() == menuId) {
+
+				return menu;
+			}
+		}
+
+		return null;
 	}
 
 	private List<MenuItem> getAuthMenu(Integer parentNode,
@@ -221,38 +267,66 @@ public class ReportMemoController {
 	public void getReportMemoImage(
 			@RequestParam(value = "reportMemoId") Integer id,
 			HttpServletResponse response) throws IOException {
-		
-		
+
 		byte[] data = reportMemoDAO.getReportMemoImage(id);
 
-		response.setContentType("application/pdf");
-		 // get your file as InputStream
-	      InputStream is = new ByteArrayInputStream(data);  
-	      // copy it to response's OutputStream
-	      org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
-	      response.flushBuffer();
-	      
-	      
+		response.setContentType("Image");
+		// get your file as InputStream
+		InputStream is = new ByteArrayInputStream(data);
+		// copy it to response's OutputStream
+		org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+		response.flushBuffer();
+
 	}
 
+	
+	@RequestMapping(params = "method=deleteMemo")
+	public String deleteReportMemo(
+			ModelMap map,
+			@RequestParam(value = "id", required = false) Integer id,
+			HttpServletRequest request
+			){
+		
+		
+		ReportMemo reportMemo = reportMemoDAO.findReportMemoById(id);
+		
+		reportMemoDAO.deleteReportMemo(reportMemo);
+		
+		
+		JSONObject json = new JSONObject();
+		json.put("result", "success");
+
+		map.put("menu_json", json);
+		
+
+
+		return "BOEFrame";
+
+		
+		
+	}
+			
 	@RequestMapping(params = "method=addMemo")
 	public String saveReportMemo(
 			ModelMap map,
 			@RequestParam(value = "picFile", required = false) CommonsMultipartFile picFile,
 			@RequestParam(value = "keyValue", required = false) String keyValue,
+			@RequestParam(value = "id", required = false) Integer id,
 			@RequestParam(value = "keyDate", required = false) Date keyDate,
 			@RequestParam(value = "isEnabled", required = false) Boolean isEnabled,
 			@RequestParam(value = "memo", required = false) String memo,
 			HttpServletRequest request
 
 	) {
+		
+		ReportMemo reportMemo = null;
+		if(id!=null){
 
-		ReportMemo reportMemo = reportMemoDAO.getLastReportMemo(keyDate,
-				keyValue);
+		 reportMemo = reportMemoDAO.findReportMemoById(id);
+		}
 
-		if ((reportMemo != null) && (reportMemo.getKeyDate().equals(keyDate))) {
+		if ((reportMemo == null)) {
 
-		} else {
 			reportMemo = new ReportMemo();
 			reportMemo.setKeyDate(keyDate);
 			reportMemo.setKeyValue(keyValue);
@@ -261,12 +335,26 @@ public class ReportMemoController {
 
 		reportMemo.setIsEnabled(isEnabled);
 		reportMemo.setMemo(memo);
-		reportMemo.setImage(picFile.getBytes());
+		if (picFile.getSize() != 0) {
+			reportMemo.setImage(picFile.getBytes());
+		}
 
 		reportMemoDAO.modifyReportMemo(reportMemo);
 
-		map.put("result", "{\"result\":\"success\"}");
-		return "resultOnly";
+		
+		JSONObject json = new JSONObject();
+		json.put("result", "success");
+		json.put("data", reportMemo);
+
+		// JSONArray json = JSONArray.fromObject(jsonResult);
+
+		// map.put("menuList", json);
+
+		map.put("menu_json", json);
+		
+
+
+		return "BOEFrame";
 
 	}
 

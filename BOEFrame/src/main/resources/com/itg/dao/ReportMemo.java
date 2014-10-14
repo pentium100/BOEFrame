@@ -102,12 +102,14 @@ public class ReportMemo {
 
 	}
 
-	public ReportMemo(int id, String keyValue, Date keyDate, String memo) {
+	public ReportMemo(int id, String keyValue, Date keyDate, String memo,
+			Boolean isEnabled) {
 
 		this.id = id;
 		this.keyDate = keyDate;
 		this.keyValue = keyValue;
 		this.memo = memo;
+		this.isEnabled = isEnabled;
 	}
 
 	public String toJSON() {

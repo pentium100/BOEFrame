@@ -1,6 +1,6 @@
 /**
  * @author zhixin wen <wenzhixin2010@gmail.com>
- * version: 1.2.3
+ * version: 1.2.4
  * https://github.com/wenzhixin/bootstrap-table/
  */
 
@@ -44,7 +44,7 @@
         return result;
     };
 
-    var getFiledIndex = function (columns, field) {
+    var getFieldIndex = function (columns, field) {
         var index = -1;
 
         $.each(columns, function (i, column) {
@@ -75,6 +75,26 @@
 
         outer.remove();
         return w1 - w2;
+    };
+
+    var calculateFunctionValue = function (func, args, defaultValue) {
+        if (typeof func === 'string') {
+            // support obj.func1.func2
+            var fs = func.split('.');
+
+            if (fs.length > 1) {
+                func = window;
+                $.each(fs, function (i, f) {
+                    func = func[f];
+                });
+            } else {
+                func = window[func];
+            }
+        }
+        if (typeof func === 'function') {
+            return func.apply(null, args);
+        }
+        return defaultValue;
     };
 
     // BOOTSTRAP TABLE CLASS DEFINITION
@@ -172,10 +192,11 @@
         order: 'asc', // asc, desc
         visible: true,
         switchable: true,
+        clickToSelect: true,
         formatter: undefined,
         events: undefined,
         sorter: undefined,
-        clickToSelect: true
+        cellStyle: undefined
     };
 
     BootstrapTable.EVENTS = {
@@ -281,6 +302,7 @@
             formatters: [],
             events: [],
             sorters: [],
+            cellStyles: [],
             clickToSelects: []
         };
         $.each(this.options.columns, function (i, column) {
@@ -301,6 +323,7 @@
             that.header.formatters.push(column.formatter);
             that.header.events.push(column.events);
             that.header.sorters.push(column.sorter);
+            that.header.cellStyles.push(column.cellStyle);
             that.header.clickToSelects.push(column.clickToSelect);
 
             if (column.halign) {
@@ -378,18 +401,17 @@
     };
 
     BootstrapTable.prototype.initSort = function () {
-        var name = this.options.sortName,
+        var that = this,
+            name = this.options.sortName,
             order = this.options.sortOrder === 'desc' ? -1 : 1,
             index = $.inArray(this.options.sortName, this.header.fields);
 
         if (index !== -1) {
-            var sorter = this.header.sorters[index];
             this.data.sort(function (a, b) {
-                if (typeof sorter === 'function') {
-                    return order * sorter(a[name], b[name]);
-                }
-                if (typeof sorter === 'string') {
-                    return order * eval(sorter + '(a[name], b[name])'); // eval ?
+                var value = calculateFunctionValue(that.header.sorters[index], [a[name], b[name]]);
+
+                if (value !== undefined) {
+                    return order * value;
                 }
 
                 if (a[name] === b[name]) {
@@ -618,7 +640,10 @@
             pageList = this.options.pageList;
 
         if (typeof this.options.pageList === 'string') {
-            pageList = eval(this.options.pageList);
+            pageList = [];
+            $.each(this.options.pageList.slice(1, -1), function (i, value) {
+                pageList.push(+value);
+            });
         }
 
         $.each(pageList, function (i, page) {
@@ -762,11 +787,7 @@
                 style = {},
                 csses = [];
 
-            if (typeof this.options.rowStyle === 'function') {
-                style = this.options.rowStyle(item, i);
-            } else if (typeof this.options.rowStyle === 'string') {
-                style = eval(this.options.rowStyle + '(item, i)');
-            }
+            style = calculateFunctionValue(this.options.rowStyle, [item, i], style);
 
             if (style && style.css) {
                 for (var key in style.css) {
@@ -788,12 +809,22 @@
                 var text = '',
                     value = item[field],
                     type = '',
+                    cellStyle = {},
+                    class_ = that.header.classes[j];
                     style = sprintf('style="%s"', csses.concat(that.header.styles[j]).join('; '));
 
-                if (typeof that.header.formatters[j] === 'function') {
-                    value = that.header.formatters[j](value, item, i);
-                } else if (typeof that.header.formatters[j] === 'string') {
-                    value = eval(that.header.formatters[j] + '(value, item, i)'); // eval ?
+                value = calculateFunctionValue(that.header.formatters[j], [value, item, i], value);
+
+                cellStyle = calculateFunctionValue(that.header.cellStyles[j], [value, item, i], cellStyle);
+                if (cellStyle.classes) {
+                    class_ = sprintf(' class="%s"', cellStyle.classes);
+                }
+                if (cellStyle.css) {
+                    csses = [];
+                    for (var key in cellStyle.css) {
+                        csses.push(key + ': ' + cellStyle.css[key]);
+                    }
+                    style = sprintf('style="%s"', csses.concat(that.header.styles[j]).join('; '));
                 }
 
                 if (that.options.columns[j].checkbox || that.options.columns[j].radio) {
@@ -820,11 +851,11 @@
 
                     text = that.options.cardView ?
                         ['<div class="card-view">',
-                            sprintf('<span class="title" %s>%s</span>', style,
-                                getPropertyFromOther(that.options.columns, 'field', 'title', field)),
+                            that.options.showHeader ? sprintf('<span class="title" %s>%s</span>', style,
+                                getPropertyFromOther(that.options.columns, 'field', 'title', field)) : '',
                             sprintf('<span class="value">%s</span>', value),
                             '</div>'].join('') :
-                        [sprintf('<td%s %s>', that.header.classes[j], style),
+                        [sprintf('<td%s %s>', class_, style),
                             value,
                             '</td>'].join('');
                 }
@@ -900,7 +931,7 @@
                 return;
             }
             if (typeof events === 'string') {
-                events = eval(events);
+                events = window[events];
             }
             for (var key in events) {
                 that.$body.find('tr').each(function () {
@@ -953,11 +984,7 @@
                 order: params.sortOrder
             };
         }
-        if (typeof this.options.queryParams === 'function') {
-            data = this.options.queryParams(params);
-        } else if (typeof this.options.queryParams === 'string') {
-            data = eval(this.options.queryParams + '(params)');
-        }
+        data = calculateFunctionValue(this.options.queryParams, [params], data);
 
         $.ajax({
             type: this.options.method,
@@ -967,11 +994,7 @@
             contentType: this.options.contentType,
             dataType: 'json',
             success: function (res) {
-                if (typeof that.options.responseHandler === 'function') {
-                    res = that.options.responseHandler(res);
-                } else if (typeof that.options.responseHandler === 'string') {
-                    res = eval(that.options.responseHandler + '(res)');
-                }
+                res = calculateFunctionValue(that.options.responseHandler, [res], res);
 
                 var data = res;
 
@@ -1260,11 +1283,11 @@
     };
 
     BootstrapTable.prototype.showColumn = function (field) {
-        this.toggleColumn(getFiledIndex(this.options.columns, field), true, true);
+        this.toggleColumn(getFieldIndex(this.options.columns, field), true, true);
     };
 
     BootstrapTable.prototype.hideColumn = function (field) {
-        this.toggleColumn(getFiledIndex(this.options.columns, field), false, true);
+        this.toggleColumn(getFieldIndex(this.options.columns, field), false, true);
     };
 
 

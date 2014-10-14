@@ -11,6 +11,15 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 
+
+		<property name="validationQuery">
+			<value>select 1</value>
+		</property>
+		
+		<property name="testOnBorrow">
+			<value>true</value>
+		</property>
+		
 		<property name="driverClassName">
 
 			<value>net.sourceforge.jtds.jdbcx.JtdsDataSource</value>

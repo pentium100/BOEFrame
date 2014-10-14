@@ -10,6 +10,19 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery', 'view/MarkMemoView',
 						// template : Handlebars.compile(markMemoTemplate),
 
 						title : '指标注释填写',
+
+						className : "modal fade bs-example-modal-lg",
+						
+						attributes : function() {
+							return {
+
+								"tabindex" : "-1",
+								"role" : "dialog",
+								"aria-hidden" : "true",
+								"style" : "z-index: 1050"
+
+							}
+						},
 						initialize : function(options) {
 
 							this.markMemoView = new MarkMemoView(options);
@@ -21,8 +34,10 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery', 'view/MarkMemoView',
 
 						closeModalView : function() {
 
-							$('#' + this.model.get("modalId"), this.el)
-									.modal('hide');
+							// $('#' + this.attributes.id,
+							// this.el).modal('hide');
+							this.$el.modal('hide');
+
 						},
 
 						render : function() {
@@ -39,15 +54,17 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery', 'view/MarkMemoView',
 							$('.modal-body', this.el)
 									.html(this.markMemoView.$el);
 
-							$('#' + this.model.get("modalId"), this.el).on(
-									'hidden.bs.modal', this.removeModal);
+							// $('#' + this.attributes.id, this.el).on(
+							// 'hidden.bs.modal', this.removeModal);
+
+							this.$el.on('hidden.bs.modal', this.removeModal);
 
 						},
 
 						removeModal : function() {
 
 							// $('#' + model.modalId).remove();
-							$(this).remove();
+							this.remove();
 						}
 
 					});

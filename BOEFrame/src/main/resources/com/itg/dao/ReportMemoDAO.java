@@ -75,15 +75,52 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 
 	}
 
-	public List<ReportMemo> getMemoInList(List<String> menuIds, Boolean enabled) {
+	public List<ReportMemo> getMemoInList(List<String> menuIds,
+			Boolean enabled, Integer start, Integer limit) {
 
-		String sql = "select new ReportMemo(id, keyValue, keyDate, memo) From ReportMemo where keyValue in (:values) and isEnabled = :isEnabled  Order By ID desc";
+		String sql = "select new ReportMemo(id, keyValue, keyDate, memo, isEnabled) From ReportMemo where keyValue in (:values) ";
+
+		if (enabled != null) {
+			sql = sql + " and isEnabled = :isEnabled ";
+
+		}
+
+		sql = sql + " order by KeyValue ";
+
 		org.hibernate.Query q = getSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
-		q.setParameter("isEnabled", enabled);
+
+		if (enabled != null) {
+			q.setParameter("isEnabled", enabled);
+
+		}
+		q.setFirstResult(start);
+		q.setMaxResults(limit);
 
 		List<ReportMemo> findByNamedQuery = q.list();
 		return (List<ReportMemo>) findByNamedQuery;
+
+	}
+
+	public Long getMemoCountInList(List<String> menuIds, Boolean enabled) {
+
+		String sql = "select count(*) From ReportMemo where keyValue in (:values) ";
+
+		if (enabled != null) {
+			sql = sql + " and isEnabled = :isEnabled";
+		}
+
+		// sql = sql + " Order By ID desc";
+
+		org.hibernate.Query q = getSession().createQuery(sql);
+		q.setParameterList("values", menuIds);
+
+		if (enabled != null) {
+			q.setParameter("isEnabled", enabled);
+		}
+
+		List<Long> findByNamedQuery = q.list();
+		return findByNamedQuery.get(0);
 
 	}
 

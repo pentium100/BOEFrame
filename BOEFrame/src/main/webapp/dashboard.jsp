@@ -20,7 +20,9 @@
 <link href="css/thumbnail-gallery.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <link href="css/datepicker3.css" rel="stylesheet">
-<link href="css/fileinput.css" rel="stylesheet">
+<link href="css/fileinput.min.css" rel="stylesheet">
+<link href="css/bootstrap-table.css" rel="stylesheet">
+<link href="css/bootstrap-select.min.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -69,8 +71,9 @@ div.c-wrapper {
 				<ul class="nav navbar-nav nav-tabs" role="tablist">
 					<li class="active"><a href="#home" role="tab"
 						data-toggle="tab">快捷入口</a></li>
-					<li><a href="#slider" role="tab" data-toggle="tab">逐项浏览</a></li>
-					<li><a href="#" id="markMemo">备注说明</a></li>
+					<li><a href="#sliderTab" role="tab" data-toggle="tab">逐项浏览</a></li>
+					<li><a href="#reportMemoList" role="tab" data-toggle="tab" id="reportMemoLink">报表注释维护</a></li>
+					
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -83,26 +86,31 @@ div.c-wrapper {
 
 
 		<div class="tab-pane active row " id="home"></div>
+		<div class="tab-pane" id="reportMemoList"></div>
 
 
-		<div id="slider" class="tab-pane carousel slide " data-ride="carousel">
-	<div class="row clearfix">
-		<div class="col-md-2 column">
-			<blockquote>
-				<p id="reportMemo">
-					
-				</p> <small></small>
-			</blockquote>
-		</div>
-		<div class="col-md-10 column">
-			<div class="carousel slide" id="carousel-832478">
-				<ol class="carousel-indicators">
-				</ol>
-				<div class="carousel-inner">
-				</div> <a class="left carousel-control" href="#slider" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#slider" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+		<div id="sliderTab" class="tab-pane ">
+			<div class="row clearfix">
+				<div class="col-md-2 column">
+
+
+					<pre id="reportMemo"></pre>
+
+					<small></small>
+
+				</div>
+				<div class="col-md-10 column">
+					<div class="carousel slide" id="slider">
+						<ol class="carousel-indicators">
+						</ol>
+						<div class="carousel-inner"></div>
+						<a class="left carousel-control" href="#slider" data-slide="prev"><span
+							class="glyphicon glyphicon-chevron-left"></span></a> <a
+							class="right carousel-control" href="#slider" data-slide="next"><span
+							class="glyphicon glyphicon-chevron-right"></span></a>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
 		</div>
 
 
@@ -121,6 +129,14 @@ div.c-wrapper {
 	<!-- /.container -->
 
 	<div id="modals" tabindex="-1"></div>
+
+
+	<div tabindex="-1" style="display:none">
+		<div id="custem-toolbar" >
+    
+		</div>
+	</div>
+
 
 
 	<!-- jQuery Version 1.11.0 -->
