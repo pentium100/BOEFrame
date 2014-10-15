@@ -76,6 +76,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     var updateMemoByModel = function(memoModel) {
 
+        $('#memoBy').html(memoModel.get('memoBy') +'<br>'+ memoModel.get('keyDate'));
         $('#reportMemo').html(memoModel.get('memo'));
     };
 
@@ -133,7 +134,9 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
 
         var memoModel = memos.at(0);
-        updateMemoByModel(memoModel);
+        if (memoModel !== undefined) {
+            updateMemoByModel(memoModel);
+        }
 
         $('.carousel img').hover(hoverIn, hoverOut);
 
@@ -162,14 +165,14 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         $('.carousel img').css("height",
             window.innerHeight - $('.navbar').height() - 20);
 
-        $('#sliderTab pre').css("height",
-            window.innerHeight - $('.navbar').height() - 20);
+        $('#sliderTab pre#reportMemo').css("height",
+            $('.carousel img').height() - 25 - $('#memoBy').height());
 
     };
 
     var menus;
 
-    var memos = new ReportMemoCollection();;
+    var memos = new ReportMemoCollection();
 
     var loadSlideItem = function() {
 

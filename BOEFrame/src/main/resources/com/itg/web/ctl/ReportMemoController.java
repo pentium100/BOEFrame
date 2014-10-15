@@ -17,11 +17,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.directory.ldap.client.api.LdapConnection;
+import org.apache.directory.ldap.client.api.LdapNetworkConnection;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -177,6 +180,7 @@ public class ReportMemoController {
 			m.put("keyValue", memo.getKeyValue());
 			m.put("isEnabled", memo.getIsEnabled());
 			m.put("keyDate", sdf.format(memo.getKeyDate()));
+			m.put("memoBy", memo.getMemoBy());
 
 			MenuItem menu = findMenu(menus, Integer.valueOf(memo.getKeyValue()));
 
@@ -279,33 +283,24 @@ public class ReportMemoController {
 
 	}
 
-	
 	@RequestMapping(params = "method=deleteMemo")
-	public String deleteReportMemo(
-			ModelMap map,
+	public String deleteReportMemo(ModelMap map,
 			@RequestParam(value = "id", required = false) Integer id,
-			HttpServletRequest request
-			){
-		
-		
+			HttpServletRequest request) {
+
 		ReportMemo reportMemo = reportMemoDAO.findReportMemoById(id);
-		
+
 		reportMemoDAO.deleteReportMemo(reportMemo);
-		
-		
+
 		JSONObject json = new JSONObject();
 		json.put("result", "success");
 
 		map.put("menu_json", json);
-		
-
 
 		return "BOEFrame";
 
-		
-		
 	}
-			
+
 	@RequestMapping(params = "method=addMemo")
 	public String saveReportMemo(
 			ModelMap map,
@@ -318,11 +313,11 @@ public class ReportMemoController {
 			HttpServletRequest request
 
 	) {
-		
-		ReportMemo reportMemo = null;
-		if(id!=null){
 
-		 reportMemo = reportMemoDAO.findReportMemoById(id);
+		ReportMemo reportMemo = null;
+		if (id != null) {
+
+			reportMemo = reportMemoDAO.findReportMemoById(id);
 		}
 
 		if ((reportMemo == null)) {
@@ -339,9 +334,11 @@ public class ReportMemoController {
 			reportMemo.setImage(picFile.getBytes());
 		}
 
+		HttpSession session = request.getSession(false);
+		reportMemo.setMemoBy((String) session.getAttribute("full_name"));
+
 		reportMemoDAO.modifyReportMemo(reportMemo);
 
-		
 		JSONObject json = new JSONObject();
 		json.put("result", "success");
 		json.put("data", reportMemo);
@@ -351,8 +348,6 @@ public class ReportMemoController {
 		// map.put("menuList", json);
 
 		map.put("menu_json", json);
-		
-
 
 		return "BOEFrame";
 

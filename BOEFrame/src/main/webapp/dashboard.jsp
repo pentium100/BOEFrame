@@ -69,9 +69,8 @@ div.c-wrapper {
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav nav-tabs" role="tablist">
-					<li class="active"><a href="#home" role="tab"
-						data-toggle="tab">快捷入口</a></li>
-					<li><a href="#sliderTab" role="tab" data-toggle="tab">逐项浏览</a></li>
+					<li class=""><a href="#home" role="tab"data-toggle="tab">快捷入口</a></li>
+					<li class="active"><a href="#sliderTab" role="tab" data-toggle="tab">逐项浏览</a></li>
 					<li><a href="#reportMemoList" role="tab" data-toggle="tab" id="reportMemoLink">报表注释维护</a></li>
 					
 				</ul>
@@ -85,13 +84,15 @@ div.c-wrapper {
 	<div class="container tab-content">
 
 
-		<div class="tab-pane active row " id="home"></div>
-		<div class="tab-pane" id="reportMemoList"></div>
+		<div class="tab-pane row" id="home"></div>
+		<div class="tab-pane " id="reportMemoList"></div>
 
 
-		<div id="sliderTab" class="tab-pane ">
+		<div id="sliderTab" class="tab-pane active">
 			<div class="row clearfix">
 				<div class="col-md-2 column">
+
+					<pre id="memoBy"></pre>
 
 
 					<pre id="reportMemo"></pre>

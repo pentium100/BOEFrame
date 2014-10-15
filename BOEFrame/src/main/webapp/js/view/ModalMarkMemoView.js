@@ -21,7 +21,7 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery', 'view/MarkMemoView',
 								"aria-hidden" : "true",
 								"style" : "z-index: 1050"
 
-							}
+							};
 						},
 						initialize : function(options) {
 
@@ -64,6 +64,7 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery', 'view/MarkMemoView',
 						removeModal : function() {
 
 							// $('#' + model.modalId).remove();
+							
 							this.remove();
 						}
 

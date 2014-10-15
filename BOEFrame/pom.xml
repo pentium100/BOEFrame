@@ -203,6 +203,18 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.0.11</version>
 		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.directory.api</groupId>
+			<artifactId>api-all</artifactId>
+			<version>1.0.0-M24</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>BOEFrame</finalName>

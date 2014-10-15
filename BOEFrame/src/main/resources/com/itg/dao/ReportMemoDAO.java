@@ -78,7 +78,7 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 	public List<ReportMemo> getMemoInList(List<String> menuIds,
 			Boolean enabled, Integer start, Integer limit) {
 
-		String sql = "select new ReportMemo(id, keyValue, keyDate, memo, isEnabled) From ReportMemo where keyValue in (:values) ";
+		String sql = "select new ReportMemo(id, keyValue, keyDate, memo, isEnabled, memoBy) From ReportMemo where keyValue in (:values) ";
 
 		if (enabled != null) {
 			sql = sql + " and isEnabled = :isEnabled ";

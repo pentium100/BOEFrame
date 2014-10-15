@@ -97,19 +97,25 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                         title: "注释日期"
                     }, {
                         field: "menuText",
-                        class: "col-md-3",
+                        class: "col-md-2",
                         title: "指标名称"
                     }, {
                         field: "id",
-                        class: "col-md-3",
+                        class: "col-md-2",
                         title: "指标快照",
                         formatter: this.formatSnapShot,
                     }, {
                         field: "memo",
-                        class: "col-md-5",
+                        class: "col-md-6",
                         title: "说明信息",
 
                         cellStyle: this.formatMemo,
+                    }, {
+                        field: "memoBy",
+                        class: "col-md-1",
+                        title: "创建人"
+
+                        
                     }
 
                 ]

@@ -198,11 +198,19 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                 success: function(data) {
                     var res = $.parseJSON(data);
                     this.model.set("id", res.data.id);
+                    this.model.set("memoBy", res.data.memoBy);
 
                     if(isNew){
                         this.model.set('recStatus', 'inserted');
                     }else{
                         this.model.set('recStatus', 'updated');
+
+                    }
+
+
+                    var menu = this.menus.get(this.model.get('keyValue'));
+                    if(menu!==undefined){
+                        this.model.set('menuText', menu.get('text'));
                     }
 
                     if (res.result == "success") {
