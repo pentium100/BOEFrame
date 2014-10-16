@@ -251,10 +251,14 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
         require(['view/reportMemo/list'], function(ReportMemoListView) {
 
+            var vent = new _.extend({}, Backbone.Events);
             var view = new ReportMemoListView({
-                menus: menus
+                menus: menus,
+                vent: vent
             });
             $('.tab-pane#reportMemoList').html(view.$el);
+
+            vent.bind('app:updateSlide', loadSlideItem);
 
         });
     };

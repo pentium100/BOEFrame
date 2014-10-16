@@ -15,6 +15,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             this.collection = new ReportMemoCollection();
             this.listenTo(this.collection, 'sync', this.render);
             this.menuCollection = options.menus;
+            this.options = options;
             this.render();
             // this.collection.fetch({
             // data : {
@@ -75,6 +76,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     position: 0
                 });
             }
+            self.options.vent.trigger('app:updateSlide');
 
         },
 
@@ -94,7 +96,9 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     {
                         field: "keyDate",
                         class: "col-md-1",
-                        title: "注释日期"
+                        title: "注释",
+                        formatter: this.formatKeyDate
+
                     }, {
                         field: "menuText",
                         class: "col-md-2",
@@ -110,12 +114,6 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                         title: "说明信息",
 
                         cellStyle: this.formatMemo,
-                    }, {
-                        field: "memoBy",
-                        class: "col-md-1",
-                        title: "创建人"
-
-                        
                     }
 
                 ]
@@ -128,6 +126,13 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             // $('table', this.el).bootstrapTable('load',
             // this.collection.models);
 
+        },
+
+        formatKeyDate: function(value, row){
+
+            var isShow = row.isEnabled ? '显示':'不显示'
+
+            return  row.memoBy+'<br>'+row.keyDate+'<br>'+isShow;
         },
 
         formatSnapShot: function(value) {
@@ -201,6 +206,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     row: self.model.attributes
                 });
             }
+            self.options.vent.trigger('app:updateSlide');
         },
 
         queryParams: function(options) {
