@@ -1,25 +1,25 @@
 /**
- * Bootstrap Table dabush translation
- * Author: Your Name Jan Borup Coyle, github@coyle.dk
+ * Bootstrap Table Vietnamese translation
+ * Author: Duc N. PHAM <pngduc@gmail.com>
  */
 (function ($) {
     'use strict';
 
     $.extend($.fn.bootstrapTable.defaults, {
         formatLoadingMessage: function () {
-            return 'Indlæser, vent venligst…';
+            return 'Đang tải...';
         },
         formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' poster pr side';
+            return pageNumber + ' bản ghi mỗi trang';
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Viser ' + pageFrom + ' til ' + pageTo + ' af ' + totalRows + ' rækker';
+            return 'Hiển thị từ trang ' + pageFrom + ' đến ' + pageTo + ' của ' + totalRows + ' bảng ghi';
         },
         formatSearch: function () {
-            return 'Søg'
+            return 'Tìm kiếm';
         },
         formatNoMatches: function () {
-            return 'Ingen poster fundet';
+            return 'Không có dữ liệu';
         }
     });
 })(jQuery);

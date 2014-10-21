@@ -44,7 +44,8 @@ require.config({
         'fileinput': 'libs/fileinput',
         'backbone.stickit': 'libs/backbone.stickit',
         'bootstrap-table-ench': 'ench/bootstrap-table-ench',
-        'bootstrap-select': 'libs/bootstrap-select'
+        'bootstrap-select': 'libs/bootstrap-select',
+        'jquery-cookie': 'libs/jquery-cookie'
 
     }
 
@@ -53,7 +54,7 @@ require.config({
 require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     'text!template/slide-item.hbs', 'jquery', 'bootstrap',
     'handlebars', 'jquery', 'collection/menus',
-    'collection/reportMemos', 'backbone'
+    'collection/reportMemos', 'backbone', 'jquery-cookie'
 ], function(menuSrc,
     slideIndicatorSrc, slideItemSrc, jquery, bootstrap, Handlebars,
     $, MenuCollection, ReportMemoCollection, Backbone) {
@@ -66,6 +67,9 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         return new Handlebars.SafeString(theString);
     });
 
+    var intervalCookieName = 'interval';
+    var memoIdsCookieName = 'menoIds';
+
     var updateMemo = function(target, direction) {
 
         var memoId = $(target.relatedTarget).attr('data-id');
@@ -76,7 +80,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     var updateMemoByModel = function(memoModel) {
 
-        $('#memoBy').html(memoModel.get('memoBy') +'<br>'+ memoModel.get('keyDate'));
+        $('#memoBy').html(memoModel.get('memoBy') + '<br>' + memoModel.get('keyDate'));
         $('#reportMemo').html(memoModel.get('memo'));
     };
 
@@ -103,8 +107,10 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
             }
 
         });
-        $('#markMemo').on('click', markMemo);
+        //$('#markMemo').on('click', markMemo);
         $('#reportMemoLink').on('click', LoadReportMemoList);
+        $('a[href=#slideSetting]').on('click', LoadMemoOptions);
+
         $('.thumb').on('click', setThumbSelected);
 
     };
@@ -112,6 +118,30 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     var initSlide = function(collection) {
 
         var data = collection.toJSON();
+
+
+
+        var ids = $.cookie(memoIdsCookieName);
+        var interval = $.cookie(intervalCookieName);
+        if (interval === undefined) {
+            interval = 10000;
+        } else {
+            interval = interval * 1000;
+        }
+
+        if (ids !== undefined) {
+
+            for (var i = data.length - 1; i >= 0; i--) {
+                if (ids.indexOf(data[i].id) < 0) {
+                    data.splice(i, 1);
+
+                }
+            }
+
+        }
+
+
+
 
         var slideIndicatorTemplate = Handlebars
             .compile(slideIndicatorSrc);
@@ -128,14 +158,16 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         $(".carousel-inner").html(slideItemHtml);
 
         // $('.carousel').on('slide.bs.carousel', updateMemo);
-        $('.carousel').carousel();
-        $('.carousel').on('slid.bs.carousel', updateMemo);
+        $('.carousel').carousel({
+            interval: interval
+        });
+        //$('.carousel').on('slid.bs.carousel', updateMemo);
 
 
 
         var memoModel = memos.at(0);
         if (memoModel !== undefined) {
-            updateMemoByModel(memoModel);
+            //updateMemoByModel(memoModel);
         }
 
         $('.carousel img').hover(hoverIn, hoverOut);
@@ -171,6 +203,9 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     };
 
     var menus;
+
+    var vent = new _.extend({}, Backbone.Events);
+    vent.bind('app:updateSlide', loadSlideItem);
 
     var memos = new ReportMemoCollection();
 
@@ -247,20 +282,57 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     };
 
+    var currentView = null;
+
     var LoadReportMemoList = function() {
 
         require(['view/reportMemo/list'], function(ReportMemoListView) {
 
-            var vent = new _.extend({}, Backbone.Events);
+            
+            if(currentView!==null){
+
+                currentView.trigger('closeView');
+
+            }
             var view = new ReportMemoListView({
                 menus: menus,
                 vent: vent
             });
             $('.tab-pane#reportMemoList').html(view.$el);
+            currentView = view;
 
-            vent.bind('app:updateSlide', loadSlideItem);
+            
 
         });
+    };
+
+
+
+    var LoadMemoOptions = function() {
+
+
+        require(['view/slideSetting/list'], function(SlideSettingView) {
+
+            
+
+            if(currentView!==null){
+
+                currentView.trigger('closeView');
+
+            }
+
+
+            var view = new SlideSettingView({
+
+                vent: vent
+            });
+            currentView = view;
+            $('.tab-pane#slideSetting').html(view.$el);
+
+
+
+        });
+
     };
 
     loadMenuItem();

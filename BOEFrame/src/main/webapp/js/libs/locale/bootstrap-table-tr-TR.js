@@ -1,25 +1,25 @@
 /**
- * Bootstrap Table Brazilian Portuguese Translation
- * Author: Eduardo Cerqueira<egcerqueira@gmail.com>
+ * Bootstrap Table Turkish translation
+ * Author: Emin Şen
  */
 (function ($) {
     'use strict';
 
     $.extend($.fn.bootstrapTable.defaults, {
         formatLoadingMessage: function () {
-            return 'Carregando, aguarde…';
+            return 'Yükleniyor, lütfen bekleyin…';
         },
         formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' registros por página';
+            return pageNumber + ' kayıt sayfa başına';
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Exibindo ' + pageFrom + ' até ' + pageTo + ' de ' + totalRows + ' linhas';
+            return totalRows + ' kayıttan ' + pageFrom + ' ile ' + pageTo + ' arası gösteriliyor';
         },
         formatSearch: function () {
-            return 'Busca';
+            return 'Ara';
         },
         formatNoMatches: function () {
-            return 'Nenhum registro encontrado';
+            return 'Eşleşen kayıt bulunamadı';
         }
     });
 })(jQuery);

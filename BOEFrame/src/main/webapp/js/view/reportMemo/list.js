@@ -17,6 +17,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             this.menuCollection = options.menus;
             this.options = options;
             this.render();
+            this.listenTo(this, 'closeView', this.close);
             // this.collection.fetch({
             // data : {
             // node : 900,
@@ -32,6 +33,20 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             // 'hidden.bs.modal div' : 'updateRow'
         },
 
+
+        close: function() {
+
+
+            this.remove();
+            this.unbind();
+            delete this.template;
+            delete this.collection;
+            delete this.menuCollection;
+
+
+        },
+
+
         newMemo: function(event) {
 
 
@@ -40,6 +55,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             this.model = new Backbone.Model({
 
                 keyDate: $().datepicker.DPGlobal.formatDate(new Date(), 'yyyy/mm/dd', 'en'),
+                keyValue: 901,
                 isEnabled: true
             });
 
@@ -128,11 +144,11 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
         },
 
-        formatKeyDate: function(value, row){
+        formatKeyDate: function(value, row) {
 
-            var isShow = row.isEnabled ? '显示':'不显示'
+            var isShow = row.isEnabled ? '显示' : '不显示';
 
-            return  row.memoBy+'<br>'+row.keyDate+'<br>'+isShow;
+            return row.memoBy + '<br>' + row.keyDate + '<br>' + isShow;
         },
 
         formatSnapShot: function(value) {
@@ -214,7 +230,8 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             return {
 
                 start: options.offset,
-                limit: options.limit
+                limit: options.limit,
+                searchToken: options.search
             };
 
         }

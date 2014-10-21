@@ -8,3 +8,17 @@
 .datepicker {
 	z-index: 1151 !important;
 }
+
+
+.carousel-control.left {
+  background-image: none !important ;
+  filter: none;
+  background-repeat: repeat-x;
+}
+.carousel-control.right {
+  right: 0;
+  left: auto;
+  background-image: none !important ;
+  filter: none;
+  background-repeat: repeat-x;
+}

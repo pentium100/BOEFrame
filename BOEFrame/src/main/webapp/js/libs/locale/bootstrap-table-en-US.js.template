@@ -1,25 +1,25 @@
 /**
- * Bootstrap Table dabush translation
- * Author: Your Name Jan Borup Coyle, github@coyle.dk
+ * Bootstrap Table <Language> translation
+ * Author: Your Name <your@email>
  */
 (function ($) {
     'use strict';
 
     $.extend($.fn.bootstrapTable.defaults, {
         formatLoadingMessage: function () {
-            return 'Indlæser, vent venligst…';
+            return 'Loading, please wait…';
         },
         formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' poster pr side';
+            return pageNumber + ' records per page';
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Viser ' + pageFrom + ' til ' + pageTo + ' af ' + totalRows + ' rækker';
+            return 'Showing ' + pageFrom + ' to ' + pageTo + ' of ' + totalRows + ' rows';
         },
         formatSearch: function () {
-            return 'Søg'
+            return 'Search';
         },
         formatNoMatches: function () {
-            return 'Ingen poster fundet';
+            return 'No matching records found';
         }
     });
 })(jQuery);

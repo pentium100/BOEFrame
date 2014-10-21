@@ -21,9 +21,9 @@ public interface IReportMemoDAO {
 	public ReportMemo getLastReportMemo(Date keyDate, String keyValue);
 
 	public List<ReportMemo> getMemoInList(List<String> menuIds, Boolean b,
-			Integer start, Integer limit);
+			Integer start, Integer limit, String searchToken);
 
-	public Long getMemoCountInList(List<String> menuIds, Boolean enabled);
+	public Long getMemoCountInList(List<String> menuIds, Boolean enabled, String memo);
 
 	public byte[] getReportMemoImage(Integer id);
 

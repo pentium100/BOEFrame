@@ -1,3 +1,20 @@
 {{#each menus}}
-<div class="item {{#if @first}}active{{/if}} center" data-id="{{id}}"><img style="height:600px" data-id="{{id}}" data-menuId="{{keyValue}}" src="reportMemo.do?method=getImage&reportMemoId={{id}}" alt="" class="img-responsive"></div>
+
+
+<div class="col-md-12 item {{#if @first}}active{{/if}} " data-id="{{id}}">
+
+    <div class="col-md-4 col-xs-2 column">
+
+        <pre id="memoBy">{{memoBy}}<br>{{keyDate}}</pre>
+
+        <pre id="reportMemo">{{memo}}</pre>
+
+    </div>
+    <div class="col-md-8 col-xs-10">
+        <div class="center-block">
+
+            <img style="height:600px" data-id="{{id}}" data-menuId="{{keyValue}}" src="reportMemo.do?method=getImage&reportMemoId={{id}}" alt="" class="img-responsive">
+        </div>
+    </div>
+</div>
 {{/each}}

@@ -141,6 +141,7 @@ public class ReportMemoController {
 	public String getReportMemos(ModelMap map,
 			@RequestParam("node") Integer parentNode,
 			@RequestParam(value = "enabled", required = false) String enabled,
+			@RequestParam(value = "searchToken", required = false) String searchToken,
 			@RequestParam(value = "start", required = false) Integer start,
 			@RequestParam(value = "limit", required = false) Integer limit,
 			HttpServletRequest request) {
@@ -166,11 +167,15 @@ public class ReportMemoController {
 
 			isEnabled = enabled.equals("true");
 		}
+		
+		if (searchToken == null) {
+			searchToken = "";
+		}
 
 		List<ReportMemo> memos = reportMemoDAO.getMemoInList(menuIds,
-				isEnabled, start, limit);
+				isEnabled, start, limit, searchToken);
 
-		Long count = reportMemoDAO.getMemoCountInList(menuIds, isEnabled);
+		Long count = reportMemoDAO.getMemoCountInList(menuIds, isEnabled, searchToken);
 
 		ArrayList<Map> result = new ArrayList<Map>();
 		for (ReportMemo memo : memos) {
@@ -335,6 +340,7 @@ public class ReportMemoController {
 		}
 
 		HttpSession session = request.getSession(false);
+		
 		reportMemo.setMemoBy((String) session.getAttribute("full_name"));
 
 		reportMemoDAO.modifyReportMemo(reportMemo);

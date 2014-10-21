@@ -1,25 +1,25 @@
 /**
- * Bootstrap Table Brazilian Portuguese Translation
- * Author: Eduardo Cerqueira<egcerqueira@gmail.com>
+ * Bootstrap Table French (Belgium) translation
+ * Author: Julien Bisconti (julien.bisconti@gmail.com)
  */
 (function ($) {
     'use strict';
 
     $.extend($.fn.bootstrapTable.defaults, {
         formatLoadingMessage: function () {
-            return 'Carregando, aguarde…';
+            return 'Chargement en cours...';
         },
         formatRecordsPerPage: function (pageNumber) {
-            return pageNumber + ' registros por página';
+            return pageNumber + ' entrées par page';
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return 'Exibindo ' + pageFrom + ' até ' + pageTo + ' de ' + totalRows + ' linhas';
+            return 'Affiche de' + pageFrom + ' à ' + pageTo + ' sur ' + totalRows + ' lignes';
         },
         formatSearch: function () {
-            return 'Busca';
+            return 'Recherche';
         },
         formatNoMatches: function () {
-            return 'Nenhum registro encontrado';
+            return 'Pas de fichiers trouvés';
         }
     });
 })(jQuery);

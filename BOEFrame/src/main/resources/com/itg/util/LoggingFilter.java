@@ -47,9 +47,9 @@ public class LoggingFilter implements Filter {
 						"172.16.10.102", 389);
 
 				try {
-					connection
-							.bind("CN=chngpwd,CN=Users,DC=itg,DC=net",  //CN=³Â Á¢Î°,OU=users,OU=IT,OU=9F,OU=itg,DC=itg,DC=net
-									"39w7z2");
+					connection.bind("CN=chngpwd,CN=Users,DC=itg,DC=net", // CN=³Â
+																			// Á¢Î°,OU=users,OU=IT,OU=9F,OU=itg,DC=itg,DC=net
+							"39w7z2");
 					EntryCursor cursor = connection.search(
 							"OU=itg,DC=itg,DC=net", "(userPrincipalName="
 									+ httpRequest.getUserPrincipal().getName()

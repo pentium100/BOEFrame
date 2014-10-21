@@ -76,19 +76,20 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 	}
 
 	public List<ReportMemo> getMemoInList(List<String> menuIds,
-			Boolean enabled, Integer start, Integer limit) {
+			Boolean enabled, Integer start, Integer limit, String searchToken) {
 
-		String sql = "select new ReportMemo(id, keyValue, keyDate, memo, isEnabled, memoBy) From ReportMemo where keyValue in (:values) ";
+		String sql = "select new ReportMemo(r.id, r.keyValue, r.keyDate, r.memo, r.isEnabled, r.memoBy) From ReportMemo r, MenuItem m where r.keyValue = m.ID and r.keyValue in (:values) and r.memo like :memo";
 
 		if (enabled != null) {
-			sql = sql + " and isEnabled = :isEnabled ";
+			sql = sql + " and r.isEnabled = :isEnabled ";
 
 		}
 
-		sql = sql + " order by KeyValue ";
+		sql = sql + " order by m.menuText ";
 
 		org.hibernate.Query q = getSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
+		q.setParameter("memo", "%" + searchToken + "%");
 
 		if (enabled != null) {
 			q.setParameter("isEnabled", enabled);
@@ -102,9 +103,10 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 
 	}
 
-	public Long getMemoCountInList(List<String> menuIds, Boolean enabled) {
+	public Long getMemoCountInList(List<String> menuIds, Boolean enabled,
+			String searchToken) {
 
-		String sql = "select count(*) From ReportMemo where keyValue in (:values) ";
+		String sql = "select count(*) From ReportMemo where keyValue in (:values) and memo like :memo ";
 
 		if (enabled != null) {
 			sql = sql + " and isEnabled = :isEnabled";
@@ -114,6 +116,8 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 
 		org.hibernate.Query q = getSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
+		
+		q.setParameter("memo", "%" + searchToken + "%");
 
 		if (enabled != null) {
 			q.setParameter("isEnabled", enabled);

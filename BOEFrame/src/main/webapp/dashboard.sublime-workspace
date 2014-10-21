@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"if",
+				"if	if(handlebars)"
+			],
+			[
 				"memo",
 				"memoModel"
 			],
@@ -28,9 +32,10 @@
 	"buffers":
 	[
 		{
+			"file": "js/view/slideSetting/list.js",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 3689,
 				"line_ending": "Windows"
 			}
 		},
@@ -38,39 +43,7 @@
 			"file": "dashboard.jsp",
 			"settings":
 			{
-				"buffer_size": 3914,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/view/reportMemo/list.js",
-			"settings":
-			{
-				"buffer_size": 6156,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "WEB-INF/spring.tld",
-			"settings":
-			{
-				"buffer_size": 13162,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "WEB-INF/web.xml",
-			"settings":
-			{
-				"buffer_size": 3530,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/template/reportMemo/list.hbs",
-			"settings":
-			{
-				"buffer_size": 358,
+				"buffer_size": 5421,
 				"line_ending": "Windows"
 			}
 		},
@@ -78,7 +51,15 @@
 			"file": "js/dashboard.js",
 			"settings":
 			{
-				"buffer_size": 7143,
+				"buffer_size": 7669,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/template/slideSetting/list.hbs",
+			"settings":
+			{
+				"buffer_size": 1460,
 				"line_ending": "Windows"
 			}
 		}
@@ -136,36 +117,48 @@
 	"expanded_folders":
 	[
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/css",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/fonts",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/model",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/reportMemo",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slideSetting",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/reportMemo",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/slideSetting",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/WEB-INF"
 	],
 	"file_history":
 	[
+		"/C/Users/lenovo/AppData/Local/Temp/Rar$DRa0.969/bootstrap-table-master/src/bootstrap-table.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/modal-view.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slide-indicator.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slide-item.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slideSetting/list.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/slideSetting/list.js",
+		"/C/Users/lenovo/AppData/Local/Temp/Rar$DRa0.215/bootstrap-table-master/src/bootstrap-table.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/jquery-cookie.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/reportMemo/list.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/mark-memo.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/reportMemo/list.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/css/dashboard.css",
+		"/C/Users/lenovo/AppData/Local/Temp/Rar$DRa0.243/bootstrap-table-master/src/bootstrap-table.js",
+		"/C/Users/lenovo/AppData/Local/Temp/Rar$DRa0.014/bootstrap-table-master/src/bootstrap-table.js",
+		"/C/Users/lenovo/AppData/Local/Temp/Rar$DRa0.622/bootstrap-table-master/src/bootstrap-table.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/css/bootstrap.css",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dashboard.jsp",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat55/webapps/AnalyticalReporting/WEB-INF/web.xml",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/WEB-INF/spring.tld",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/MarkMemoView.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/login.jsp",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/css/loginstyle.css",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/MarkMemoView.js",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/css/bootstrap.css",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/css/bootstrap.min.css",
 		"/C/Users/lenovo/AppData/Roaming/Sublime Text 3/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard.js",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/reportMemo/list.js",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/reportMemo/list.hbs",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/reportMemo/tool-bar.hbs",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dashboard.jsp",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/login.old.jsp",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/fonts/glyphicons-halflings-regular.woff",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/login.html",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/modal-view.hbs",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/mark-memo.hbs",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/resources/logback.xml",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slide-item.hbs",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/kuang.swf",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/ModalMarkMemoView.js",
 		"/C/Users/lenovo/AppData/Roaming/Sublime Text 3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
@@ -201,6 +194,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"listener",
 			"menus",
 			"updateMemoByModel",
 			"googleapis",
@@ -225,7 +219,7 @@
 		"replace_history":
 		[
 		],
-		"reverse": false,
+		"reverse": true,
 		"show_context": true,
 		"use_buffer2": true,
 		"whole_word": false,
@@ -234,34 +228,37 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "js/view/slideSetting/list.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 3689,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								2633,
+								2633
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 990.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -270,160 +267,45 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3914,
+						"buffer_size": 5421,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								663,
-								663
+								3324,
+								3344
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 945.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "js/view/reportMemo/list.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6156,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3934,
-								3934
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1665.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "WEB-INF/spring.tld",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13162,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "WEB-INF/web.xml",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 3530,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1089,
-								1089
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 375.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "js/template/reportMemo/list.hbs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 358,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Handlebars/Handlebars.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1125.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 2,
 					"file": "js/dashboard.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7143,
+						"buffer_size": 7669,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7058,
-								7058
+								3325,
+								3325
 							]
 						],
 						"settings":
@@ -433,10 +315,40 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3105.0,
+						"translation.y": 1366.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/template/slideSetting/list.hbs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1460,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								564,
+								564
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Handlebars/Handlebars.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]

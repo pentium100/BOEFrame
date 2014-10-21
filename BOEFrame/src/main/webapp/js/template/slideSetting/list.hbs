@@ -1,0 +1,46 @@
+
+
+
+
+<div class="container">
+    <form role="form">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="page-header">
+                    <h1>
+                        浏览注释设置
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-primary" data-action="save">保存设置</button>
+                        </div>
+                    </h1>
+
+                </div>
+
+                <div class="form-group form-inline">
+                    <label for="interval">刷新速度</label>
+                    <div class="input-group">
+
+                        <input type="number" class="form-control" id="interval" name="interval" value="{{interval}}" default="10" />
+                        <div class="input-group-addon">秒</div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <table id="reportMemoList" data-url="reportMemo.do?node=900&method=getMemoList" data-side-pagination="server" data-pagination="true" data-page-list="[2, 10, 20, 50, 100, 200]" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true">
+                    <thead>
+                        <tr>
+
+
+
+                        </tr>
+                    </thead>
+                </table>
+
+            </div>
+        </div>
+    </form>
+</div>
