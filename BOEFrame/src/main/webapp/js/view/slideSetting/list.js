@@ -11,9 +11,26 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
         template: Handlebars.compile(slideSettingTemplate),
         intervalCookieName: 'interval',
         memoIdsCookieName: 'menoIds',
+        memoIdsCookieName2: 'menoIds2',
         events: {
 
-            'click button[data-action=save]': 'saveChanges'
+            'click button[data-action=save]': 'saveChanges',
+            'click button[data-action=reset]': 'resetSetting'
+        },
+
+
+        resetSetting: function() {
+
+
+            $.removeCookie(this.intervalCookieName);
+
+            $.removeCookie(this.memoIdsCookieName);
+            $.removeCookie(this.memoIdsCookieName2);
+
+            //this.close();
+            this.render();
+
+
         },
 
 
@@ -47,7 +64,26 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             }
 
             var rows = this.$('table').bootstrapTable('getData');
-            var ids = $.cookie(this.memoIdsCookieName).split(',');
+            var arrayIds = $.cookie(this.memoIdsCookieName);
+
+            var ids = [];
+
+            if (arrayIds !== undefined) {
+
+                ids = arrayIds.split(',');
+
+            }
+
+            arrayIds = $.cookie(this.memoIdsCookieName2);
+
+
+            var ids2 = [];
+
+            if (arrayIds !== undefined) {
+
+                ids2 = arrayIds.split(',');
+
+            }
 
 
 
@@ -59,6 +95,11 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     }
 
 
+                    var idx = ids2.indexOf(rows[i].id);
+                    if (idx >= 0) {
+                        ids2.splice(idx, 1);
+                    }
+
                 } else {
 
                     var idx = ids.indexOf(rows[i].id);
@@ -68,10 +109,22 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
 
                     }
+                    if (ids2.indexOf(rows[i].id) < 0) {
+                        ids2.push(rows[i].id);
+                    }
+
+
+
+
+
                 }
             }
 
             $.cookie(this.memoIdsCookieName, ids.join(','), {
+                expires: 3650
+            });
+
+            $.cookie(this.memoIdsCookieName2, ids2.join(','), {
                 expires: 3650
             });
 

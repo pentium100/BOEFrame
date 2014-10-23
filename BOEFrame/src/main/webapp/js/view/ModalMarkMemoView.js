@@ -57,15 +57,16 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery', 'view/MarkMemoView',
 							// $('#' + this.attributes.id, this.el).on(
 							// 'hidden.bs.modal', this.removeModal);
 
-							this.$el.on('hidden.bs.modal', this.removeModal);
+							this.$el.on('hidden.bs.modal', this, this.removeModal);
+							//this.listenTo($(this.$el), 'hidden.bs.modal', this.removeModal);
 
 						},
 
-						removeModal : function() {
+						removeModal : function(event) {
 
 							// $('#' + model.modalId).remove();
-							
-							this.remove();
+							var self = event.data;
+							self.remove();
 						}
 
 					});

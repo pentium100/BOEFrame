@@ -47,6 +47,7 @@ require.config({
         'bootstrap-select': 'libs/bootstrap-select',
         'jquery-cookie': 'libs/jquery-cookie'
 
+
     }
 
 });
@@ -69,6 +70,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     var intervalCookieName = 'interval';
     var memoIdsCookieName = 'menoIds';
+    var memoIdsCookieName2 = 'menoIds2';
 
     var updateMemo = function(target, direction) {
 
@@ -115,13 +117,82 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     };
 
+
+    var getImageSize = function(image) {
+
+
+        var img = new Image();
+        img.src = image.src;
+        return {
+            width: img.width,
+            height: img.height
+        };
+    };
+
+    var resizeImage = function() {
+
+        var height = window.innerHeight - $('.navbar').height() - 40;
+
+        $('#sliderTab pre#reportMemo').css("height",
+            height - 25 - $('#memoBy').height());
+
+
+        $('.carousel img').each(function(idx, item) {
+
+
+            var height = window.innerHeight - $('.navbar').height() - 40;
+
+
+            if ($(item).prop('naturalHeight') == 0 || $(item).prop('naturalHeight') === undefined) {
+
+                var naturalSize = getImageSize(item);
+
+            } else {
+
+                naturalSize = {
+                    width: $(item).prop('naturalWidth'),
+                    height: $(item).prop('naturalHeight')
+                }
+            }
+
+
+
+            if (height > naturalSize.height) {
+
+                height = naturalSize.height - 40;
+            }
+
+
+
+
+            console.log(naturalSize.height);
+
+            if (height <= 0) {
+                height = window.innerHeight - $('.navbar').height() - 40;
+
+            }
+
+            $(item).css("height", height);
+
+
+            var width = $(item).prop("height") * (naturalSize.width / naturalSize.height);
+
+            if (width > 0) {
+                $(item).css("width", width);
+            }
+        });
+
+    };
+
+
     var initSlide = function(collection) {
 
         var data = collection.toJSON();
 
 
 
-        var ids = $.cookie(memoIdsCookieName);
+        var sIds = $.cookie(memoIdsCookieName);
+        var sIds2 = $.cookie(memoIdsCookieName2);
         var interval = $.cookie(intervalCookieName);
         if (interval === undefined) {
             interval = 10000;
@@ -129,16 +200,29 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
             interval = interval * 1000;
         }
 
-        if (ids !== undefined) {
+        var ids = [];
+        var ids2 = [];
 
-            for (var i = data.length - 1; i >= 0; i--) {
-                if (ids.indexOf(data[i].id) < 0) {
-                    data.splice(i, 1);
-
-                }
-            }
-
+        if (sIds !== undefined) {
+            ids = sIds.split(',');
         }
+
+        if (sIds2 !== undefined) {
+            ids2 = sIds2.split(',');
+        }
+
+
+
+        for (var i = data.length - 1; i >= 0; i--) {
+            var idx = ids.indexOf(data[i].id);
+            var idx2 = ids2.indexOf(data[i].id);
+            if (idx2 >= 0) {
+                data.splice(i, 1);
+
+            }
+        }
+
+
 
 
 
@@ -187,25 +271,17 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         });
 
 
-        resizeImage();
+        $(document).ready(resizeImage);
+
         $(window).on('resize', resizeImage);
 
     };
 
-    var resizeImage = function() {
-
-        $('.carousel img').css("height",
-            window.innerHeight - $('.navbar').height() - 20);
-
-        $('#sliderTab pre#reportMemo').css("height",
-            $('.carousel img').height() - 25 - $('#memoBy').height());
-
-    };
 
     var menus;
 
     var vent = new _.extend({}, Backbone.Events);
-    vent.bind('app:updateSlide', loadSlideItem);
+
 
     var memos = new ReportMemoCollection();
 
@@ -222,6 +298,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         });
 
     };
+
+    vent.bind('app:updateSlide', loadSlideItem);
     var loadMenuItem = function() {
 
         menus = new MenuCollection();
@@ -246,7 +324,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     };
     var hoverOut = function(event) {
 
-        $('.carousel').carousel('next');
+        //$('.carousel').carousel('next');
 
     };
 
@@ -288,8 +366,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
         require(['view/reportMemo/list'], function(ReportMemoListView) {
 
-            
-            if(currentView!==null){
+
+            if (currentView !== null) {
 
                 currentView.trigger('closeView');
 
@@ -301,7 +379,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
             $('.tab-pane#reportMemoList').html(view.$el);
             currentView = view;
 
-            
+
 
         });
     };
@@ -313,9 +391,9 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
         require(['view/slideSetting/list'], function(SlideSettingView) {
 
-            
 
-            if(currentView!==null){
+
+            if (currentView !== null) {
 
                 currentView.trigger('closeView');
 
@@ -324,10 +402,12 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
             var view = new SlideSettingView({
 
+
                 vent: vent
             });
             currentView = view;
             $('.tab-pane#slideSetting').html(view.$el);
+
 
 
 
