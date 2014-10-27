@@ -47,38 +47,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "login.jsp",
-			"settings":
-			{
-				"buffer_size": 3541,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/dashboard.js",
-			"settings":
-			{
-				"buffer_size": 9961,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/view/ModalMarkMemoView.js",
-			"settings":
-			{
-				"buffer_size": 1762,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/view/slideSetting/list.js",
-			"settings":
-			{
-				"buffer_size": 7146,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -135,26 +103,28 @@
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/i18n",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/reportMemo",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slideSetting",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/reportMemo",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/slideSetting",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/WEB-INF"
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/slideSetting"
 	],
 	"file_history":
 	[
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slide-item.hbs",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard.js",
-		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat55/webapps/BOEFrame/login.jsp",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/handlebars-v2.0.0.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/login.jsp",
+		"/D/springsource/sts-3.6.2.RELEASE/STS.ini",
+		"/D/springsource/sts-3.4.0.RELEASE/STS.ini",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/ModalMarkMemoView.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/slideSetting/list.js",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat55/webapps/BOEFrame/login.jsp",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/reportMemo/list.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dashboard.jsp",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/bootstrap-table.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slideSetting/list.hbs",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/login.jsp",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/bootstrap.js",
 		"/C/Users/lenovo/AppData/Local/Temp/Rar$DRa0.969/bootstrap-table-master/src/bootstrap-table.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/modal-view.hbs",
@@ -180,7 +150,6 @@
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/login.html",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/resources/logback.xml",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/kuang.swf",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/ModalMarkMemoView.js",
 		"/C/Users/lenovo/AppData/Roaming/Sublime Text 3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/ench/bootstrap-table-ench.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/css/fileinput.min.css",
@@ -214,6 +183,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"datetime",
+			"/*!",
 			"listener",
 			"menus",
 			"updateMemoByModel",
@@ -248,128 +219,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "login.jsp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3541,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1244,
-								1244
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 630.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "js/dashboard.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9961,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4657,
-								4657
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1890.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "js/view/ModalMarkMemoView.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1762,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1697,
-								1697
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "js/view/slideSetting/list.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7146,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								941,
-								941
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				}
 			]
 		}
 	],

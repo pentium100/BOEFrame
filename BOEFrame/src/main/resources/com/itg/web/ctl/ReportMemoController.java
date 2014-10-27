@@ -138,7 +138,8 @@ public class ReportMemoController {
 	}
 
 	@RequestMapping(params = "method=getMemoList")
-	public String getReportMemos(ModelMap map,
+	public String getReportMemos(
+			ModelMap map,
 			@RequestParam("node") Integer parentNode,
 			@RequestParam(value = "enabled", required = false) String enabled,
 			@RequestParam(value = "searchToken", required = false) String searchToken,
@@ -167,7 +168,7 @@ public class ReportMemoController {
 
 			isEnabled = enabled.equals("true");
 		}
-		
+
 		if (searchToken == null) {
 			searchToken = "";
 		}
@@ -175,10 +176,20 @@ public class ReportMemoController {
 		List<ReportMemo> memos = reportMemoDAO.getMemoInList(menuIds,
 				isEnabled, start, limit, searchToken);
 
-		Long count = reportMemoDAO.getMemoCountInList(menuIds, isEnabled, searchToken);
+		Long count = reportMemoDAO.getMemoCountInList(menuIds, isEnabled,
+				searchToken);
 
 		ArrayList<Map> result = new ArrayList<Map>();
 		for (ReportMemo memo : memos) {
+
+			if (memo.getKeyValue().equals("913")) {
+
+				if (!checkHasAuthValue(request, "ZBIZ_GRP", "1000")) {
+					continue;
+				}
+
+			}
+
 			Map m = new HashMap();
 			m.put("id", memo.getId());
 			m.put("memo", memo.getMemo());
@@ -222,15 +233,7 @@ public class ReportMemoController {
 		return null;
 	}
 
-	private List<MenuItem> getAuthMenu(Integer parentNode,
-			HttpServletRequest request) {
-
-		// map是用来设置View层数据的
-		MenuItem parent = menuItemDAO.selectMenuItemByID(parentNode);
-
-		List<MenuItem> l = menuItemDAO.selectMenuItem(parent);
-
-		List<MenuItem> menus = new ArrayList<MenuItem>();
+	private List<String> getUserRoles(HttpServletRequest request) {
 
 		ArrayList al = new ArrayList();
 		String userName = request.getUserPrincipal().getName();
@@ -241,13 +244,28 @@ public class ReportMemoController {
 
 		List<UserRole> urs = userRolesDAO.findRolesByID(userName);
 
-		List<String> authValue = new ArrayList<String>();
 		List<String> roles = new ArrayList<String>();
 
 		for (int i = 0; i < urs.size(); i++) {
 			roles.add(urs.get(i).getRole());
 
 		}
+
+		return roles;
+
+	};
+
+	private List<MenuItem> getAuthMenu(Integer parentNode,
+			HttpServletRequest request) {
+
+		// map是用来设置View层数据的
+		MenuItem parent = menuItemDAO.selectMenuItemByID(parentNode);
+
+		List<MenuItem> l = menuItemDAO.selectMenuItem(parent);
+
+		List<String> roles = getUserRoles(request);
+		List<String> authValue = new ArrayList<String>();
+		List<MenuItem> menus = new ArrayList<MenuItem>();
 
 		for (int i = 0; i < l.size(); i++) {
 
@@ -269,6 +287,26 @@ public class ReportMemoController {
 		}
 
 		return menus;
+
+	}
+
+	public boolean checkHasAuthValue(HttpServletRequest request,
+			String authObject, String authValue) {
+
+		List<String> roles = getUserRoles(request);
+		List<String> authValues = new ArrayList<String>();
+		authValues.add(authValue);
+
+		List<String> values = rolesDAO.findAuthValue(roles, authObject,
+				authValues);
+
+		boolean result = false;
+		if (values.size() > 0) {
+
+			result = true;
+		}
+
+		return result;
 
 	}
 
@@ -340,7 +378,7 @@ public class ReportMemoController {
 		}
 
 		HttpSession session = request.getSession(false);
-		
+
 		reportMemo.setMemoBy((String) session.getAttribute("full_name"));
 
 		reportMemoDAO.modifyReportMemo(reportMemo);

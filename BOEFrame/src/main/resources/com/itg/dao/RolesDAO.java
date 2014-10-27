@@ -54,12 +54,13 @@ public class RolesDAO extends HibernateDaoSupport implements IRolesDAO {
 			q.setParameterList("roleName", role);
 			q.setParameterList("authValue", authValue);
 			q.setParameter("authObject", authObj);
-			//List<Role> findByNamedQuery = new ArrayList();
+			// List<Role> findByNamedQuery = new ArrayList();
 			List<Role> findByNamedQuery = q.list();
-			
+
 			List<String> l = new ArrayList();
 
-			for (int i = 0; i < findByNamedQuery.size(); i++) {
+			for (int i = 0; findByNamedQuery != null
+					&& i < findByNamedQuery.size(); i++) {
 				l.add(findByNamedQuery.get(i).getAuthValue());
 			}
 			return l;

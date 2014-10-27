@@ -68,6 +68,14 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         return new Handlebars.SafeString(theString);
     });
 
+
+    Handlebars.registerHelper('getCurrentTime', function(date,
+        options) {
+
+        
+        return new Handlebars.SafeString(+new Date);
+    });
+
     var intervalCookieName = 'interval';
     var memoIdsCookieName = 'menoIds';
     var memoIdsCookieName2 = 'menoIds2';
