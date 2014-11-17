@@ -104,7 +104,7 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 	}
 
 	public Long getMemoCountInList(List<String> menuIds, Boolean enabled,
-			String searchToken) {
+			String searchToken, Boolean forEdit, String fullName) {
 
 		String sql = "select count(*) From ReportMemo where keyValue in (:values) and memo like :memo ";
 
@@ -112,15 +112,27 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 			sql = sql + " and isEnabled = :isEnabled";
 		}
 
+		if (forEdit != null && forEdit) {
+
+			sql = sql + " and memoBy = :memoBy";
+
+		}
+
 		// sql = sql + " Order By ID desc";
 
 		org.hibernate.Query q = getSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
-		
+
 		q.setParameter("memo", "%" + searchToken + "%");
 
 		if (enabled != null) {
 			q.setParameter("isEnabled", enabled);
+		}
+
+		if (forEdit != null && forEdit) {
+
+			q.setParameter("memoBy", fullName);
+
 		}
 
 		List<Long> findByNamedQuery = q.list();

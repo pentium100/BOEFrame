@@ -231,7 +231,8 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
                 start: options.offset,
                 limit: options.limit,
-                searchToken: options.search
+                searchToken: options.search,
+                forEdit: true
             };
 
         }

@@ -1,24 +1,41 @@
 .x-view-selected {
-	background-color: rgba(100, 100, 100, .15);
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	border-top: 0px solid rgba(0, 0, 0, .15);
+    background-color: rgba(100, 100, 100, .15);
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-top: 0px solid rgba(0, 0, 0, .15);
 }
-
 .datepicker {
-	z-index: 1151 !important;
+    z-index: 1151 !important;
 }
-
-
 .carousel-control.left {
-  background-image: none !important ;
-  filter: none;
-  background-repeat: repeat-x;
+    background-image: none !important;
+    filter: none;
+    background-repeat: repeat-x;
 }
 .carousel-control.right {
-  right: 0;
-  left: auto;
-  background-image: none !important ;
-  filter: none;
-  background-repeat: repeat-x;
+    right: 0;
+    left: auto;
+    background-image: none !important;
+    filter: none;
+    background-repeat: repeat-x;
+}
+.memo {
+    border: none;
+    color: #ffffff;
+    background-color: #272b2e;
+    padding-left: 0;
+    padding-right: 0;
+    font-family: "Microsoft Yahei","微软雅黑","SimSun","宋体","Arial Narrow",serif
+}
+.memo2 {
+    border: none;
+    color: #ffffff;
+    background-color: #53534F;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: "Microsoft Yahei","微软雅黑","SimSun","宋体","Arial Narrow",serif
+}
+
+.tab-pane{
+    padding-top: 10px;
 }

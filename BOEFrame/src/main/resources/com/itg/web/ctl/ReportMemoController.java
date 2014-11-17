@@ -145,11 +145,21 @@ public class ReportMemoController {
 			@RequestParam(value = "searchToken", required = false) String searchToken,
 			@RequestParam(value = "start", required = false) Integer start,
 			@RequestParam(value = "limit", required = false) Integer limit,
+			@RequestParam(value = "forEdit", required = false) Boolean forEdit,
 			HttpServletRequest request) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		List<MenuItem> menus = getAuthMenu(parentNode, request);
 		List<String> menuIds = new ArrayList<String>();
+		
+
+		HttpSession session = request.getSession(false);
+
+		String fullName = (String) session.getAttribute("full_name");
+
+		
+		
+		
 		for (MenuItem m : menus) {
 
 			menuIds.add(String.valueOf(m.getID()));
@@ -177,7 +187,7 @@ public class ReportMemoController {
 				isEnabled, start, limit, searchToken);
 
 		Long count = reportMemoDAO.getMemoCountInList(menuIds, isEnabled,
-				searchToken);
+				searchToken, forEdit, fullName);
 
 		ArrayList<Map> result = new ArrayList<Map>();
 		for (ReportMemo memo : memos) {
@@ -188,6 +198,15 @@ public class ReportMemoController {
 					continue;
 				}
 
+			}
+			
+			if(forEdit!=null&&forEdit){
+				
+				if(!memo.getMemoBy().equals(fullName)){
+					
+					continue;
+				}
+				
 			}
 
 			Map m = new HashMap();

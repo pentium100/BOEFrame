@@ -23,7 +23,7 @@ public interface IReportMemoDAO {
 	public List<ReportMemo> getMemoInList(List<String> menuIds, Boolean b,
 			Integer start, Integer limit, String searchToken);
 
-	public Long getMemoCountInList(List<String> menuIds, Boolean enabled, String memo);
+	public Long getMemoCountInList(List<String> menuIds, Boolean enabled, String memo, Boolean forEdit, String fullName);
 
 	public byte[] getReportMemoImage(Integer id);
 

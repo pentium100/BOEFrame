@@ -5,13 +5,35 @@
  */
 
 body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
-}
+    padding-top: 52px;
+    /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+    
+    font-family: "Microsoft Yahei", "微软雅黑", "SimSun", "宋体", "Arial Narrow", serif;
 
+
+}
 .thumb {
     margin-bottom: 30px;
 }
-
 footer {
     margin: 50px 0;
 }
+.navbar-default {
+    background-color: #ffffff;
+
+}
+
+.navbar-default .navbar-nav > li > a {
+color: #000;
+}
+
+
+.navbar-default .navbar-brand {
+color: #000;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+color: #000;
+
+}
+

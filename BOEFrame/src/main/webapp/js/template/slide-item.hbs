@@ -3,18 +3,24 @@
 
 <div class="col-md-12 item {{#if @first}}active{{/if}} " data-id="{{id}}">
 
-    <div class="col-md-4 col-xs-2 column">
+    <img style="display:none" src="reportMemo.do?method=getImage&reportMemoId={{id}}&ds={{getCurrentTime}}">
 
-        <pre id="memoBy">{{memoBy}}<br>{{keyDate}}</pre>
 
-        <pre id="reportMemo">{{memo}}</pre>
+    <div class="col-md-8 col-xs-8">
+        <div class="center-block img" data-id="{{id}}" data-menuId="{{keyValue}}" style="height:940px;background-size: contain;background-image:url('reportMemo.do?method=getImage&reportMemoId={{id}}&ds={{getCurrentTime}}');background-repeat:no-repeat;background-position:top center">
 
-    </div>
-    <div class="col-md-8 col-xs-10">
-        <div class="center-block">
 
-            <img style="height:600px" data-id="{{id}}" data-menuId="{{keyValue}}" src="reportMemo.do?method=getImage&reportMemoId={{id}}&ds={{getCurrentTime}}" alt="" class="img-responsive">
         </div>
     </div>
+
+
+    <div class="col-md-4 col-xs-4 column memo">
+
+
+		<pre id="memoBy" class="memo2"><span style="font-size: 15px">{{memoBy}}<br>{{keyDate}}</span></pre>
+        <pre id="reportMemo" class="memo2"><span style="font-size: 15px">{{memo}}</span></pre>
+
+    </div>
+
 </div>
 {{/each}}

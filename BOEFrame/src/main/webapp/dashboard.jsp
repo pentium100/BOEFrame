@@ -13,11 +13,14 @@
 
         <title>厦门国贸集团股份有限公司 管理驾驶舱</title>
 
-        <link href="css/dashboard.css" rel="stylesheet">
+        
         <!-- Bootstrap Core CSS -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/dashboard.css" rel="stylesheet">
 
-        <!-- Custom CSS -->
+        <!-- Custom CSS 
+        
+        -->
         <link href="css/thumbnail-gallery.css" rel="stylesheet">
 
         <link href="css/datepicker3.css" rel="stylesheet">
@@ -59,8 +62,11 @@
 
     <body>
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Navigation 
+navbar navbar-static-top bs-docs-nav
+navbar navbar-default navbar-fixed-top
+        -->
+        <nav class="navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -78,14 +84,22 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav nav-tabs" role="tablist">
-                        <li class=""><a href="#home" role="tab" data-toggle="tab">快捷入口</a>
+                        <li class=""><a href="#home" role="tab" data-toggle="tab">全部指标</a>
                         </li>
-                        <li class="active"><a href="#sliderTab" role="tab" data-toggle="tab">逐项浏览</a>
+                        <li class="active"><a href="#sliderTab" id="jumpToSlide" role="tab" data-toggle="tab">分项浏览</a>
                         </li>
-                        <li><a href="#reportMemoList" role="tab" data-toggle="tab" id="reportMemoLink">报表注释维护</a>
+                        <li class="dropdown" ><a href="#" class="dropdown-toggle" data-toggle="dropdown">设置<span class="caret"></span></a>
+
+                            <ul  class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#reportMemoList" role="tab" data-toggle="tab" id="reportMemoLink">注释管理</a>
+                                </li>
+                                <li class=""><a href="#slideSetting" role="tab" data-toggle="tab">浏览设置</a>
+                                </li>    
+                            </ul>
+
                         </li>
-                        <li class=""><a href="#slideSetting" role="tab" data-toggle="tab">浏览设置</a>
-                        </li>
+                        
 
                     </ul>
                 </div>
@@ -95,12 +109,12 @@
         </nav>
 
         <!-- Page Content -->
-        <div class="container-fluid tab-content">
+        <div class="container-fluid tab-content memo" >  
 
 
             <div class="tab-pane row" id="home"></div>
-            <div class="tab-pane " id="reportMemoList"></div>
-            <div class="tab-pane " id="slideSetting"></div>
+            <div class="tab-pane "  id="reportMemoList"></div>
+            <div class="tab-pane" id="slideSetting"></div>
 
 
             <div id="sliderTab" class="tab-pane active">

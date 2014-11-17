@@ -39,7 +39,7 @@
     <body>
 
         <div class="container">
-            <div class="row  style=" overflow:hidden ">
+            <div class="row">
                 <OBJECT ID='maintop_menu_flash' NAME='maintop_menu_flash' class="center-block " CLASSID='CLSID:D27CDB6E-AE6D-11CF-96B8-444553540000' CODEBASE='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0' WIDTH='800' HEIGHT='117'>
                     <PARAM NAME='movie' VALUE='maintop.swf'>
                     <PARAM NAME='wmode' VALUE='transparent'>
