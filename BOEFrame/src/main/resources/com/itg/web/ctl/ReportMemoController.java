@@ -385,10 +385,12 @@ public class ReportMemoController {
 		if ((reportMemo == null)) {
 
 			reportMemo = new ReportMemo();
-			reportMemo.setKeyDate(keyDate);
-			reportMemo.setKeyValue(keyValue);
 
 		}
+		
+		reportMemo.setKeyDate(keyDate);
+		reportMemo.setKeyValue(keyValue);
+	
 
 		reportMemo.setIsEnabled(isEnabled);
 		reportMemo.setMemo(memo);

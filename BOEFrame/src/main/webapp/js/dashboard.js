@@ -176,15 +176,25 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 					var target = evt.target;
 					var id = $(target).attr("data-id");
 					if (id !== undefined) {
-						window
-								.open(
-										"queryReport.do?menuId=" + id,
-										id,
-										"left=0,top=0,width="
-												+ (screen.width - 10)
-												+ ",height="
-												+ (screen.height - 70)
-												+ ",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes");
+
+						var win = $(target).data("data-window");
+						if (win != undefined && !win.closed) {
+
+							win.focus();
+
+						} else {
+							win = window
+									.open(
+											"queryReport.do?menuId=" + id,
+											id,
+											"left=0,top=0,width="
+													+ (screen.width - 10)
+													+ ",height="
+													+ (screen.height - 70)
+													+ ",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes");
+
+							$(target).data("data-window", win);
+						}
 					}
 
 				});
@@ -281,16 +291,26 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 				$(".carousel .img").on("dblclick", function(evt) {
 					var target = evt.target;
 					var id = $(target).attr("data-menuId");
+					var menuItem = $('img[data-id=' + id+']');
+
 					if (id !== undefined) {
-						window
-								.open(
-										"queryReport.do?menuId=" + id,
-										id,
-										"left=0,top=0,width="
-												+ (screen.width - 10)
-												+ ",height="
-												+ (screen.height - 70)
-												+ ",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes");
+						var win = $(menuItem).data('data-window');
+						if (win != undefined && !win.closed) {
+							win.focus();
+						} else {
+
+							win = window
+									.open(
+											"queryReport.do?menuId=" + id,
+											id,
+											"left=0,top=0,width="
+													+ (screen.width - 10)
+													+ ",height="
+													+ (screen.height - 70)
+													+ ",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes");
+
+							$(menuItem).data('data-window', win);
+						}
 					}
 
 				});
