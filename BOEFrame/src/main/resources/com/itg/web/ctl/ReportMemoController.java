@@ -3,11 +3,13 @@ package com.itg.web.ctl;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.directory.ldap.client.api.LdapConnection;
@@ -37,12 +40,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+
 
 import com.itg.dao.IMenuItemDAO;
 import com.itg.dao.IReportMemoDAO;
 import com.itg.dao.IRolesDAO;
 import com.itg.dao.IUserRolesDAO;
+import com.itg.dao.Postscript;
 import com.itg.dao.ReportMemo;
 import com.itg.dao.UserRole;
 import com.itg.dao.MenuItem;
@@ -151,15 +159,11 @@ public class ReportMemoController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		List<MenuItem> menus = getAuthMenu(parentNode, request);
 		List<String> menuIds = new ArrayList<String>();
-		
 
 		HttpSession session = request.getSession(false);
 
 		String fullName = (String) session.getAttribute("full_name");
 
-		
-		
-		
 		for (MenuItem m : menus) {
 
 			menuIds.add(String.valueOf(m.getID()));
@@ -199,14 +203,14 @@ public class ReportMemoController {
 				}
 
 			}
-			
-			if(forEdit!=null&&forEdit){
-				
-				if(!memo.getMemoBy().equals(fullName)){
-					
+
+			if (forEdit != null && forEdit) {
+
+				if (!memo.getMemoBy().equals(fullName)) {
+
 					continue;
 				}
-				
+
 			}
 
 			Map m = new HashMap();
@@ -216,6 +220,16 @@ public class ReportMemoController {
 			m.put("isEnabled", memo.getIsEnabled());
 			m.put("keyDate", sdf.format(memo.getKeyDate()));
 			m.put("memoBy", memo.getMemoBy());
+
+			List<Map> postscripts = new ArrayList<Map>();
+			for (Postscript p : memo.getPostscripts()) {
+				Map postscriptMap = new HashMap<String, Object>();
+				postscriptMap.put("id", p.getId());
+				postscriptMap.put("fileName", p.getFileName());
+				postscripts.add(postscriptMap);
+
+			}
+			m.put("postscripts", postscripts);
 
 			MenuItem menu = findMenu(menus, Integer.valueOf(memo.getKeyValue()));
 
@@ -329,6 +343,34 @@ public class ReportMemoController {
 
 	}
 
+	@RequestMapping(params = "method=getPostscript")
+	public void getReportMemoPostscript(@RequestParam(value = "id") Long id,
+			HttpServletResponse response) throws IOException {
+
+		Postscript p = reportMemoDAO.getPostscript(id);
+		byte[] data = p.getPostFile();
+
+		// response.setContentType(p.getContentType());
+
+		response.setContentType("application/download");
+
+		response.setHeader("Cache-Control", "public");
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Content-Description", "File Transfer");
+		response.setHeader("Content-Disposition", "attachment; filename=\""
+				+ URLEncoder.encode(p.getFileName(), "utf-8")+"\"");
+		          
+		// response.setHeader("Content-Transfer-Encoding", "binary");
+		// response.setHeader("Content-Type", "binary/octet-stream");
+
+		// get your file as InputStream
+		InputStream is = new ByteArrayInputStream(data);
+		// copy it to response's OutputStream
+		org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+		response.flushBuffer();
+
+	}
+
 	@RequestMapping(params = "method=getImage")
 	public void getReportMemoImage(
 			@RequestParam(value = "reportMemoId") Integer id,
@@ -367,6 +409,8 @@ public class ReportMemoController {
 	public String saveReportMemo(
 			ModelMap map,
 			@RequestParam(value = "picFile", required = false) CommonsMultipartFile picFile,
+			@RequestParam(value = "postscriptFiles", required = false) CommonsMultipartFile[] postscriptFiles,
+
 			@RequestParam(value = "keyValue", required = false) String keyValue,
 			@RequestParam(value = "id", required = false) Integer id,
 			@RequestParam(value = "keyDate", required = false) Date keyDate,
@@ -387,10 +431,35 @@ public class ReportMemoController {
 			reportMemo = new ReportMemo();
 
 		}
-		
+
+		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+		multiRequest.getFileMap();
+		Iterator iterator = multiRequest.getFileNames();
+
+		while (iterator.hasNext()) {
+
+			String filename = (String) iterator.next();
+			MultipartFile filePart = multiRequest.getFile(filename);
+			if ((filePart.getName().matches("postscriptFiles_\\d\\d\\d") || filePart
+					.getName().equals("postscriptFiles"))
+					&& filePart.getSize() > 0) {
+
+				Postscript postscript = new Postscript();
+				postscript.setFileName(filePart.getOriginalFilename());
+				postscript.setContentType(filePart.getContentType());
+				try {
+					postscript.setPostFile(filePart.getBytes());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				reportMemo.getPostscripts().add(postscript);
+			}
+
+		}
+
 		reportMemo.setKeyDate(keyDate);
 		reportMemo.setKeyValue(keyValue);
-	
 
 		reportMemo.setIsEnabled(isEnabled);
 		reportMemo.setMemo(memo);
@@ -404,9 +473,13 @@ public class ReportMemoController {
 
 		reportMemoDAO.modifyReportMemo(reportMemo);
 
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(new String[] { "handler",
+				"hibernateLazyInitializer" });
 		JSONObject json = new JSONObject();
+
 		json.put("result", "success");
-		json.put("data", reportMemo);
+		json.element("data", reportMemo, jsonConfig);
 
 		// JSONArray json = JSONArray.fromObject(jsonResult);
 

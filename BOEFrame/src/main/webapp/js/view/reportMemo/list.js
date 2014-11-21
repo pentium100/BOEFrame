@@ -123,13 +123,13 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                         field: "id",
                         class: "col-md-2",
                         title: "指标快照",
-                        formatter: this.formatSnapShot,
+                        formatter: this.formatSnapShot
                     }, {
                         field: "memo",
                         class: "col-md-6",
                         title: "说明信息",
 
-                        cellStyle: this.formatMemo,
+                        cellStyle: this.formatMemo
                     }
 
                 ]

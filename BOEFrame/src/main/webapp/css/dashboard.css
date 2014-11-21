@@ -1,3 +1,13 @@
+.file-preview-text {
+display: table-cell;
+width: 100px;
+height: 100px;
+color: #428bca;
+font-size: 11px;
+vertical-align: middle;
+text-align: center;
+}
+
 .x-view-selected {
     background-color: rgba(100, 100, 100, .15);
     -moz-border-radius: 8px;

@@ -26,5 +26,7 @@ public interface IReportMemoDAO {
 	public Long getMemoCountInList(List<String> menuIds, Boolean enabled, String memo, Boolean forEdit, String fullName);
 
 	public byte[] getReportMemoImage(Integer id);
+	
+	public Postscript getPostscript(Long id);
 
 }

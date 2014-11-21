@@ -78,7 +78,10 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 	public List<ReportMemo> getMemoInList(List<String> menuIds,
 			Boolean enabled, Integer start, Integer limit, String searchToken) {
 
-		String sql = "select new ReportMemo(r.id, r.keyValue, r.keyDate, r.memo, r.isEnabled, r.memoBy) From ReportMemo r, MenuItem m where r.keyValue = m.ID and r.keyValue in (:values) and r.memo like :memo";
+		// String sql =
+		// "select new ReportMemo(r.id, r.keyValue, r.keyDate, r.memo, r.isEnabled, r.memoBy, new ArrayList<Postscript>(r.postscripts) From ReportMemo r, MenuItem m where r.keyValue = m.ID and r.keyValue in (:values) and r.memo like :memo";
+
+		String sql = "select r From ReportMemo r, MenuItem m where r.keyValue = m.ID and r.keyValue in (:values) and r.memo like :memo";
 
 		if (enabled != null) {
 			sql = sql + " and r.isEnabled = :isEnabled ";
@@ -100,6 +103,23 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 
 		List<ReportMemo> findByNamedQuery = q.list();
 		return (List<ReportMemo>) findByNamedQuery;
+
+	}
+
+	public Postscript getPostscript(Long id) {
+
+		String sql = "From Postscript where id = :id";
+
+		org.hibernate.Query q = getSession().createQuery(sql);
+		q.setParameter("id", id);
+
+		List<Postscript> postscripts = q.list();
+
+		if (postscripts.size() > 0) {
+			return postscripts.get(0);
+		} else {
+			return null;
+		}
 
 	}
 

@@ -31,6 +31,9 @@ require.config({
 				},
 				'bootstrap-table' : {
 					deps : ['bootstrap', 'jquery']
+				},
+				'jquery.fileDownload':{
+
 				}
 			},
 			paths : {
@@ -49,7 +52,8 @@ require.config({
 				'bootstrap-table-ench' : 'ench/bootstrap-table-ench',
 				'bootstrap-select' : 'libs/bootstrap-select',
 				'jquery-cookie' : 'libs/jquery-cookie',
-				'jquery-fullscreen' : 'libs/jquery.fullscreen'
+				'jquery-fullscreen' : 'libs/jquery.fullscreen',
+				'jquery.fileDownload':'libs/jquery.fileDownload'
 
 			}
 

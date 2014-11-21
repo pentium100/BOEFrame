@@ -1,8 +1,11 @@
 package com.itg.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -23,6 +26,17 @@ public class ReportMemo {
 	private Date memoAt; // ±¸×¢Ê±¼ä
 
 	private Boolean isEnabled;
+
+	private List<Postscript> postscripts;
+
+	@OneToMany(targetEntity = Postscript.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public List<Postscript> getPostscripts() {
+		return postscripts;
+	}
+
+	public void setPostscripts(List<Postscript> postscripts) {
+		this.postscripts = postscripts;
+	}
 
 	@Lob
 	@Column(name = "image", length = 20971520)
@@ -100,10 +114,13 @@ public class ReportMemo {
 
 	public ReportMemo() {
 
+		List<Postscript> postscripts = new ArrayList<Postscript>();
+		setPostscripts(postscripts);
+
 	}
 
 	public ReportMemo(int id, String keyValue, Date keyDate, String memo,
-			Boolean isEnabled, String memoBy) {
+			Boolean isEnabled, String memoBy, List<Postscript> postscripts) {
 
 		this.id = id;
 		this.keyDate = keyDate;
@@ -111,6 +128,8 @@ public class ReportMemo {
 		this.memo = memo;
 		this.isEnabled = isEnabled;
 		this.memoBy = memoBy;
+
+		this.postscripts = postscripts;
 	}
 
 	public String toJSON() {

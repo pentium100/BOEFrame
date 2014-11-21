@@ -1,6 +1,6 @@
 define(['backbone', 'underscore', 'handlebars', 'jquery',
     'text!template/mark-memo.hbs', 'bootstrap-datepicker',
-    'fileinput', 'backbone.stickit', 'bootstrap-select'
+    'fileinput', 'backbone.stickit', 'bootstrap-select', 'jquery.fileDownload'
 ], function(Backbone, _,
     Handlebars, $, markMemoTemplate) {
 
@@ -34,7 +34,21 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
         events: {
             'submit form': 'submitForm',
             'click button[action=delete]': 'deleteMemo',
-            'click button[action=cancel]': 'cancelMemo'
+            'click button[action=cancel]': 'cancelMemo',
+            'dblclick .file-preview-text[data-postscript-id]' : 'downloadPostscript'
+        },
+
+        downloadPostscript: function(event){
+
+
+
+            var postscriptId = $(event.currentTarget).attr('data-postscript-id');
+
+            $.fileDownload('reportMemo.do?method=getPostscript&id='+postscriptId);
+
+
+
+
         },
 
         cancelMemo: function(event) {
@@ -137,7 +151,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
                 initialPreview.push('<img src="reportMemo.do?method=getImage&reportMemoId=' + this.model.get("id") + '" class="file-preview-image">');
             }
-            $('input[type=file]', this.el).fileinput({
+            $('input[type=file][id=picFile]', this.el).fileinput({
                 showUpload: false,
 
                 allowedFileTypes: ["image"],
@@ -147,6 +161,35 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                 initialPreview: initialPreview
 
             });
+
+
+            var postscriptPreview = [];
+
+
+            $.each(model.postscripts, function() {
+
+                postscriptPreview.push("<div class='file-preview-text' data-postscript-id='"+this.id+"'>" +
+                    "<h2><i class='glyphicon glyphicon-file'></i></h2>" +
+                    this.fileName + "</div>"
+                );
+            });
+
+
+
+
+            $('input[type=file][id=postscriptFiles]', this.el).fileinput({
+                showUpload: false,
+                overwriteInitial : false,
+
+                maxFileCount: 100,
+                allowedPreviewMimeTypes: ['image'],
+                initialPreview: postscriptPreview
+
+
+
+            });
+
+
 
 
 
@@ -200,16 +243,19 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     this.model.set("id", res.data.id);
                     this.model.set("memoBy", res.data.memoBy);
 
-                    if(isNew){
+                    if (isNew) {
                         this.model.set('recStatus', 'inserted');
-                    }else{
+                    } else {
                         this.model.set('recStatus', 'updated');
 
                     }
 
 
+                    this.model.attributes.postscripts = res.data.postscripts;
+
+
                     var menu = this.menus.get(this.model.get('keyValue'));
-                    if(menu!==undefined){
+                    if (menu !== undefined) {
                         this.model.set('menuText', menu.get('text'));
                     }
 

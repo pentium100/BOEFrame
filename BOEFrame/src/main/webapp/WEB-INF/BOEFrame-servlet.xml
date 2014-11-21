@@ -4,11 +4,16 @@
 
 <beans>
 
+	<!--
+		<bean id="multipartResolver"
+			class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+-->		
 		
-		
+	<bean id="multipartResolver" class=" com.itg.util.MultiCommonsMultipartResolver">
+		<property name="maxUploadSize" value="5000000" />
+		<property name="maxInMemorySize" value="5000000" />
+	</bean>		
     
     		
 	<!-- 定义Spring MVC 的模板文件 -->

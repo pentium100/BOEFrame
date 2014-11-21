@@ -28,7 +28,7 @@
 
 		<property name="url">
 
-			<value>jdbc:jtds:sqlserver://172.16.10.54:1433/BOEFrame</value>
+			<value>jdbc:jtds:sqlserver://localhost:1433/BOEFrame</value>
 
 		</property>
 
@@ -67,6 +67,7 @@
 				<value>com.itg.dao.Role</value>
 				<value>com.itg.dao.UserRole</value>
 				<value>com.itg.dao.ReportMemo</value>
+				<value>com.itg.dao.Postscript</value>
 			</list>
 
 		</property>
