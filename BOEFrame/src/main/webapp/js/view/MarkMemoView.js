@@ -35,16 +35,17 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             'submit form': 'submitForm',
             'click button[action=delete]': 'deleteMemo',
             'click button[action=cancel]': 'cancelMemo',
-            'dblclick .file-preview-text[data-postscript-id]' : 'downloadPostscript'
+            'dblclick .file-preview-text[data-postscript-id]': 'downloadPostscript',
+            'fileclear input[type=file][id=postscriptFiles]': 'clearInitialPreview'
         },
 
-        downloadPostscript: function(event){
+        downloadPostscript: function(event) {
 
 
 
             var postscriptId = $(event.currentTarget).attr('data-postscript-id');
 
-            $.fileDownload('reportMemo.do?method=getPostscript&id='+postscriptId);
+            $.fileDownload('reportMemo.do?method=getPostscript&id=' + postscriptId);
 
 
 
@@ -168,7 +169,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
             $.each(model.postscripts, function() {
 
-                postscriptPreview.push("<div class='file-preview-text' data-postscript-id='"+this.id+"'>" +
+                postscriptPreview.push("<div class='file-preview-text' data-postscript-id='" + this.id + "'>" +
                     "<h2><i class='glyphicon glyphicon-file'></i></h2>" +
                     this.fileName + "</div>"
                 );
@@ -179,7 +180,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
             $('input[type=file][id=postscriptFiles]', this.el).fileinput({
                 showUpload: false,
-                overwriteInitial : false,
+                overwriteInitial: false,
 
                 maxFileCount: 100,
                 allowedPreviewMimeTypes: ['image'],
@@ -189,6 +190,8 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
             });
 
+
+          
 
 
 
@@ -202,6 +205,23 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
             this.$('.selectpicker').selectpicker();
             return this;
+
+        },
+
+
+        clearInitialPreview: function (event){
+
+
+
+                  var $fileinput = $('input[type=file][id=postscriptFiles]', this.el);
+
+
+                  var fileinput = $fileinput.data('fileinput');
+                  fileinput.overwriteInitial = true;
+                  $('input[name=clearPostscript]', this.el).val('true');
+                
+
+
 
         },
 

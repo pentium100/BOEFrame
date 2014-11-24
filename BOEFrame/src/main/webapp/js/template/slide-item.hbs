@@ -17,8 +17,37 @@
     <div class="col-md-4 col-xs-4 column memo">
 
 
-		<pre id="memoBy" class="memo2"><span style="font-size: 15px">{{memoBy}}<br>{{keyDate}}</span></pre>
-        <pre id="reportMemo" class="memo2"><span style="font-size: 15px">{{memo}}</span></pre>
+        <div id="memoBy" class="memo2 memoby"><span style="font-size: 15px">{{memoBy}}<br>{{keyDate}}</span>
+        </div>
+
+
+
+        <div role="tabpanel">
+
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#reportMemo{{id}}" aria-controls="reportMemo" role="tab" data-toggle="tab">指标注释</a>
+                </li>
+                <li role="presentation"><a href="#postscripts{{id}}" aria-controls="postscripts" role="tab" data-toggle="tab">其他附加文件</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+
+                <div class="tab-pane active" id="reportMemo{{id}}">
+                    <pre id="reportMemo" class="memo2"><span style="font-size: 15px">{{memo}}</span></pre>
+                </div>
+                <div id="postscripts{{id}}" class="tab-pane">
+                    <ul>
+                        {{#each postscripts}}
+                        <li><i class="glyphicon glyphicon-file"></i>{{fileName}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
 
     </div>
 

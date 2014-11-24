@@ -410,7 +410,7 @@ public class ReportMemoController {
 			ModelMap map,
 			@RequestParam(value = "picFile", required = false) CommonsMultipartFile picFile,
 			@RequestParam(value = "postscriptFiles", required = false) CommonsMultipartFile[] postscriptFiles,
-
+			@RequestParam(value = "clearPostscript", required = false) Boolean clearPostscript,
 			@RequestParam(value = "keyValue", required = false) String keyValue,
 			@RequestParam(value = "id", required = false) Integer id,
 			@RequestParam(value = "keyDate", required = false) Date keyDate,
@@ -424,12 +424,19 @@ public class ReportMemoController {
 		if (id != null) {
 
 			reportMemo = reportMemoDAO.findReportMemoById(id);
+			
+			
 		}
 
 		if ((reportMemo == null)) {
 
 			reportMemo = new ReportMemo();
 
+		}
+		
+		if(clearPostscript){
+			
+			reportMemo.getPostscripts().clear();
 		}
 
 		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
