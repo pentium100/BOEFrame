@@ -84,7 +84,7 @@ navbar navbar-default navbar-fixed-top
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav nav-tabs" role="tablist">
+                    <ul class="nav navbar-nav nav-tabs22 nav-pills" role="tablist">
                         <li class=""><a href="#home" role="tab" data-toggle="tab">全部指标</a>
                         </li>
                         <li class="active"><a href="#sliderTab" id="jumpToSlide" role="tab" data-toggle="tab">分项浏览</a>

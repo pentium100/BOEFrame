@@ -1,31 +1,45 @@
-.memoby{
-
-
-    margin: 0 0 10px;
-    border-radius: 4px;
-
+.carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    z-index: 15;
+    width: 40%;
+    padding-left: 0;
+    margin-left: -30%;
+    text-align: center;
+    list-style: none;
 }
-.footerPostscripts {
-    
-
-    height: 100px;
-    overflow:auto;
-    background-color: #53534F;
+.postscript-files-list {
+    height: 50px;
+}
+a.list-group-item {
+    color: #FFF;
+}
+.list-group-item {
+    position: relative;
     display: block;
-    
-    margin: 0 0 10px;
-    font-size: 13px;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    background-color: #53534F;
+    border: 0px solid #ddd;
+}
+.nav-tabs > li > a {
+    margin-right: 2px;
     line-height: 1.42857143;
-    color: #333;
-    word-break: break-all;
-    word-wrap: break-word;
-    
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    color: #7D7D7F;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #fff;
+    cursor: default;
+    background-color: #000;
+    border: 0px solid #ddd;
+    border-bottom-color: transparent;
+}
+.memoby {
+    margin: 0 0 10px;
     border-radius: 4px;
-    border: none;
-    
-    padding-left: 10px;
-    padding-right: 10px;
-    font-family: "Microsoft Yahei", "微软雅黑", "SimSun", "宋体", "Arial Narrow", serif;
 }
 .file-preview-text {
     display: table-cell;

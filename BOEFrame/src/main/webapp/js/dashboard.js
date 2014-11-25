@@ -1,475 +1,466 @@
 require.config({
-			baseUrl : 'js',
-			shim : {
-				'bootstrap' : {
-					deps : ['jquery']
-				},
+    baseUrl: 'js',
+    shim: {
+        'bootstrap': {
+            deps: ['jquery']
+        },
 
-				'handlebars' : {
-					exports : 'Handlebars'
-				},
-				'fileinput' : {
-					deps : ['jquery']
-				},
-				'backbone.stickit' : {
-					deps : ['backbone', 'jquery']
-				},
-				'backbone' : {
-					deps : ['underscore']
-				},
-				'bootstrap-table-ench' : {
-					deps : ['bootstrap-table']
+        'handlebars': {
+            exports: 'Handlebars'
+        },
+        'fileinput': {
+            deps: ['jquery']
+        },
+        'backbone.stickit': {
+            deps: ['backbone', 'jquery']
+        },
+        'backbone': {
+            deps: ['underscore']
+        },
+        'bootstrap-table-ench': {
+            deps: ['bootstrap-table']
 
-				},
-				'jquery-fullscreen' : {
-					deps : ['jquery']
-				},
+        },
+        'jquery-fullscreen': {
+            deps: ['jquery']
+        },
 
-				'bootstrap-select' : {
+        'bootstrap-select': {
 
-					deps : ['bootstrap']
-				},
-				'bootstrap-table' : {
-					deps : ['bootstrap', 'jquery']
-				},
-				'jquery.fileDownload':{
+            deps: ['bootstrap']
+        },
+        'bootstrap-table': {
+            deps: ['bootstrap', 'jquery']
+        },
+        'jquery.fileDownload': {
 
-				}
-			},
-			paths : {
+        }
+    },
+    paths: {
 
-				jquery : 'libs/jquery-1.11.1',
-				handlebars : 'libs/handlebars-v2.0.0',
-				bootstrap : 'libs/bootstrap',
-				text : 'libs/text',
-				backbone : 'libs/backbone',
-				underscore : 'libs/underscore',
-				'bootstrap-datepicker' : 'libs/bootstrap-datepicker',
-				'bootstrap-table' : 'libs/bootstrap-table',
+        jquery: 'libs/jquery-1.11.1',
+        handlebars: 'libs/handlebars-v2.0.0',
+        bootstrap: 'libs/bootstrap',
+        text: 'libs/text',
+        backbone: 'libs/backbone',
+        underscore: 'libs/underscore',
+        'bootstrap-datepicker': 'libs/bootstrap-datepicker',
+        'bootstrap-table': 'libs/bootstrap-table',
 
-				'fileinput' : 'libs/fileinput',
-				'backbone.stickit' : 'libs/backbone.stickit',
-				'bootstrap-table-ench' : 'ench/bootstrap-table-ench',
-				'bootstrap-select' : 'libs/bootstrap-select',
-				'jquery-cookie' : 'libs/jquery-cookie',
-				'jquery-fullscreen' : 'libs/jquery.fullscreen',
-				'jquery.fileDownload':'libs/jquery.fileDownload'
+        'fileinput': 'libs/fileinput',
+        'backbone.stickit': 'libs/backbone.stickit',
+        'bootstrap-table-ench': 'ench/bootstrap-table-ench',
+        'bootstrap-select': 'libs/bootstrap-select',
+        'jquery-cookie': 'libs/jquery-cookie',
+        'jquery-fullscreen': 'libs/jquery.fullscreen',
+        'jquery.fileDownload': 'libs/jquery.fileDownload'
 
-			}
+    }
 
-		});
+});
 
 require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
-				'text!template/slide-item.hbs', 'jquery', 'bootstrap',
-				'handlebars', 'jquery', 'collection/menus',
-				'collection/reportMemos', 'backbone', 'jquery-cookie',
-				'jquery-fullscreen'], function(menuSrc, slideIndicatorSrc,
-				slideItemSrc, jquery, bootstrap, Handlebars, $, MenuCollection,
-				ReportMemoCollection, Backbone) {
-			Handlebars.registerHelper('substring', function(passedString,
-					options) {
-
-				var hash = options.hash;
-
-				var theString = passedString.substring(hash.start, hash.length);
-				return new Handlebars.SafeString(theString);
-			});
-
-			Handlebars.registerHelper('getCurrentTime',
-					function(date, options) {
-
-						return new Handlebars.SafeString(+new Date);
-					});
-
-			if (!Array.prototype.indexOf) {
-				Array.prototype.indexOf = function(searchElement, fromIndex) {
-
-					var k;
-
-					// 1. Let O be the result of calling ToObject passing
-					// the this value as the argument.
-					if (this == null) {
-						throw new TypeError('"this" is null or not defined');
-					}
-
-					var O = Object(this);
-
-					// 2. Let lenValue be the result of calling the Get
-					// internal method of O with the argument "length".
-					// 3. Let len be ToUint32(lenValue).
-					var len = O.length >>> 0;
-
-					// 4. If len is 0, return -1.
-					if (len === 0) {
-						return -1;
-					}
-
-					// 5. If argument fromIndex was passed let n be
-					// ToInteger(fromIndex); else let n be 0.
-					var n = +fromIndex || 0;
-
-					if (Math.abs(n) === Infinity) {
-						n = 0;
-					}
-
-					// 6. If n >= len, return -1.
-					if (n >= len) {
-						return -1;
-					}
-
-					// 7. If n >= 0, then Let k be n.
-					// 8. Else, n<0, Let k be len - abs(n).
-					// If k is less than 0, then let k be 0.
-					k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-
-					// 9. Repeat, while k < len
-					while (k < len) {
-						var kValue;
-						// a. Let Pk be ToString(k).
-						// This is implicit for LHS operands of the in operator
-						// b. Let kPresent be the result of calling the
-						// HasProperty internal method of O with argument Pk.
-						// This step can be combined with c
-						// c. If kPresent is true, then
-						// i. Let elementK be the result of calling the Get
-						// internal method of O with the argument ToString(k).
-						// ii. Let same be the result of applying the
-						// Strict Equality Comparison Algorithm to
-						// searchElement and elementK.
-						// iii. If same is true, return k.
-						if (k in O && O[k] === searchElement) {
-							return k;
-						}
-						k++;
-					}
-					return -1;
-				};
-			};
-
-			var intervalCookieName = 'interval';
-			var memoIdsCookieName = 'menoIds';
-			var memoIdsCookieName2 = 'menoIds2';
-
-			var updateMemo = function(target, direction) {
-
-				var memoId = $(target.relatedTarget).attr('data-id');
-				var memoModel = memos.get(parseInt(memoId));
-				updateMemoByModel(memoModel);
-
-			};
-
-			var updateMemoByModel = function(memoModel) {
-
-				$('#memoBy').html(memoModel.get('memoBy') + '<br>'
-						+ memoModel.get('keyDate'));
-				$('#reportMemo').html(memoModel.get('memo'));
-			};
+    'text!template/slide-item.hbs', 'jquery', 'bootstrap',
+    'handlebars', 'jquery', 'collection/menus',
+    'collection/reportMemos', 'backbone', 'jquery-cookie',
+    'jquery-fullscreen'
+], function(menuSrc, slideIndicatorSrc,
+    slideItemSrc, jquery, bootstrap, Handlebars, $, MenuCollection,
+    ReportMemoCollection, Backbone) {
+    Handlebars.registerHelper('substring', function(passedString,
+        options) {
+
+        var hash = options.hash;
+
+        var theString = passedString.substring(hash.start, hash.length);
+        return new Handlebars.SafeString(theString);
+    });
+
+    Handlebars.registerHelper('getCurrentTime',
+        function(date, options) {
+
+            return new Handlebars.SafeString(+new Date);
+        });
+
+    if (!Array.prototype.indexOf) {
+        Array.prototype.indexOf = function(searchElement, fromIndex) {
+
+            var k;
+
+            // 1. Let O be the result of calling ToObject passing
+            // the this value as the argument.
+            if (this === null) {
+                throw new TypeError('"this" is null or not defined');
+            }
+
+            var O = Object(this);
+
+            // 2. Let lenValue be the result of calling the Get
+            // internal method of O with the argument "length".
+            // 3. Let len be ToUint32(lenValue).
+            var len = O.length >>> 0;
+
+            // 4. If len is 0, return -1.
+            if (len === 0) {
+                return -1;
+            }
+
+            // 5. If argument fromIndex was passed let n be
+            // ToInteger(fromIndex); else let n be 0.
+            var n = +fromIndex || 0;
+
+            if (Math.abs(n) === Infinity) {
+                n = 0;
+            }
+
+            // 6. If n >= len, return -1.
+            if (n >= len) {
+                return -1;
+            }
+
+            // 7. If n >= 0, then Let k be n.
+            // 8. Else, n<0, Let k be len - abs(n).
+            // If k is less than 0, then let k be 0.
+            k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+            // 9. Repeat, while k < len
+            while (k < len) {
+                var kValue;
+                // a. Let Pk be ToString(k).
+                // This is implicit for LHS operands of the in operator
+                // b. Let kPresent be the result of calling the
+                // HasProperty internal method of O with argument Pk.
+                // This step can be combined with c
+                // c. If kPresent is true, then
+                // i. Let elementK be the result of calling the Get
+                // internal method of O with the argument ToString(k).
+                // ii. Let same be the result of applying the
+                // Strict Equality Comparison Algorithm to
+                // searchElement and elementK.
+                // iii. If same is true, return k.
+                if (k in O && O[k] === searchElement) {
+                    return k;
+                }
+                k++;
+            }
+            return -1;
+        };
+    }
+
+    var intervalCookieName = 'interval';
+    var memoIdsCookieName = 'menoIds';
+    var memoIdsCookieName2 = 'menoIds2';
+
+    var updateMemo = function(target, direction) {
+
+        var memoId = $(target.relatedTarget).attr('data-id');
+        var memoModel = memos.get(parseInt(memoId));
+        updateMemoByModel(memoModel);
+
+    };
+
+    var updateMemoByModel = function(memoModel) {
+
+        $('#memoBy').html(memoModel.get('memoBy') + '<br>' + memoModel.get('keyDate'));
+        $('#reportMemo').html(memoModel.get('memo'));
+    };
 
-			var initForm = function(collection) {
+    var initForm = function(collection) {
 
-				var data = collection.toJSON();
+        var data = collection.toJSON();
 
-				var menuTemplate = Handlebars.compile(menuSrc);
-				var menuHtml = menuTemplate({
-							menus : data
-						});
+        var menuTemplate = Handlebars.compile(menuSrc);
+        var menuHtml = menuTemplate({
+            menus: data
+        });
 
-				$('#home').append(menuHtml);
+        $('#home').append(menuHtml);
 
-				$("img").on("dblclick", function(evt) {
-					var target = evt.target;
-					var id = $(target).attr("data-id");
-					if (id !== undefined) {
+        $("img").on("dblclick", function(evt) {
+            var target = evt.target;
+            var id = $(target).attr("data-id");
+            if (id !== undefined) {
 
-						var win = $(target).data("data-window");
-						if (win != undefined && !win.closed) {
+                var win = $(target).data("data-window");
+                if (win !== undefined && !win.closed) {
 
-							win.focus();
+                    win.focus();
 
-						} else {
-							win = window
-									.open(
-											"queryReport.do?menuId=" + id,
-											id,
-											"left=0,top=0,width="
-													+ (screen.width - 10)
-													+ ",height="
-													+ (screen.height - 70)
-													+ ",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes");
+                } else {
+                    win = window
+                        .open(
+                            "queryReport.do?menuId=" + id,
+                            id,
+                            "left=0,top=0,width=" + (screen.width - 10) + ",height=" + (screen.height - 70) + ",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes");
 
-							$(target).data("data-window", win);
-						}
-					}
+                    $(target).data("data-window", win);
+                }
+            }
 
-				});
-				// $('#markMemo').on('click', markMemo);
-				$('#reportMemoLink').on('click', LoadReportMemoList);
-				$('a[href=#slideSetting]').on('click', LoadMemoOptions);
-
-				$('.thumb').on('click', setThumbSelected);
-
-			};
-
-			var getImageSize = function(image) {
-
-				var img = new Image();
-				img.src = image.src;
-				return {
-					width : img.width,
-					height : img.height
-				};
-			};
-
-			var resizeImage = function() {
-
-				var height = window.innerHeight - $('.navbar').height() - 60;
+        });
+        // $('#markMemo').on('click', markMemo);
+        $('#reportMemoLink').on('click', LoadReportMemoList);
+        $('a[href=#slideSetting]').on('click', LoadMemoOptions);
 
-				$('#sliderTab pre#reportMemo').css("height",
-						height - 25 - $('#memoBy').css("height"));
-
-				$('.carousel .img').css("height", height);
-				// console.log(height);
+        $('.thumb').on('click', setThumbSelected);
 
-			};
+    };
 
-			var initSlide = function(collection) {
+    var getImageSize = function(image) {
 
-				var data = collection.toJSON();
+        var img = new Image();
+        img.src = image.src;
+        return {
+            width: img.width,
+            height: img.height
+        };
+    };
 
-				var sIds = $.cookie(memoIdsCookieName);
-				var sIds2 = $.cookie(memoIdsCookieName2);
-				var interval = $.cookie(intervalCookieName);
-				if (interval === undefined) {
-					interval = 10000;
-				} else {
-					interval = interval * 1000;
-				}
+    var resizeImage = function() {
 
-				var ids = [];
-				var ids2 = [];
+        var height = window.innerHeight - $('.navbar').height() - 60;
 
-				if (sIds !== undefined) {
-					ids = sIds.split(',');
-				}
+        $('#sliderTab pre#reportMemo').css("height", (height - 35 - $('#memoBy').height() - $('.postscript-files-list').height() + 'px'));
 
-				if (sIds2 !== undefined) {
-					ids2 = sIds2.split(',');
-				}
+        $('.carousel .img').css("height", height);
+        // console.log(height);
 
-				for (var i = data.length - 1; i >= 0; i--) {
-					var idx = ids.indexOf(data[i].id);
-					var idx2 = ids2.indexOf(data[i].id);
-					if (idx2 >= 0) {
-						data.splice(i, 1);
+    };
 
-					}
-				}
+    var initSlide = function(collection) {
 
-				var slideIndicatorTemplate = Handlebars
-						.compile(slideIndicatorSrc);
-				var slideItemTemplate = Handlebars.compile(slideItemSrc);
+        var data = collection.toJSON();
 
-				var slideIndicatorHtml = slideIndicatorTemplate({
-							menus : data
-						});
-				var slideItemHtml = slideItemTemplate({
-							menus : data
-						});
+        var sIds = $.cookie(memoIdsCookieName);
+        var sIds2 = $.cookie(memoIdsCookieName2);
+        var interval = $.cookie(intervalCookieName);
+        if (interval === undefined) {
+            interval = 10000;
+        } else {
+            interval = interval * 1000;
+        }
 
-				$(".carousel-indicators").html(slideIndicatorHtml);
-				$(".carousel-inner").html(slideItemHtml);
+        var ids = [];
+        var ids2 = [];
 
-				// $('.carousel').on('slide.bs.carousel', updateMemo);
-				$('.carousel').carousel({
-							interval : interval
-						});
-				// $('.carousel').on('slid.bs.carousel', updateMemo);
+        if (sIds !== undefined) {
+            ids = sIds.split(',');
+        }
 
-				var memoModel = memos.at(0);
-				if (memoModel !== undefined) {
-					// updateMemoByModel(memoModel);
-				}
+        if (sIds2 !== undefined) {
+            ids2 = sIds2.split(',');
+        }
 
-				$('.carousel img').hover(hoverIn, hoverOut);
+        for (var i = data.length - 1; i >= 0; i--) {
+            var idx = ids.indexOf(data[i].id);
+            var idx2 = ids2.indexOf(data[i].id);
+            if (idx2 >= 0) {
+                data.splice(i, 1);
 
-				$(".carousel .img").on("dblclick", function(evt) {
-					var target = evt.target;
-					var id = $(target).attr("data-menuId");
-					var menuItem = $('img[data-id=' + id+']');
+            }
+        }
 
-					if (id !== undefined) {
-						var win = $(menuItem).data('data-window');
-						if (win != undefined && !win.closed) {
-							win.focus();
-						} else {
+        var slideIndicatorTemplate = Handlebars
+            .compile(slideIndicatorSrc);
+        var slideItemTemplate = Handlebars.compile(slideItemSrc);
 
-							win = window
-									.open(
-											"queryReport.do?menuId=" + id,
-											id,
-											"left=0,top=0,width="
-													+ (screen.width - 10)
-													+ ",height="
-													+ (screen.height - 70)
-													+ ",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes");
+        var slideIndicatorHtml = slideIndicatorTemplate({
+            menus: data
+        });
+        var slideItemHtml = slideItemTemplate({
+            menus: data
+        });
 
-							$(menuItem).data('data-window', win);
-						}
-					}
+        $(".carousel-indicators").html(slideIndicatorHtml);
+        $(".carousel-inner").html(slideItemHtml);
 
-				});
+        // $('.carousel').on('slide.bs.carousel', updateMemo);
+        $('.carousel').carousel({
+            interval: interval
+        });
+        // $('.carousel').on('slid.bs.carousel', updateMemo);
 
-				$(window).ready(resizeImage);
+        var memoModel = memos.at(0);
+        if (memoModel !== undefined) {
+            // updateMemoByModel(memoModel);
+        }
 
-				$(window).on('resize', resizeImage);
+        $('.carousel img').hover(hoverIn, hoverOut);
 
-				$(document).ready(function() {
-							$(document).fullScreen(true);
-						});
+        $(".carousel .img").on("dblclick", function(evt) {
+            var target = evt.target;
+            var id = $(target).attr("data-menuId");
+            var menuItem = $('img[data-id=' + id + ']');
 
-			};
+            if (id !== undefined) {
+                var win = $(menuItem).data('data-window');
+                if (win != undefined && !win.closed) {
+                    win.focus();
+                } else {
 
-			var initDashboard = function() {
+                    win = window
+                        .open(
+                            "queryReport.do?menuId=" + id,
+                            id,
+                            "left=0,top=0,width=" + (screen.width - 10) + ",height=" + (screen.height - 70) + ",location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes");
 
-				$('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-							// console.log(e.target);
-							if (e.target.id === "jumpToSlide") {
+                    $(menuItem).data('data-window', win);
+                }
+            }
 
-								$(".tab-content").addClass("memo");
-							} else {
-								$(".tab-content").removeClass("memo");
+        });
 
-							}
+        $(window).ready(resizeImage);
 
-						});
+        $(window).on('resize', resizeImage);
 
-			};
+        $(document).ready(function() {
+            $(document).fullScreen(true);
+        });
 
-			var menus;
+    };
 
-			var vent = new _.extend({}, Backbone.Events);
+    var initDashboard = function() {
 
-			var memos = new ReportMemoCollection();
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            // console.log(e.target);
+            if (e.target.id === "jumpToSlide") {
 
-			var loadSlideItem = function() {
+                $(".tab-content").addClass("memo");
+            } else {
+                $(".tab-content").removeClass("memo");
 
-				memos.fetch({
+            }
 
-							data : {
-								node : 900,
-								enabled : true,
-								method : "getMemoList"
-							},
-							success : initSlide
-						});
+        });
 
-			};
+    };
 
-			vent.bind('app:updateSlide', loadSlideItem);
-			var loadMenuItem = function() {
+    var menus;
 
-				menus = new MenuCollection();
+    var vent = new _.extend({}, Backbone.Events);
 
-				menus.fetch({
-							data : {
-								node : 900
-							},
-							success : initForm
-						});
+    var memos = new ReportMemoCollection();
 
-			};
+    var loadSlideItem = function() {
 
-			var setThumbSelected = function(event) {
+        memos.fetch({
 
-				$('.x-view-selected').removeClass('x-view-selected');
-				$(event.target).parents('.thumb').addClass('x-view-selected');
-			};
+            data: {
+                node: 900,
+                enabled: true,
+                method: "getMemoList"
+            },
+            success: initSlide
+        });
 
-			var hoverIn = function(event) {
+    };
 
-			};
-			var hoverOut = function(event) {
+    vent.bind('app:updateSlide', loadSlideItem);
+    var loadMenuItem = function() {
 
-				// $('.carousel').carousel('next');
+        menus = new MenuCollection();
 
-			};
+        menus.fetch({
+            data: {
+                node: 900
+            },
+            success: initForm
+        });
 
-			var markMemo = function() {
+    };
 
-				require(['view/ModalMarkMemoView'],
-						function(ModalMarkMemoView) {
+    var setThumbSelected = function(event) {
 
-							var modalId = _.uniqueId("modal_");
-							var selectedId = $('.x-view-selected')
-									.attr('data-id');
+        $('.x-view-selected').removeClass('x-view-selected');
+        $(event.target).parents('.thumb').addClass('x-view-selected');
+    };
 
-							var menuModel = menus.get(parseInt(selectedId)).attributes;
-							var model = new Backbone.Model({
-										'menuId' : selectedId,
-										'modalId' : modalId,
-										'menu' : menuModel
-									});
+    var hoverIn = function(event) {
 
-							var view = new ModalMarkMemoView({
-										model : model,
-										root : '#modals'
-									});
+    };
+    var hoverOut = function(event) {
 
-							view.render();
+        // $('.carousel').carousel('next');
 
-							$('#modals').append(view.$el);
-							$('#' + modalId).modal('show');
-							$('#' + modalId).on('hidden.bs.modal',
-									loadSlideItem);
+    };
 
-						});
+    var markMemo = function() {
 
-			};
+        require(['view/ModalMarkMemoView'],
+            function(ModalMarkMemoView) {
 
-			var currentView = null;
+                var modalId = _.uniqueId("modal_");
+                var selectedId = $('.x-view-selected')
+                    .attr('data-id');
 
-			var LoadReportMemoList = function() {
+                var menuModel = menus.get(parseInt(selectedId)).attributes;
+                var model = new Backbone.Model({
+                    'menuId': selectedId,
+                    'modalId': modalId,
+                    'menu': menuModel
+                });
 
-				require(['view/reportMemo/list'], function(ReportMemoListView) {
+                var view = new ModalMarkMemoView({
+                    model: model,
+                    root: '#modals'
+                });
 
-							if (currentView !== null) {
+                view.render();
 
-								currentView.trigger('closeView');
+                $('#modals').append(view.$el);
+                $('#' + modalId).modal('show');
+                $('#' + modalId).on('hidden.bs.modal',
+                    loadSlideItem);
 
-							}
-							var view = new ReportMemoListView({
-										menus : menus,
-										vent : vent
-									});
-							$('.tab-pane#reportMemoList').html(view.$el);
-							currentView = view;
+            });
 
-						});
-			};
+    };
 
-			var LoadMemoOptions = function() {
+    var currentView = null;
 
-				require(['view/slideSetting/list'], function(SlideSettingView) {
+    var LoadReportMemoList = function() {
 
-							if (currentView !== null) {
+        require(['view/reportMemo/list'], function(ReportMemoListView) {
 
-								currentView.trigger('closeView');
+            if (currentView !== null) {
 
-							}
+                currentView.trigger('closeView');
 
-							var view = new SlideSettingView({
+            }
+            var view = new ReportMemoListView({
+                menus: menus,
+                vent: vent
+            });
+            $('.tab-pane#reportMemoList').html(view.$el);
+            currentView = view;
 
-										vent : vent
-									});
-							currentView = view;
-							$('.tab-pane#slideSetting').html(view.$el);
+        });
+    };
 
-						});
+    var LoadMemoOptions = function() {
 
-			};
+        require(['view/slideSetting/list'], function(SlideSettingView) {
 
-			loadMenuItem();
-			loadSlideItem();
-			initDashboard();
+            if (currentView !== null) {
 
-		});
+                currentView.trigger('closeView');
+
+            }
+
+            var view = new SlideSettingView({
+
+                vent: vent
+            });
+            currentView = view;
+            $('.tab-pane#slideSetting').html(view.$el);
+
+        });
+
+    };
+
+    loadMenuItem();
+    loadSlideItem();
+    initDashboard();
+
+});
