@@ -132,11 +132,11 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 			sql = sql + " and isEnabled = :isEnabled";
 		}
 
-		if (forEdit != null && forEdit) {
+		//if (forEdit != null && forEdit) {
 
-			sql = sql + " and memoBy = :memoBy";
+		//	sql = sql + " and memoBy = :memoBy";
 
-		}
+		//}
 
 		// sql = sql + " Order By ID desc";
 
@@ -149,11 +149,11 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 			q.setParameter("isEnabled", enabled);
 		}
 
-		if (forEdit != null && forEdit) {
+		//if (forEdit != null && forEdit) {
 
-			q.setParameter("memoBy", fullName);
+		//	q.setParameter("memoBy", fullName);
 
-		}
+		//}
 
 		List<Long> findByNamedQuery = q.list();
 		return findByNamedQuery.get(0);

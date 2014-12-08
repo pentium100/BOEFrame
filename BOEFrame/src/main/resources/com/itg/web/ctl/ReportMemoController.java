@@ -204,16 +204,16 @@ public class ReportMemoController {
 
 			}
 
-			if (forEdit != null && forEdit) {
+			//if (forEdit != null && forEdit) {
 
-				if (!memo.getMemoBy().equals(fullName)) {
+			//	if (!memo.getMemoBy().equals(fullName)) {
 
-					continue;
-				}
+			//		continue;
+			//	}
 
-			}
+			//}
 
-			Map m = new HashMap();
+			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("id", memo.getId());
 			m.put("memo", memo.getMemo());
 			m.put("keyValue", memo.getKeyValue());
