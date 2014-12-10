@@ -167,13 +167,15 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             var postscriptPreview = [];
 
 
-            $.each(model.postscripts, function() {
+            if(model.postscripts&&model.postscripts.length>0){
+                $.each(model.postscripts, function() {
 
-                postscriptPreview.push("<div class='file-preview-text' data-postscript-id='" + this.id + "'>" +
-                    "<h2><i class='glyphicon glyphicon-file'></i></h2>" +
-                    this.fileName + "</div>"
-                );
-            });
+                    postscriptPreview.push("<div class='file-preview-text' data-postscript-id='" + this.id + "'>" +
+                        "<h2><i class='glyphicon glyphicon-file'></i></h2>" +
+                        this.fileName + "</div>"
+                    );
+                });
+            }
 
 
 
