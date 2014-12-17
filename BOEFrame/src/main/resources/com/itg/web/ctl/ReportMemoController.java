@@ -196,22 +196,15 @@ public class ReportMemoController {
 		ArrayList<Map> result = new ArrayList<Map>();
 		for (ReportMemo memo : memos) {
 
-			if (memo.getKeyValue().equals("913")) {
+			//if (memo.getKeyValue().equals("913")) {
 
-				if (!checkHasAuthValue(request, "ZBIZ_GRP", "1000")) {
-					continue;
-				}
-
-			}
-
-			//if (forEdit != null && forEdit) {
-
-			//	if (!memo.getMemoBy().equals(fullName)) {
-
+			//	if (!checkHasAuthValue(request, "PRCTR_AA", "1000")) {
 			//		continue;
 			//	}
 
 			//}
+
+
 
 			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("id", memo.getId());

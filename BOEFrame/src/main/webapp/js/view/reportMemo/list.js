@@ -111,22 +111,22 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
                     {
                         field: "keyDate",
-                        class: "col-md-1",
+                        'class': "col-md-1",
                         title: "注释",
                         formatter: this.formatKeyDate
 
                     }, {
                         field: "menuText",
-                        class: "col-md-2",
+                        'class': "col-md-2",
                         title: "指标名称"
                     }, {
                         field: "id",
-                        class: "col-md-2",
+                        'class': "col-md-2",
                         title: "指标快照",
                         formatter: this.formatSnapShot
                     }, {
                         field: "memo",
-                        class: "col-md-6",
+                        'class': "col-md-6",
                         title: "说明信息",
 
                         cellStyle: this.formatMemo
