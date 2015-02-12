@@ -1,8 +1,8 @@
 define(['backbone', 'underscore', 'handlebars', 'jquery',
-    'text!template/mark-memo.hbs', 'bootstrap-datepicker',
+    'text!template/mark-memo.hbs', 'collection/indicators', 'bootstrap-datepicker',
     'fileinput', 'backbone.stickit', 'bootstrap-select', 'jquery.fileDownload'
 ], function(Backbone, _,
-    Handlebars, $, markMemoTemplate) {
+    Handlebars, $, markMemoTemplate, Indicators) {
 
     var MarkMemoView = Backbone.View.extend({
 
@@ -27,7 +27,20 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     labelPath: 'text',
                     valuePath: 'id'
                 },
-                onGet: 'formatKeyValue'
+                onGet: 'formatKeyValue',
+                onSet: 'updateIndicatorList',
+
+            },
+
+            'select#indicator': {
+                observe: 'indicator',
+                selectOptions: {
+                    // Alternatively, `this` can be used to reference anything in the view's scope.
+                    // For example: `collection:'this.stooges'` would reference `view.stooges`.
+                    collection: 'this.indicators',
+                    labelPath: 'name',
+                    valuePath: 'id'
+                }
 
             }
         },
@@ -37,6 +50,21 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             'click button[action=cancel]': 'cancelMemo',
             'dblclick .file-preview-text[data-postscript-id]': 'downloadPostscript',
             'fileclear input[type=file][id=postscriptFiles]': 'clearInitialPreview'
+        },
+
+
+        updateIndicatorList: function(val, options) {
+
+
+            this.indicators.fetch({
+                data: {
+                    menu: val
+                }
+            });
+
+            return val;
+
+
         },
 
         downloadPostscript: function(event) {
@@ -119,8 +147,16 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             // context : this
             // });
             this.menus = options.menus;
+            this.indicators = new Indicators();
+            this.listenTo(this.indicators, 'sync', this.render);
+            this.indicators.fetch({
+                data: {
+                    menu: this.model.get('keyValue')
+                }
+            });
 
-            this.render();
+
+
             this.vents = _.extend({}, Backbone.Events);
         },
 
@@ -167,7 +203,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             var postscriptPreview = [];
 
 
-            if(model.postscripts&&model.postscripts.length>0){
+            if (model.postscripts && model.postscripts.length > 0) {
                 $.each(model.postscripts, function() {
 
                     postscriptPreview.push("<div class='file-preview-text' data-postscript-id='" + this.id + "'>" +
@@ -193,7 +229,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             });
 
 
-          
+
 
 
 
@@ -211,17 +247,17 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
         },
 
 
-        clearInitialPreview: function (event){
+        clearInitialPreview: function(event) {
 
 
 
-                  var $fileinput = $('input[type=file][id=postscriptFiles]', this.el);
+            var $fileinput = $('input[type=file][id=postscriptFiles]', this.el);
 
 
-                  var fileinput = $fileinput.data('fileinput');
-                  fileinput.overwriteInitial = true;
-                  $('input[name=clearPostscript]', this.el).val('true');
-                
+            var fileinput = $fileinput.data('fileinput');
+            fileinput.overwriteInitial = true;
+            $('input[name=clearPostscript]', this.el).val('true');
+
 
 
 
@@ -234,6 +270,17 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             var form = event.target;
             // form.submit();
 
+
+            if (this.model.get('indicator') === undefined || this.model.get('indicator') === 0) {
+
+
+                this.$('#indicator').addClass('has-error');
+
+            } else {
+
+                this.$('#indicator').removeClass('has-error');
+            }
+
             if (($('#picFile', form).data('fileinput').initialPreviewCount < 1) && ($('#picFile', form).data('fileinput').$element
                     .prop("files").length < 1)) {
 
@@ -242,6 +289,9 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                 return;
 
             }
+
+
+
 
 
 
@@ -264,6 +314,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     var res = $.parseJSON(data);
                     this.model.set("id", res.data.id);
                     this.model.set("memoBy", res.data.memoBy);
+                    
 
                     if (isNew) {
                         this.model.set('recStatus', 'inserted');
@@ -294,22 +345,6 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
             return false;
 
-            // var formData = $form.serialize();
-            // formData = formData + "&method=addMemo";
-
-            // $.each($('#picFile', $form)[0].files,
-            // function(key,
-            // value) {
-            // formData = formData + '&filenames[]='
-            // + value;
-            // });
-            // $.ajax({
-
-            // type : 'post',
-            // url : 'reportMemo.do',
-
-            // data : formData
-            // });
 
         }
 

@@ -68,6 +68,7 @@
 				<value>com.itg.dao.UserRole</value>
 				<value>com.itg.dao.ReportMemo</value>
 				<value>com.itg.dao.Postscript</value>
+				<value>com.itg.dao.Indicator</value>
 			</list>
 
 		</property>
@@ -125,6 +126,35 @@
 		</property>
 		<property name="target">
 			<ref local="menuItemDAO" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- IndiactorDAO bean -->
+
+	<bean id="indicatorDAO" class="com.itg.dao.IndicatorDAO">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+
+	<!-- 带事务处理的indiactorDao 代理 -->
+
+	<bean id="indicatorDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="indicatorDAO" />
 		</property>
 		<property name="transactionAttributes">
 			<props>

@@ -90,6 +90,30 @@
 			<ref bean="boeLogon"/>
 		</property>
 	</bean>
+	
+	
+	<bean id="indicatorController" class="com.itg.web.ctl.IndicatorController">
+		<property name="viewName">  
+			<value>reportMemo</value>
+		</property>
+           
+           
+		<property name="menuItemDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="menuItemDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
+
+		<property name="indicatorDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="indicatorDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
+		
+		<property name="reportMemoController">
+			<ref bean="reportMemoController"></ref>
+		</property>
+
+
+      		
+	</bean>
+
       
 	<bean id="reportMemoController" class="com.itg.web.ctl.ReportMemoController">
 		<property name="viewName">  
@@ -103,6 +127,10 @@
 		<property name="userRolesDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
 			<ref bean="userRolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
 		</property>
+		<property name="indicatorDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="indicatorDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
+
            
 		<property name="reportMemoDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
 			<ref bean="reportMemoDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->

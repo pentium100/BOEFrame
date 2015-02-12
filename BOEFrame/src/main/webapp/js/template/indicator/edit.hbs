@@ -1,0 +1,45 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title">指标编辑</h4>
+        </div>
+        <div class="modal-body">
+
+            <form class="form-horizontal" role="form" action="reportMemo.do" method="post">
+                <input type="hidden" id="id" name="id">
+
+                <div class="form-group">
+                    <label for="menu" class="col-md-2 control-label">菜单名称</label>
+                    <div class="col-md-8">
+                        <select class="selectpicker" id="menu" name="menu">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="indicatorName" class="col-md-2 control-label">指标名称</label>
+                    <div class="col-md-8">
+                        <div class="input-group col-md-8">
+                            <input type="text" name="indicatorName" id="indicatorName" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn blue default">提交</button>
+                        <button type="button" class="btn blue" action="delete">删除</button>
+                        <button type="button" class="btn blue" action="cancel">取消</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

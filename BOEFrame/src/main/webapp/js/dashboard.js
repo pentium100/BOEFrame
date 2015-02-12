@@ -34,13 +34,17 @@ require.config({
         },
         'jquery.fileDownload': {
 
+        },
+        'jquery.smartmenus.bootstrap': {
+            deps: ['jquery', 'jquery.smartmenus']
+
         }
     },
     paths: {
 
         jquery: 'libs/jquery-1.11.1',
         handlebars: 'libs/handlebars-v2.0.0',
-        bootstrap: 'libs/bootstrap',
+        bootstrap: 'libs/bootstrap-3.3.1.min',
         text: 'libs/text',
         backbone: 'libs/backbone',
         underscore: 'libs/underscore',
@@ -53,19 +57,21 @@ require.config({
         'bootstrap-select': 'libs/bootstrap-select',
         'jquery-cookie': 'libs/jquery-cookie',
         'jquery-fullscreen': 'libs/jquery.fullscreen',
-        'jquery.fileDownload': 'libs/jquery.fileDownload'
+        'jquery.fileDownload': 'libs/jquery.fileDownload',
+        'jquery.smartmenus.bootstrap': 'libs/jquery.smartmenus.bootstrap',
+        'jquery.smartmenus': 'libs/jquery.smartmenus'
 
     }
 
 });
 
 require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
-    'text!template/slide-item.hbs', 'jquery', 'bootstrap',
-    'handlebars', 'jquery', 'collection/menus',
+    'text!template/slide-item.hbs', 'collection/indicators', 'jquery', 'bootstrap',
+    'handlebars', 'collection/menus',
     'collection/reportMemos', 'backbone', 'jquery-cookie',
     'jquery-fullscreen'
 ], function(menuSrc, slideIndicatorSrc,
-    slideItemSrc, jquery, bootstrap, Handlebars, $, MenuCollection,
+    slideItemSrc, Indicators, jquery, bootstrap, Handlebars, MenuCollection,
     ReportMemoCollection, Backbone) {
     Handlebars.registerHelper('substring', function(passedString,
         options) {
@@ -201,8 +207,33 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         // $('#markMemo').on('click', markMemo);
         $('#reportMemoLink').on('click', LoadReportMemoList);
         $('a[href=#slideSetting]').on('click', LoadMemoOptions);
+        $('a[href=#indicatorMaintain]').on('click', LoadIndicatorList);
 
         $('.thumb').on('click', setThumbSelected);
+
+    };
+
+
+    var LoadIndicatorList = function() {
+
+        require(['view/indicator/list'], function(IndicatorListView) {
+
+            if (currentView !== null) {
+
+                currentView.trigger('closeView');
+
+            }
+            var view = new IndicatorListView({
+                menus: menus,
+                vent: vent
+            });
+            $('.tab-pane#indicatorMaintain').html(view.$el);
+            currentView = view;
+
+        });
+
+
+
 
     };
 
@@ -218,7 +249,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     var resizeImage = function() {
 
-        var height = window.innerHeight - $('.navbar').height() - 60;
+        var height = window.innerHeight - $('.navbar').height() - 100;
 
         $('#sliderTab pre#reportMemo').css("height", (height - 35 - $('#memoBy').height() - $('.postscript-files-list').height() + 'px'));
 
@@ -341,18 +372,46 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     var vent = new _.extend({}, Backbone.Events);
 
     var memos = new ReportMemoCollection();
+    var indicator = -10;
 
-    var loadSlideItem = function() {
+    var loadSlideItem = function(event) {
+
+        
+
+        if (event !== undefined && event.target) {
+            newIndicator = $(event.target).attr('data-indicator-id');
+        }else{
+            newIndicator = 0;
+        }
+
+         if(newIndicator!=indicator){
+
+            indicator = newIndicator;
+         }else{
+            return;
+         }
 
         memos.fetch({
 
             data: {
                 node: 900,
                 enabled: true,
-                method: "getMemoList"
+                method: "getMemoList",
+                indicator: indicator
             },
             success: initSlide
         });
+
+
+        if(indicator>0){
+
+
+            $('#indicatorMenu').addClass('active');
+            $('#jumpToSlide').parent('li').removeClass('active');
+
+        }
+
+
 
     };
 
@@ -459,8 +518,71 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     };
 
+    var updateIndicatorsOptions = function(event) {
+
+
+        var preMenu = "";
+        var level1 = $('#indicatorMenu>ul');
+        var level2 = null;
+
+
+        event.models.forEach(function(value, idx) {
+
+
+
+            if (preMenu != value.get('menuText')) {
+
+                if (level2 !== null) {
+                    level1.append(level2);
+
+                }
+                preMenu = value.get('menuText');
+
+
+                level2 = $(' <li class="dropdown-submenu"><a href="#"  class="dropdown-toggle" data-toggle="dropdown" >' + value.get('menuText') + '</a><ul class="dropdown-menu"></ul></li>');
+
+
+            }
+
+            $('ul', level2).append('<li><a href="#"  data-indicator-id="' + value.get('id') + '">' + value.get('name') + '</a></li>');
+
+        });
+
+        level1.append(level2);
+
+        level1.on('click', 'a[data-indicator-id]', loadSlideItem);
+
+        //$('#indicatorMenu>ul').smartmenus({
+        //    hideOnClick:true
+        //});
+
+
+
+
+    };
+
+
+    var loadAllIndicatorsToSelect = function() {
+
+
+
+
+        var indicators = new Indicators();
+        indicators.on('sync', updateIndicatorsOptions, indicators);
+        indicators.fetch();
+
+        $('#jumpToSlide').on('click', loadSlideItem);
+
+
+
+
+    };
+
+    loadAllIndicatorsToSelect();
+
     loadMenuItem();
     loadSlideItem();
     initDashboard();
+
 
 });

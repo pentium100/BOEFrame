@@ -30,7 +30,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             'dbl-click-row.bs.table table': 'editMemo',
             'click button#newReportMemo': 'newMemo'
 
-            // 'hidden.bs.modal div' : 'updateRow'
+
         },
 
 
@@ -105,7 +105,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             $('table', this.el).bootstrapTable({
                 queryParams: this.queryParams,
 
-                toolbar: "#custem-toolbar",
+                toolbar: ToolbarTemplate,
 
                 columns: [
 
@@ -137,10 +137,6 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
             });
 
-            // this.$('table').on('dbl-click-row.bs.table',
-            // this.editMemo);
-            // $('table', this.el).bootstrapTable('load',
-            // this.collection.models);
 
         },
 
@@ -175,11 +171,6 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
         editMemo: function(e, row, $element) {
 
             var modalId = _.uniqueId("modal_");
-            // var selectedId = $('.x-view-selected')
-            // .attr('data-id');
-
-            // var menuModel =
-            // menus.get(parseInt(selectedId)).attributes;
             this.model = new Backbone.Model(row);
 
             var view = new ModalMarkMemoView({

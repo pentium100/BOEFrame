@@ -13,10 +13,10 @@
 
         <title>厦门国贸集团股份有限公司 管理驾驶舱</title>
 
-        
+
         <!-- Bootstrap Core CSS -->
-        <link href="css/bootstrap.css" rel="stylesheet">
-        
+        <link href="css/bootstrap-3.3.1.min.css" rel="stylesheet">
+
 
         <!-- Custom CSS 
         
@@ -29,35 +29,8 @@
         <link href="css/bootstrap-select.min.css" rel="stylesheet">
         <link href="css/dashboard.css" rel="stylesheet">
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 
-        <!--
-        <style type="text/css">
-        /*CSS*/
-        
-        div.c-wrapper {
-            width: 80%;
-            /* for example */
-            
-            margin: auto;
-        }
-        .carousel-inner>.item>img,
-        .carousel-inner>.item>a>img {
-            width2: 100%;
-            /* use this, or not */
-            
-            height: 100%;
-            margin: auto;
-        }
-        </style>
-
--->
 
     </head>
 
@@ -87,8 +60,19 @@ navbar navbar-default navbar-fixed-top
                     <ul class="nav navbar-nav nav-tabs22 nav-pills" role="tablist">
                         <li class=""><a href="#home" role="tab" data-toggle="tab">全部指标</a>
                         </li>
-                        <li class="active"><a href="#sliderTab" id="jumpToSlide" role="tab" data-toggle="tab">分项浏览</a>
+                        <li class="active"><a href="#sliderTab" id="jumpToSlide" role="tab" data-toggle="tab">最新月所有指标浏览</a>
                         </li>
+
+
+
+                        <li id="indicatorMenu" ><a href="#"  class="dropdown-toggle" data-toggle="dropdown" >单个指标多月浏览<span class="caret"></span></a>
+
+                            <ul class="dropdown-menu multi-level">
+                            </ul>  
+
+                        </li>
+
+
                         <li class="dropdown" ><a href="#" class="dropdown-toggle" data-toggle="dropdown">设置<span class="caret"></span></a>
 
                             <ul  class="dropdown-menu" role="menu">
@@ -97,10 +81,16 @@ navbar navbar-default navbar-fixed-top
                                 </li>
                                 <li class=""><a href="#slideSetting" role="tab" data-toggle="tab">浏览设置</a>
                                 </li>    
+                                <li class=""><a href="#indicatorMaintain" role="tab" data-toggle="tab">指标设置</a>
+                                </li>    
+
                             </ul>
 
                         </li>
-                        
+
+
+
+
 
                     </ul>
                 </div>
@@ -110,12 +100,13 @@ navbar navbar-default navbar-fixed-top
         </nav>
 
         <!-- Page Content -->
-        <div class="container-fluid tab-content memo" >  
+        <div class="container-fluid tab-content memo">
 
 
             <div class="tab-pane row" id="home"></div>
-            <div class="tab-pane "  id="reportMemoList"></div>
+            <div class="tab-pane " id="reportMemoList"></div>
             <div class="tab-pane" id="slideSetting"></div>
+            <div class="tab-pane" id="indicatorMaintain"></div>
 
 
             <div id="sliderTab" class="tab-pane active">
@@ -136,26 +127,16 @@ navbar navbar-default navbar-fixed-top
                 </div>
             </div>
 
-
-            <hr>
-
-            <!-- Footer -->
-            <footer>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>Copyright &copy; 厦门国贸集团股份有限公司 2014</p>
-                    </div>
-                    <div id="modals" tabindex="-1"></div>
+            <div id="modals" tabindex="-1"></div>
 
 
-                    <div tabindex="-1" style="display:none">
+            <div tabindex="-1" style="display:none">
                         <div id="custem-toolbar">
 
                         </div>
-                    </div>
+            </div>
 
-                </div>
-            </footer>
+
 
             <!-- jQuery Version 1.11.0 -->
             <script data-main="js/dashboard" src="js/libs/require.js"></script>

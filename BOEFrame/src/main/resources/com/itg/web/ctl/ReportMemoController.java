@@ -44,12 +44,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-
-
+import com.itg.dao.IIndicatorDAO;
 import com.itg.dao.IMenuItemDAO;
 import com.itg.dao.IReportMemoDAO;
 import com.itg.dao.IRolesDAO;
 import com.itg.dao.IUserRolesDAO;
+import com.itg.dao.Indicator;
 import com.itg.dao.Postscript;
 import com.itg.dao.ReportMemo;
 import com.itg.dao.UserRole;
@@ -66,6 +66,15 @@ public class ReportMemoController {
 	private IUserRolesDAO userRolesDAO;
 	private IRolesDAO rolesDAO;
 	private IMenuItemDAO menuItemDAO;
+	private IIndicatorDAO indicatorDAO;
+
+	public IIndicatorDAO getIndicatorDAO() {
+		return indicatorDAO;
+	}
+
+	public void setIndicatorDAO(IIndicatorDAO indicatorDAO) {
+		this.indicatorDAO = indicatorDAO;
+	}
 
 	public IMenuItemDAO getMenuItemDAO() {
 		return menuItemDAO;
@@ -154,6 +163,7 @@ public class ReportMemoController {
 			@RequestParam(value = "start", required = false) Integer start,
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "forEdit", required = false) Boolean forEdit,
+			@RequestParam(value = "indicator", required = false) Long indicator,
 			HttpServletRequest request) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -172,6 +182,14 @@ public class ReportMemoController {
 		if (limit == null || limit == 0) {
 			limit = 1000000;
 		}
+		if (indicator == null) {
+
+			indicator = 0L;
+		}
+		if (indicator != 0) {
+
+			limit = 12;
+		}
 
 		if (start == null) {
 			start = 0;
@@ -188,23 +206,21 @@ public class ReportMemoController {
 		}
 
 		List<ReportMemo> memos = reportMemoDAO.getMemoInList(menuIds,
-				isEnabled, start, limit, searchToken);
+				isEnabled, start, limit, searchToken, indicator);
 
 		Long count = reportMemoDAO.getMemoCountInList(menuIds, isEnabled,
-				searchToken, forEdit, fullName);
+				searchToken, forEdit, fullName, indicator);
 
 		ArrayList<Map> result = new ArrayList<Map>();
 		for (ReportMemo memo : memos) {
 
-			//if (memo.getKeyValue().equals("913")) {
+			// if (memo.getKeyValue().equals("913")) {
 
-			//	if (!checkHasAuthValue(request, "PRCTR_AA", "1000")) {
-			//		continue;
-			//	}
+			// if (!checkHasAuthValue(request, "PRCTR_AA", "1000")) {
+			// continue;
+			// }
 
-			//}
-
-
+			// }
 
 			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("id", memo.getId());
@@ -213,6 +229,7 @@ public class ReportMemoController {
 			m.put("isEnabled", memo.getIsEnabled());
 			m.put("keyDate", sdf.format(memo.getKeyDate()));
 			m.put("memoBy", memo.getMemoBy());
+			m.put("indicator", memo.getIndicator().getId());
 
 			List<Map> postscripts = new ArrayList<Map>();
 			for (Postscript p : memo.getPostscripts()) {
@@ -237,10 +254,6 @@ public class ReportMemoController {
 		JSONObject json = new JSONObject();
 		json.put("total", count);
 		json.put("rows", result);
-
-		// JSONArray json = JSONArray.fromObject(jsonResult);
-
-		// map.put("menuList", json);
 
 		map.put("menu_json", json);
 		return "BOEFrame";
@@ -281,7 +294,7 @@ public class ReportMemoController {
 
 	};
 
-	private List<MenuItem> getAuthMenu(Integer parentNode,
+	public List<MenuItem> getAuthMenu(Integer parentNode,
 			HttpServletRequest request) {
 
 		// map是用来设置View层数据的
@@ -351,8 +364,8 @@ public class ReportMemoController {
 		response.setCharacterEncoding("UTF-8");
 		response.setHeader("Content-Description", "File Transfer");
 		response.setHeader("Content-Disposition", "attachment; filename=\""
-				+ URLEncoder.encode(p.getFileName(), "utf-8")+"\"");
-		          
+				+ URLEncoder.encode(p.getFileName(), "utf-8") + "\"");
+
 		// response.setHeader("Content-Transfer-Encoding", "binary");
 		// response.setHeader("Content-Type", "binary/octet-stream");
 
@@ -409,6 +422,7 @@ public class ReportMemoController {
 			@RequestParam(value = "keyDate", required = false) Date keyDate,
 			@RequestParam(value = "isEnabled", required = false) Boolean isEnabled,
 			@RequestParam(value = "memo", required = false) String memo,
+			@RequestParam(value = "indicator", required = false) Long indicator,
 			HttpServletRequest request
 
 	) {
@@ -417,8 +431,7 @@ public class ReportMemoController {
 		if (id != null) {
 
 			reportMemo = reportMemoDAO.findReportMemoById(id);
-			
-			
+
 		}
 
 		if ((reportMemo == null)) {
@@ -426,9 +439,9 @@ public class ReportMemoController {
 			reportMemo = new ReportMemo();
 
 		}
-		
-		if(clearPostscript){
-			
+
+		if (clearPostscript) {
+
 			reportMemo.getPostscripts().clear();
 		}
 
@@ -460,6 +473,9 @@ public class ReportMemoController {
 
 		reportMemo.setKeyDate(keyDate);
 		reportMemo.setKeyValue(keyValue);
+		Indicator indicator2 = indicatorDAO.findById(indicator);
+
+		reportMemo.setIndicator(indicator2);
 
 		reportMemo.setIsEnabled(isEnabled);
 		reportMemo.setMemo(memo);
@@ -480,10 +496,6 @@ public class ReportMemoController {
 
 		json.put("result", "success");
 		json.element("data", reportMemo, jsonConfig);
-
-		// JSONArray json = JSONArray.fromObject(jsonResult);
-
-		// map.put("menuList", json);
 
 		map.put("menu_json", json);
 

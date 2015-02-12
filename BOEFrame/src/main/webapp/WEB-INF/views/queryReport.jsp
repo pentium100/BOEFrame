@@ -97,7 +97,7 @@ function getCookie(name)//取cookies函数
                                     if(Ext.getCmp("selectForm").getForm().isValid()){
                                        
                                     	Ext.getCmp("selectForm").toggleCollapse(true);
-                          	 			Ext.getCmp("SORiframe").setSrc("${openDocumentUrl}&token="+getCookie('LogonToken')+getUrl());
+                          	 			Ext.getCmp("SORiframe").setSrc("${openDocumentUrl}&token="+getCookie('LogonToken').replace(/"/g,'')+getUrl());
                           	 		}
                           	 			
                              
@@ -141,7 +141,7 @@ function getCookie(name)//取cookies函数
        }
     
        Ext.getCmp("selectForm").toggleCollapse(true);
-       Ext.getCmp("SORiframe").setSrc("${openDocumentUrl}&token="+getCookie('LogonToken')+getUrl());
+       Ext.getCmp("SORiframe").setSrc("${openDocumentUrl}&token="+getCookie('LogonToken').replace(/"/g,'')+getUrl());
 
     
     }

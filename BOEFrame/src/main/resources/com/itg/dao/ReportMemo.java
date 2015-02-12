@@ -26,6 +26,18 @@ public class ReportMemo {
 	private Date memoAt; // ±¸×¢Ê±¼ä
 
 	private Boolean isEnabled;
+	
+	
+	private Indicator indicator;
+
+	@ManyToOne
+	public Indicator getIndicator() {
+		return indicator;
+	}
+
+	public void setIndicator(Indicator indicator) {
+		this.indicator = indicator;
+	}
 
 	private List<Postscript> postscripts;
 
