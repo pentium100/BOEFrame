@@ -93,7 +93,7 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 			sql = sql + " and r.indicator.id = :indicator";
 		}
 
-		sql = sql + " order by m.menuText ";
+		sql = sql + " order by m.menuText, r.keyDate desc ";
 
 		org.hibernate.Query q = getSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
