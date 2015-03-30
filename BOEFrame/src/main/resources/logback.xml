@@ -29,7 +29,7 @@
 	</appender> 
     
 	<!-- 日志输出级别 -->
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>
 
@@ -39,11 +39,12 @@
         <appender-ref ref="FILE" />  
     </logger>  
 	
+	<logger name="org.springframework" level="TRACE">  
+        <appender-ref ref="STDOUT" />  
+        <appender-ref ref="FILE" />  
+    </logger>  
 	
- 
-	
-	
-	
+ 	
 	
 	
 </configuration>

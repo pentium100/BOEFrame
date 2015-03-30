@@ -171,12 +171,17 @@ public class IndicatorController {
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public String delete(ModelMap map,
-			@RequestParam(value = "indiactor") Indicator indiactor) {
+			@RequestParam(value = "id") Integer id) {
+		
+		Indicator indicator = indicatorDAO.findById(Long.valueOf(id));
+		if(indicator!=null){
 
-		indicatorDAO.deleteIndicator(indiactor);
+
+			indicatorDAO.deleteIndicator(indicator);
+		}
 		JSONObject json = new JSONObject();
 		json.put("result", "success");
-		json.put("data", indiactor);
+		json.put("data", indicator);
 
 		map.put("menu_json", json);
 

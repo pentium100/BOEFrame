@@ -18,7 +18,7 @@
 
 		<param-name>contextConfigLocation</param-name>
 
-		<param-value>/WEB-INF/applicationContext.xml,/WEB-INF/BOEFrame-servlet.xml,/WEB-INF/applicationContext-rest.xml </param-value>
+		<param-value>/WEB-INF/BOEFrame-servlet.xml,/WEB-INF/applicationContext.xml,/WEB-INF/applicationContext-rest.xml </param-value>
 		<!--
 				自动载入的spring配置
 			-->

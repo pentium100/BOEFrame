@@ -202,6 +202,7 @@ public class QueryController {
     	if(map.get("token")==null){
     		try {
     			logonTokenMgr = enterpriseSession.getLogonTokenMgr();
+    			
     			String token = logonTokenMgr.createLogonToken("", 1440, 10000);
     			cookie = new Cookie("LogonToken", token);
     			map.put("token", token);

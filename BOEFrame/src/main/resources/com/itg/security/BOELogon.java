@@ -49,6 +49,8 @@ public class BOELogon {
 	public IEnterpriseSession logon() throws SDKException
 	{
 		return CrystalEnterprise.getSessionMgr().logon(userName, password, cMSName, authentication);
+		//CrystalEnterprise.getSessionMgr().
+		
 		
 	}
 
