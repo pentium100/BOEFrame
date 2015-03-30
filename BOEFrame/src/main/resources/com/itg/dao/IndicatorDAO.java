@@ -2,22 +2,40 @@ package com.itg.dao;
 
 import java.util.List;
 
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.hibernate.type.Type;
 
-public class IndicatorDAO extends HibernateDaoSupport implements IIndicatorDAO {
+
+public class IndicatorDAO implements IIndicatorDAO {
+	
+	
+    
+    private SessionFactory sessionFactory;
+    
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	public void insertIndicator(Indicator indiactor) {
-		getHibernateTemplate().saveOrUpdate(indiactor);
+		sessionFactory.getCurrentSession().saveOrUpdate(indiactor);
+		//getHibernateTemplate().saveOrUpdate(indiactor);
 
 	}
 
 	public void modifyIndicator(Indicator indiactor) {
-		getHibernateTemplate().saveOrUpdate(indiactor);
+		sessionFactory.getCurrentSession().saveOrUpdate(indiactor);
+		//getHibernateTemplate().saveOrUpdate(indiactor);
 
 	}
 
 	public void deleteIndicator(Indicator indiactor) {
-		getHibernateTemplate().delete(indiactor);
+		//getHibernateTemplate().delete(indiactor);
+		sessionFactory.getCurrentSession().delete(indiactor);
 
 	}
 
@@ -33,7 +51,7 @@ public class IndicatorDAO extends HibernateDaoSupport implements IIndicatorDAO {
 
 		sql = sql + " order by menu.menuText ";
 
-		org.hibernate.Query q = getSession().createQuery(sql);
+		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 
 		if (menuIds.size() > 0) {
 
@@ -56,7 +74,7 @@ public class IndicatorDAO extends HibernateDaoSupport implements IIndicatorDAO {
 			sql += " where menu.id in (:menus) ";
 
 		}
-		org.hibernate.Query q = getSession().createQuery(sql);
+		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 
 		if (menuIds.size() > 0) {
 
@@ -72,8 +90,12 @@ public class IndicatorDAO extends HibernateDaoSupport implements IIndicatorDAO {
 	public Indicator findById(Long id) {
 
 		String sql = "From Indicator where ID=? Order By ID";
-		List<Indicator> findByNamedQuery = getHibernateTemplate().find(sql,
-				new Object[] { id });
+		Query query = sessionFactory.getCurrentSession().createQuery(sql);
+		query.setParameter(0, id);
+		List<Indicator> findByNamedQuery = query.list();
+		
+		
+		
 		if (findByNamedQuery.size() > 0) {
 			return findByNamedQuery.get(0);
 		} else {

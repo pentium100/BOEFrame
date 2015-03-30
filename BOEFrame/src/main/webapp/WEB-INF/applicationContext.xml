@@ -130,6 +130,7 @@
 		<property name="transactionAttributes">
 			<props>
 				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
 				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
 			</props>
 		</property>
@@ -158,7 +159,7 @@
 		</property>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
 				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
 			</props>
 		</property>
@@ -188,7 +189,7 @@
 		</property>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
 				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
 			</props>
 		</property>
@@ -211,7 +212,7 @@
 		</property>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
 				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
 			</props>
 		</property>
@@ -233,7 +234,7 @@
 		</property>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
 				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
 			</props>
 		</property>

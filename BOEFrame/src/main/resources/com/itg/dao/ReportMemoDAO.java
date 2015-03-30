@@ -3,17 +3,26 @@ package com.itg.dao;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Query;
+import org.hibernate.SessionFactory;
 
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public class ReportMemoDAO extends HibernateDaoSupport implements
+public class ReportMemoDAO implements
 		IReportMemoDAO {
 
+	
+	private SessionFactory sessionFactory;
+	
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 	public Long getReportMemoCount(Date keyDate, String keyValue) {
 
 		String sql = "select count(*) From ReportMemo where keyDate<=? and keyValue=? ";
-		org.hibernate.Query q = getSession().createQuery(sql);
+		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 		q.setParameter(0, keyDate);
 		q.setParameter(1, keyValue);
 
@@ -24,14 +33,17 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 
 	public void deleteReportMemo(ReportMemo rm) {
 		// TODO Auto-generated method stub
-		getHibernateTemplate().delete(rm);
+		sessionFactory.getCurrentSession().delete(rm);
 	}
 
 	public ReportMemo findReportMemoById(Integer id) {
 		// TODO Auto-generated method stub
 		String sql = "From ReportMemo where id=? ";
-		return (ReportMemo) getHibernateTemplate().find(sql,
-				new Object[] { id }).get(0);
+		
+		org.hibernate.Query query = sessionFactory.getCurrentSession().createQuery(sql);
+		query.setParameter(0, id);
+				
+		return (ReportMemo) (query.list().get(0));
 
 	}
 
@@ -40,7 +52,7 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 			int start, int limit) {
 		// TODO Auto-generated method stub
 		String sql = "From ReportMemo where keyDate<=? and keyValue=? Order By ID desc";
-		org.hibernate.Query q = getSession().createQuery(sql);
+		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 		q.setParameter(0, keyDate);
 		q.setParameter(1, keyValue);
 		q.setFirstResult(start);
@@ -55,12 +67,12 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 
 	public void insertReportMemo(ReportMemo rm) {
 		// TODO Auto-generated method stub
-		getHibernateTemplate().save(rm);
+		sessionFactory.getCurrentSession().save(rm);
 	}
 
 	public void modifyReportMemo(ReportMemo rm) {
 		// TODO Auto-generated method stub
-		getHibernateTemplate().saveOrUpdate(rm);
+		sessionFactory.getCurrentSession().saveOrUpdate(rm);
 
 	}
 
@@ -95,7 +107,7 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 
 		sql = sql + " order by m.menuText, r.keyDate desc ";
 
-		org.hibernate.Query q = getSession().createQuery(sql);
+		org.hibernate.Query q =sessionFactory.getCurrentSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
 		q.setParameter("memo", "%" + searchToken + "%");
 
@@ -120,7 +132,7 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 
 		String sql = "From Postscript where id = :id";
 
-		org.hibernate.Query q = getSession().createQuery(sql);
+		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 		q.setParameter("id", id);
 
 		List<Postscript> postscripts = q.list();
@@ -148,7 +160,7 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 		}
 
 
-		org.hibernate.Query q = getSession().createQuery(sql);
+		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
 
 		q.setParameter("memo", "%" + searchToken + "%");
@@ -176,7 +188,7 @@ public class ReportMemoDAO extends HibernateDaoSupport implements
 	public byte[] getReportMemoImage(Integer id) {
 
 		String sql = "select image From ReportMemo where id = :id ";
-		org.hibernate.Query q = getSession().createQuery(sql);
+		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 
 		q.setParameter("id", id);
 

@@ -78,7 +78,7 @@ public class MultiCommonsMultipartResolver extends CommonsMultipartResolver {
 				}
 			}
 		}
-		return new MultipartParsingResult(multipartFiles, multipartParameters);
+		return new MultipartParsingResult(null, multipartFiles, multipartParameters);
 	}
 
 	private String getMultipartFileKey(Map multipartFiles, String fieldName) {

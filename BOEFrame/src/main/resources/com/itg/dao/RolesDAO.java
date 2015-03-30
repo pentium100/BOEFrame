@@ -5,18 +5,29 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.SessionFactory;
 
-public class RolesDAO extends HibernateDaoSupport implements IRolesDAO {
+
+public class RolesDAO implements IRolesDAO {
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see com.itg.dao.IRolesDAO#insertRole(com.itg.dao.Role)
 	 */
+	
+	private SessionFactory sessionFactory;
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 	public void insertRole(Role role) {
 
-		getHibernateTemplate().saveOrUpdate(role);
+		sessionFactory.getCurrentSession().saveOrUpdate(role);
 	}
 
 	/*
@@ -29,8 +40,10 @@ public class RolesDAO extends HibernateDaoSupport implements IRolesDAO {
 
 		String sql = "From Role where roleName=? and authObject=?";
 
-		List<Role> findByNamedQuery = getHibernateTemplate().find(sql,
-				new Object[] { role, authObj });
+		Query query = sessionFactory.getCurrentSession().createQuery(sql);
+		query.setParameter(0, role);
+		query.setParameter(1, authObj);
+		List<Role> findByNamedQuery = query.list();
 
 		return findByNamedQuery;
 
@@ -47,7 +60,7 @@ public class RolesDAO extends HibernateDaoSupport implements IRolesDAO {
 			List<String> authValue) {
 
 		String sql = "From Role where roleName in (:roleName) and authObject=:authObject and authValue in (:authValue)";
-		Session s = getSession();
+		Session s = sessionFactory.getCurrentSession();
 		try {
 			Query q = s.createQuery(sql);
 
@@ -65,7 +78,7 @@ public class RolesDAO extends HibernateDaoSupport implements IRolesDAO {
 			}
 			return l;
 		} finally {
-			releaseSession(s);
+			//s.close();
 		}
 
 	}

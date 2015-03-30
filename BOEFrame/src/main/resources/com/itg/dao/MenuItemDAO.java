@@ -3,14 +3,29 @@ package com.itg.dao;
 import java.util.List;
 
 
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public class MenuItemDAO extends HibernateDaoSupport implements IMenuItemDAO {
+
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+
+
+public class MenuItemDAO implements IMenuItemDAO {
+	
+	
+	private SessionFactory sessionFactory;
+	
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	public void insertMenuItem(MenuItem menuItem) {
 		
 		
-		getHibernateTemplate().saveOrUpdate(menuItem);
+		sessionFactory.getCurrentSession().saveOrUpdate(menuItem);
 
 
 	}
@@ -28,7 +43,9 @@ public class MenuItemDAO extends HibernateDaoSupport implements IMenuItemDAO {
         	parentID = Integer.valueOf(parentMenuItem.getID());
         }
         
-        List<MenuItem> findByNamedQuery = getHibernateTemplate().find(sql, new Object[]{parentID});
+        Query query = sessionFactory.getCurrentSession().createQuery(sql);
+        query.setParameter(0, parentID);
+        List<MenuItem> findByNamedQuery = query.list();
         
         return findByNamedQuery;
 	}
@@ -43,7 +60,10 @@ public class MenuItemDAO extends HibernateDaoSupport implements IMenuItemDAO {
 		// TODO Auto-generated method stub
 		
 		String sql="From MenuItem where ID=? Order By ID";
-		List<MenuItem> findByNamedQuery = getHibernateTemplate().find(sql, new Object[]{ID});
+        Query query = sessionFactory.getCurrentSession().createQuery(sql);
+        query.setParameter(0, ID);
+
+		List<MenuItem> findByNamedQuery = query.list();
 		if (findByNamedQuery.size() > 0){
 			return findByNamedQuery.get(0);
 		}

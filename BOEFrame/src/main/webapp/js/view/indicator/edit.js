@@ -78,9 +78,10 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
             $.ajax({
                 url: 'indicators.do',
-                type: 'DELETE',
+                type: 'POST',
                 data: {
-                    'id': this.model.get('id')
+                    'id': this.model.get('id'),
+                    'method':'delete'
 
                 },
                 async: false,
