@@ -44,7 +44,7 @@ require.config({
 
         jquery: 'libs/jquery-1.11.1',
         handlebars: 'libs/handlebars-v2.0.0',
-        bootstrap: 'libs/bootstrap-3.3.1.min',
+        bootstrap: 'libs/bootstrap',
         text: 'libs/text',
         backbone: 'libs/backbone',
         underscore: 'libs/underscore',
@@ -66,13 +66,13 @@ require.config({
 });
 
 require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
-    'text!template/slide-item.hbs', 'collection/indicators', 'jquery', 'bootstrap',
+    'text!template/slide-item.hbs', 'text!template/slide.hbs', 'collection/indicators', 'jquery', 'bootstrap',
     'handlebars', 'collection/menus',
-    'collection/reportMemos', 'backbone', 'jquery-cookie',
+    'collection/reportMemos', 'collection/indicatorSets', 'backbone', 'jquery-cookie',
     'jquery-fullscreen'
 ], function(menuSrc, slideIndicatorSrc,
-    slideItemSrc, Indicators, jquery, bootstrap, Handlebars, MenuCollection,
-    ReportMemoCollection, Backbone) {
+    slideItemSrc, slideSrc, Indicators, jquery, bootstrap, Handlebars, MenuCollection,
+    ReportMemoCollection, IndicatorSets,Backbone) {
     Handlebars.registerHelper('substring', function(passedString,
         options) {
 
@@ -180,7 +180,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
             menus: data
         });
 
-        $('#home').append(menuHtml);
+        $('#home').html(menuHtml);
 
         $("img").on("dblclick", function(evt) {
             var target = evt.target;
@@ -205,13 +205,40 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
         });
         // $('#markMemo').on('click', markMemo);
-        $('#reportMemoLink').on('click', LoadReportMemoList);
-        $('a[href=#slideSetting]').on('click', LoadMemoOptions);
-        $('a[href=#indicatorMaintain]').on('click', LoadIndicatorList);
 
         $('.thumb').on('click', setThumbSelected);
+        
+        setMenuItemActive($('#mainTab'), $('a[href=#home]'));
 
     };
+    
+    var setMenuItemActive = function($ul, $el){
+    	
+    	
+    	$ul.children('li').removeClass('active');
+    	$el.parent('li').addClass('active');
+    	
+    	
+    };
+    
+    $(window).ready(function () {
+    	    /*
+    	
+    	     * Scroll the window to avoid the topnav bar
+    	     * https://github.com/twitter/bootstrap/issues/1768
+    	     */
+    	    if ($(".navbar-default.navbar-fixed-top").length > 0) {
+    	      // var navHeight = $(".navbar").height(),
+    	      var navHeight = 40,
+    	        shiftWindow = function() { scrollBy(0, -navHeight - 10); };
+    	
+    	      if (location.hash) {
+    	        setTimeout(shiftWindow, 1);
+    	      }
+    	
+    	      window.addEventListener("hashchange", shiftWindow);
+    	    }
+    	  });
 
 
     var LoadIndicatorList = function() {
@@ -227,9 +254,11 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
                 menus: menus,
                 vent: vent
             });
-            $('.tab-pane#indicatorMaintain').html(view.$el);
+            //$('.tab-pane#indicatorMaintain').html(view.$el);
+            $('#home').html(view.$el);
             currentView = view;
 
+            setMenuItemActive($('#mainTab'), $('#settingMenu>a'));
         });
 
 
@@ -301,12 +330,18 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         var slideItemHtml = slideItemTemplate({
             menus: data
         });
+        
+        
+        var slideTemplate = Handlebars.compile(slideSrc);
+        var slideHtml = slideTemplate();
 
-        $(".carousel-indicators").html(slideIndicatorHtml);
-        $(".carousel-inner").html(slideItemHtml);
+        var $slideHtml = $(slideHtml);
+        
+        $(".carousel-indicators", $slideHtml).append(slideIndicatorHtml);
+        $(".carousel-inner", $slideHtml).append(slideItemHtml);
 
         // $('.carousel').on('slide.bs.carousel', updateMemo);
-        $('.carousel').carousel({
+        $('.carousel', $slideHtml).carousel({
             interval: interval
         });
         // $('.carousel').on('slid.bs.carousel', updateMemo);
@@ -316,9 +351,9 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
             // updateMemoByModel(memoModel);
         }
 
-        $('.carousel img').hover(hoverIn, hoverOut);
+        $('.carousel img', $slideHtml).hover(hoverIn, hoverOut);
 
-        $(".carousel .img").on("dblclick", function(evt) {
+        $(".carousel .img", $slideHtml).on("dblclick", function(evt) {
             var target = evt.target;
             var id = $(target).attr("data-menuId");
             var menuItem = $('img[data-id=' + id + ']');
@@ -340,6 +375,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
             }
 
         });
+        
+        $('#home').html($slideHtml);
 
         $(window).ready(resizeImage);
 
@@ -364,15 +401,62 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
             }
 
         });
+        
+        
+        $('a[href=#home]').on('click', loadMenuItem);
 
     };
 
     var menus;
+    menus = new MenuCollection();
+
+    menus.fetch({
+        data: {
+            node: 900
+        }
+    });
+
 
     var vent = new _.extend({}, Backbone.Events);
 
     var memos = new ReportMemoCollection();
     var indicator = -10;
+    
+    
+    
+    var loadSlideItemByIndicatorSet = function(event){
+    	
+        if (event !== undefined && event.target) {
+            indicatorSet = $(event.target).attr('data-indicatorSet-id');
+            
+               
+            
+        }else{
+        	return;
+        }
+       
+        memos.fetch({
+
+            data: {
+                node: 900,
+                enabled: true,
+                method: "getMemoList",
+                indicatorSet: indicatorSet
+            },
+            success: initSlide
+        });
+
+
+        if(indicatorSet>0){
+
+        	
+        	setMenuItemActive($('#mainTab'), $('#indicatorSetMenu>a'));
+            
+
+        }
+
+    	
+    };
 
     var loadSlideItem = function(event) {
 
@@ -380,15 +464,20 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
         if (event !== undefined && event.target) {
             newIndicator = $(event.target).attr('data-indicator-id');
+            
+                
+            
         }else{
             newIndicator = 0;
         }
+       
+        
+       
+        
 
          if(newIndicator!=indicator){
 
             indicator = newIndicator;
-         }else{
-            return;
          }
 
         memos.fetch({
@@ -405,17 +494,26 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
         if(indicator>0){
 
+        	
+        	setMenuItemActive($('#mainTab'), $('#indicatorMenu>a'));
+            //$('#indicatorMenu').addClass('active');
+            
+            //$('#jumpToSlide').parent('li').removeClass('active');
+            //$('a[href=#home]').parent('li').removeClass('active');
+            //$('#settingMenu').removeClass('active');
+            //$(event.target).parent('li').removeClass('active');
+            
 
-            $('#indicatorMenu').addClass('active');
-            $('#jumpToSlide').parent('li').removeClass('active');
-
+        }else{
+        	
+        	setMenuItemActive($('#mainTab'), $('#mainTab>li>a[href=#sliderTab]'));
         }
 
 
 
     };
 
-    vent.bind('app:updateSlide', loadSlideItem);
+    //vent.bind('app:updateSlide', loadSlideItem);
     var loadMenuItem = function() {
 
         menus = new MenuCollection();
@@ -491,8 +589,10 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
                 menus: menus,
                 vent: vent
             });
-            $('.tab-pane#reportMemoList').html(view.$el);
+            //$('.tab-pane#reportMemoList').html(view.$el);
+            $('#home').html(view.$el);
             currentView = view;
+            setMenuItemActive($('#mainTab'), $('#settingMenu>a'));
 
         });
     };
@@ -512,11 +612,16 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
                 vent: vent
             });
             currentView = view;
-            $('.tab-pane#slideSetting').html(view.$el);
+            //$('.tab-pane#slideSetting').html(view.$el);
+            $('#home').html(view.$el);
+            setMenuItemActive($('#mainTab'), $('#settingMenu>a'));
 
         });
 
     };
+    
+    
+    
 
     var updateIndicatorsOptions = function(event) {
 
@@ -544,13 +649,39 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
             }
 
-            $('ul', level2).append('<li><a href="#"  data-indicator-id="' + value.get('id') + '">' + value.get('name') + '</a></li>');
+            $('ul', level2).append('<li><a href="#sliderTab" data-indicator-id="' + value.get('id') + '">' + value.get('name') + '</a></li>');
 
         });
 
         level1.append(level2);
 
         level1.on('click', 'a[data-indicator-id]', loadSlideItem);
+
+        //$('#indicatorMenu>ul').smartmenus({
+        //    hideOnClick:true
+        //});
+
+
+
+
+    };
+
+    var updateIndicatorSetsOptions = function(event) {
+
+
+        var preMenu = "";
+        var $level1 = $('#indicatorSetMenu>ul');
+
+        event.models.forEach(function(value, idx) {
+
+
+            $level1.append('<li><a href="#sliderTab" data-indicatorSet-id="' + value.get('id') + '">' + value.get('name') + '</a></li>');
+
+        });
+
+        
+
+        $level1.on('click', 'a[data-indicatorSet-id]', loadSlideItemByIndicatorSet);
 
         //$('#indicatorMenu>ul').smartmenus({
         //    hideOnClick:true
@@ -572,6 +703,12 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         indicators.fetch();
 
         $('#jumpToSlide').on('click', loadSlideItem);
+        
+        
+        var indicatorSets = new IndicatorSets();
+        indicatorSets.on('sync', updateIndicatorSetsOptions, indicatorSets);
+        indicatorSets.fetch();
+        
 
 
 
@@ -579,8 +716,14 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     };
 
     loadAllIndicatorsToSelect();
+    
+    $('#reportMemoLink').on('click', LoadReportMemoList);
+    $('a[href=#slideSetting]').on('click', LoadMemoOptions);
+    $('a[href=#indicatorMaintain]').on('click', LoadIndicatorList);
 
-    loadMenuItem();
+
+    
+    //loadMenuItem();
     loadSlideItem();
     initDashboard();
 

@@ -3,19 +3,22 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-
-	<!--
+<!-- add by clw 2015/04/10 begin -->
+	
 		<bean id="multipartResolver"
 			class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
--->		
-		
+<!-- add by clw 2015/04/10 end -->
+
+
+
+	<!--	remark by clw at 2015/04/10
 	<bean id="multipartResolver" class=" com.itg.util.MultiCommonsMultipartResolver">
 		<property name="maxUploadSize" value="5000000" />
 		<property name="maxInMemorySize" value="5000000" />
 	</bean>		
     
-    		
+-->		    		
 	<!-- 定义Spring MVC 的模板文件 -->
 
 	<bean id="viewResolver"
@@ -92,6 +95,22 @@
 	</bean>
 	
 	
+	<!--  IndicatorSetController add by clw 2015/04/07 -->
+	<bean id="indicatorSetController" class="com.itg.web.ctl.IndicatorSetController">
+           
+           
+
+		<property name="indicatorSetDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="indicatorSetDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
+		
+
+
+      		
+	</bean>
+	
+	
+	
 	<bean id="indicatorController" class="com.itg.web.ctl.IndicatorController">
 		<property name="viewName">  
 			<value>reportMemo</value>
@@ -105,6 +124,12 @@
 		<property name="indicatorDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
 			<ref bean="indicatorDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
 		</property>
+		
+		<!-- IndicatorSetDAO Bean add by clw 2015/04/07 begin -->
+		<property name="indicatorSetDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="indicatorSetDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
+		<!-- IndicatorSetDAO Bean add by clw 2015/04/07 end -->
 		
 		<property name="reportMemoController">
 			<ref bean="reportMemoController"></ref>

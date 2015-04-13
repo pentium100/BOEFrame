@@ -1,5 +1,5 @@
 define(['backbone'], function(Backbone) {
-			var IndicatorModel = Backbone.Model.extend({
+			var IndicatorSetModel = Backbone.Model.extend({
 
 						initialize : function() {
 
@@ -7,11 +7,9 @@ define(['backbone'], function(Backbone) {
 
 						defaults:{
 							id:0,
-							name:'',
-							menu:0,
-							indicatorSet:0
+							name:''
 						}
 
 					});
-			return IndicatorModel;
+			return IndicatorSetModel;
 		});

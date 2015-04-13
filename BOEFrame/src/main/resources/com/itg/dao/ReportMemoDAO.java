@@ -89,7 +89,7 @@ public class ReportMemoDAO implements
 
 	public List<ReportMemo> getMemoInList(List<String> menuIds,
 			Boolean enabled, Integer start, Integer limit, String searchToken,
-			Long indicator) {
+			Long indicator, Long indicatorSet) {
 
 		// String sql =
 		// "select new ReportMemo(r.id, r.keyValue, r.keyDate, r.memo, r.isEnabled, r.memoBy, new ArrayList<Postscript>(r.postscripts) From ReportMemo r, MenuItem m where r.keyValue = m.ID and r.keyValue in (:values) and r.memo like :memo";
@@ -104,6 +104,12 @@ public class ReportMemoDAO implements
 
 			sql = sql + " and r.indicator.id = :indicator";
 		}
+		
+
+		if(indicatorSet!=null){
+			
+			sql = sql + " and r.indicator.indicatorSet.id = :indicatorSet";
+		}		
 
 		sql = sql + " order by m.menuText, r.keyDate desc ";
 
@@ -114,6 +120,11 @@ public class ReportMemoDAO implements
 		if (indicator != 0) {
 
 			q.setParameter("indicator", indicator);
+		}
+
+		if(indicatorSet!=null){
+			
+			q.setParameter("indicatorSet", indicatorSet);
 		}
 
 		if (enabled != null && indicator == 0) {
@@ -146,7 +157,7 @@ public class ReportMemoDAO implements
 	}
 
 	public Long getMemoCountInList(List<String> menuIds, Boolean enabled,
-			String searchToken, Boolean forEdit, String fullName, Long indicator) {
+			String searchToken, Boolean forEdit, String fullName, Long indicator, Long indicatorSet) {
 
 		String sql = "select count(*) From ReportMemo where keyValue in (:values) and memo like :memo ";
 
@@ -159,11 +170,23 @@ public class ReportMemoDAO implements
 			sql += " and indicator.id = :indicator ";
 		}
 
+		
+		if(indicatorSet!=null){
+			
+			sql += " and indicator.indicatorSet.id = :indicatorSet ";
+		}
 
 		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
 
 		q.setParameter("memo", "%" + searchToken + "%");
+		
+		
+
+		if(indicatorSet!=null){
+			
+			q.setParameter("indicatorSet", indicatorSet);
+		}
 
 		if (enabled != null&& indicator == 0) {
 			q.setParameter("isEnabled", enabled);

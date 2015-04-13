@@ -1,6 +1,9 @@
 eclipse.preferences.version=1
+encoding//src/main/webapp/css/dashboard.css=UTF-8
+encoding//src/main/webapp/css/thumbnail-gallery.css=UTF-8
 encoding//src/main/webapp/dashboard.jsp=UTF-8
 encoding//src/main/webapp/js/template/indicator/edit.hbs=UTF-8
+encoding//src/main/webapp/js/template/indicator/list.hbs=UTF-8
 encoding//src/main/webapp/js/template/mark-memo.hbs=UTF-8
 encoding//src/main/webapp/js/template/reportMemo/list.hbs=UTF-8
 encoding//src/main/webapp/js/template/reportMemo/tool-bar.hbs=UTF-8

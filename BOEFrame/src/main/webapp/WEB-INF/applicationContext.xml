@@ -69,6 +69,7 @@
 				<value>com.itg.dao.ReportMemo</value>
 				<value>com.itg.dao.Postscript</value>
 				<value>com.itg.dao.Indicator</value>
+				<value>com.itg.dao.IndicatorSet</value>
 			</list>
 
 		</property>
@@ -166,6 +167,35 @@
 	</bean>
 
 
+<!-- IndiactorSetDAO bean  add by clw 2015/04/07 begin-->
+
+	<bean id="indicatorSetDAO" class="com.itg.dao.IndicatorSetDAO">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+
+	<!-- 带事务处理的indiactorDao 代理 -->
+
+	<bean id="indicatorSetDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="indicatorSetDAO" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+<!-- IndiactorSetDAO bean  add by clw 2015/04/07 end-->
 
 	<!-- UserDAO bean -->
 

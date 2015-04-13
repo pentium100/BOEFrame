@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.type.Type;
+
 
 
 public class IndicatorDAO implements IIndicatorDAO {

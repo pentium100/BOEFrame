@@ -164,6 +164,7 @@ public class ReportMemoController {
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "forEdit", required = false) Boolean forEdit,
 			@RequestParam(value = "indicator", required = false) Long indicator,
+			@RequestParam(value = "indicatorSet", required = false) Long indicatorSet,
 			HttpServletRequest request) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -206,10 +207,10 @@ public class ReportMemoController {
 		}
 
 		List<ReportMemo> memos = reportMemoDAO.getMemoInList(menuIds,
-				isEnabled, start, limit, searchToken, indicator);
+				isEnabled, start, limit, searchToken, indicator, indicatorSet);
 
 		Long count = reportMemoDAO.getMemoCountInList(menuIds, isEnabled,
-				searchToken, forEdit, fullName, indicator);
+				searchToken, forEdit, fullName, indicator, indicatorSet);
 
 		ArrayList<Map> result = new ArrayList<Map>();
 		for (ReportMemo memo : memos) {

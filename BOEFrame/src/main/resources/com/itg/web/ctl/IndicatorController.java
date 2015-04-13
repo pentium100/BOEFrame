@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itg.dao.IIndicatorDAO;
+import com.itg.dao.IIndicatorSetDAO;
 import com.itg.dao.IMenuItemDAO;
 import com.itg.dao.Indicator;
 import com.itg.dao.MenuItem;
@@ -55,6 +56,15 @@ public class IndicatorController {
 	}
 
 	private IIndicatorDAO indicatorDAO;
+	private IIndicatorSetDAO indicatorSetDAO;
+
+	public IIndicatorSetDAO getIndicatorSetDAO() {
+		return indicatorSetDAO;
+	}
+
+	public void setIndicatorSetDAO(IIndicatorSetDAO indicatorSetDAO) {
+		this.indicatorSetDAO = indicatorSetDAO;
+	}
 
 	private ReportMemoController reportMemoController;
 
@@ -116,6 +126,8 @@ public class IndicatorController {
 			indicatorJson.put("id", indicator.getId());
 			indicatorJson.put("name", indicator.getName());
 			indicatorJson.put("menuText", indicator.getMenu().getMenuText());
+			indicatorJson.put("indicatorSet", indicator.getIndicatorSet()!=null?indicator.getIndicatorSet().getId():0);
+			indicatorJson.put("indicatorSetName", indicator.getIndicatorSet()!=null?indicator.getIndicatorSet().getName():"");
 			indicatorJson.put("menu", indicator.getMenu().getID());
 			jsonArray.add(indicatorJson);
 
@@ -132,7 +144,8 @@ public class IndicatorController {
 	public String create(ModelMap map,
 			@RequestParam(value = "id", required = false) Long id,
 			@RequestParam(value = "name") String name,
-			@RequestParam(value = "menu") Long menu) {
+			@RequestParam(value = "menu") Long menu,
+			@RequestParam(value = "indicatorSet") Long indicatorSet) {
 
 		Indicator indicator = null;
 		if (id != null && id != 0) {
@@ -144,6 +157,7 @@ public class IndicatorController {
 		indicator.setMenu(menuItemDAO.selectMenuItemByID(Integer.valueOf(menu
 				.toString())));
 		indicator.setName(name);
+		indicator.setIndicatorSet(indicatorSetDAO.findById(indicatorSet));
 		indicatorDAO.modifyIndicator(indicator);
 		JSONObject json = new JSONObject();
 		json.put("result", "success");

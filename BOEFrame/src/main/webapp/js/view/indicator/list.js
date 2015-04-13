@@ -1,10 +1,11 @@
 define(['backbone', 'underscore', 'handlebars', 'jquery',
     'text!template/indicator/list.hbs',
     'collection/indicators', 'model/indicator', 'view/indicator/edit', 'text!template/indicator/tool-bar.hbs',
+    'collection/indicatorSets',
     'bootstrap-table', 'bootstrap-datepicker', 'bootstrap-table-ench'
 ], function(
     Backbone, _, Handlebars, $, IndicatorListTemplate,
-    IndicatorCollection, IndicatorModel, EditView, ToolbarTemplate, BootstrapTable) {
+    IndicatorCollection, IndicatorModel, EditView, ToolbarTemplate, IndicatorSets, BootstrapTable) {
 
     var IndicatorList = Backbone.View.extend({
 
@@ -17,6 +18,9 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             this.listenTo(this.collection, 'sync', this.render);
             this.options = options;
             this.menuCollection = options.menus;
+            
+            this.indicatorSets = new IndicatorSets();
+            this.indicatorSets.fetch();
             this.render();
             this.listenTo(this, 'closeView', this.close);
             //$('#modals').append(ToolbarTemplate);
@@ -32,6 +36,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             delete this.template;
             delete this.collection;
             delete this.menuCollection;
+            delete this.indicatorSets;
 
 
         },
@@ -51,6 +56,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                 model: this.model,
                 root: '#modals',
                 menus: this.menuCollection,
+                indicatorSets: this.indicatorSets,
                 attributes: {
                     id: modalId
                 }
@@ -112,6 +118,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             var view = new EditView({
                 model: this.model,
                 menus: this.menuCollection,
+                indicatorSets: this.indicatorSets,
                 root: '#modals',
                 attributes: {
                     id: modalId

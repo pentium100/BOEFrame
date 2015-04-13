@@ -1,5 +1,5 @@
 define(['backbone', 'underscore', 'handlebars', 'jquery',
-    'text!template/indicator/edit.hbs',
+    'text!template/indicator/edit.hbs', 
     'backbone.stickit', 'bootstrap-select'
 ], function(Backbone, _,
     Handlebars, $, editTemplate) {
@@ -43,7 +43,24 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                 },
                 onGet: 'formatKeyValue'
 
+            },
+            'select#indicatorSet': {
+                observe: 'indicatorSet',
+                selectOptions: {
+                    // Alternatively, `this` can be used to reference anything in the view's scope.
+                    // For example: `collection:'this.stooges'` would reference `view.stooges`.
+                    collection: 'this.indicatorSets',
+                    labelPath: 'name',
+                    valuePath: 'id',
+                    defaultOption: {
+                        label: "Choose one...",
+                        value: null
+                    }
+                }
+                //,onGet: 'formatKeyValue'
+
             }
+
         },
         events: {
             'submit form': 'submitForm',
@@ -103,14 +120,17 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
         },
 
-        title: '注释指标填写',
+        title: '指标维护',
 
         initialize: function(options) {
 
 
             this.menus = options.menus;
+            this.indicatorSets = options.indicatorSets;
 
             this.render();
+
+            
             this.vents = _.extend({}, Backbone.Events);
 
             this.vents.on('closeModalView',
@@ -185,7 +205,8 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                 data: {
                     'id': this.model.get('id'),
                     'name': this.model.get('name'),
-                    'menu': this.model.get('menu')
+                    'menu': this.model.get('menu'),
+                    'indicatorSet': this.model.get('indicatorSet')
                 },
                 //async: false,
                 success: function(data) {

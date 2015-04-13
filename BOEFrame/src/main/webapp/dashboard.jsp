@@ -15,7 +15,7 @@
 
 
         <!-- Bootstrap Core CSS -->
-        <link href="css/bootstrap-3.3.1.min.css" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet">
 
 
         <!-- Custom CSS 
@@ -57,15 +57,15 @@ navbar navbar-default navbar-fixed-top
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav nav-tabs22 nav-pills" role="tablist">
-                        <li class=""><a href="#home" role="tab" data-toggle="tab">全部指标</a>
+                    <ul class="nav navbar-nav nav-tabs22 nav-pills"  id="mainTab">
+                        <li class=""><a href="#home" >全部指标</a>
                         </li>
-                        <li class="active"><a href="#sliderTab" id="jumpToSlide" role="tab" data-toggle="tab">最新月所有指标浏览</a>
+                        <li class="active"><a href="#sliderTab" id="jumpToSlide">最新月所有指标浏览</a>
                         </li>
 
 
 
-                        <li id="indicatorMenu" ><a href="#"  class="dropdown-toggle" data-toggle="dropdown" >单个指标多月浏览<span class="caret"></span></a>
+                        <li id="indicatorMenu" class="dropdown"><a href="#"  class="dropdown-toggle" data-toggle="dropdown" >单个指标多月浏览<span class="caret"></span></a>
 
                             <ul class="dropdown-menu multi-level">
                             </ul>  
@@ -73,15 +73,23 @@ navbar navbar-default navbar-fixed-top
                         </li>
 
 
-                        <li class="dropdown" ><a href="#" class="dropdown-toggle" data-toggle="dropdown">设置<span class="caret"></span></a>
+                        <li id="indicatorSetMenu" class="dropdown"><a href="#"  class="dropdown-toggle" data-toggle="dropdown" >按指标集浏览<span class="caret"></span></a>
+
+                            <ul class="dropdown-menu">
+                            </ul>  
+
+                        </li>
+
+
+                        <li class="dropdown" id="settingMenu" ><a href="#" class="dropdown-toggle" data-toggle="dropdown">设置<span class="caret"></span></a>
 
                             <ul  class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="#reportMemoList" role="tab" data-toggle="tab" id="reportMemoLink">注释管理</a>
+                                    <a href="#reportMemoList"  id="reportMemoLink">注释管理</a>
                                 </li>
-                                <li class=""><a href="#slideSetting" role="tab" data-toggle="tab">浏览设置</a>
+                                <li class=""><a href="#slideSetting">浏览设置</a>
                                 </li>    
-                                <li class=""><a href="#indicatorMaintain" role="tab" data-toggle="tab">指标设置</a>
+                                <li class=""><a href="#indicatorMaintain" >指标设置</a>
                                 </li>    
 
                             </ul>
@@ -100,34 +108,13 @@ navbar navbar-default navbar-fixed-top
         </nav>
 
         <!-- Page Content -->
-        <div class="container-fluid tab-content memo">
+        <div class="container-fluid ">
 
 
-            <div class="tab-pane row" id="home"></div>
-            <div class="tab-pane " id="reportMemoList"></div>
-            <div class="tab-pane" id="slideSetting"></div>
-            <div class="tab-pane" id="indicatorMaintain"></div>
-
-
-            <div id="sliderTab" class="tab-pane active">
-                <div class="row clearfix">
-                    <div class="col-md-12 column">
-                        <div class="carousel slide" id="slider">
-                            <ol class="carousel-indicators">
-                            </ol>
-                            <div class="carousel-inner"></div>
-                            <a class="left carousel-control" href="#slider" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left"></span>
-                            </a>
-                            <a class="right carousel-control" href="#slider" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="modals" tabindex="-1"></div>
+            <div class="row" id="home"></div>
+            
+          
+  			<div id="modals" tabindex="-1"></div>
 
 
             <div tabindex="-1" style="display:none">
@@ -135,7 +122,6 @@ navbar navbar-default navbar-fixed-top
 
                         </div>
             </div>
-
 
 
             <!-- jQuery Version 1.11.0 -->
