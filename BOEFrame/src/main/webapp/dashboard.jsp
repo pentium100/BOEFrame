@@ -124,8 +124,10 @@ navbar navbar-default navbar-fixed-top
             </div>
 
 
-            <!-- jQuery Version 1.11.0 -->
-            <script data-main="js/dashboard" src="js/libs/require.js"></script>
+            <!-- jQuery Version 1.11.0 --> 
+            <script data-main="js/dashboard_20150418" src="js/libs/require.js"></script>
+            
+            
         </div>
     </body>
 

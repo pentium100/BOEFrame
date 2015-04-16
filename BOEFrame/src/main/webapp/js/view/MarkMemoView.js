@@ -14,7 +14,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             '#indicatorName': 'menuText',
             '#keyDate': 'keyDate',
             '#isEnabled': 'isEnabled',
-            //'#keyValue': 'keyValue',
+            '#period': 'period',
             '#id': 'id',
             '#indicatorMemo': 'memo',
 
@@ -179,6 +179,16 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                 autoclose: true,
                 todayHighlight: true
             });
+            
+            
+            $('#period', this.el).datepicker({
+                format: "yyyy-mm",
+                minViewMode: 1,
+                autoclose: true,
+                clearBtn: true
+            });
+            
+            $('#period', this.el).datepicker('update', model.period);
 
 
 

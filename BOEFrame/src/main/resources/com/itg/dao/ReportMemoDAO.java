@@ -89,7 +89,7 @@ public class ReportMemoDAO implements
 
 	public List<ReportMemo> getMemoInList(List<String> menuIds,
 			Boolean enabled, Integer start, Integer limit, String searchToken,
-			Long indicator, Long indicatorSet) {
+			Long indicator, Long indicatorSet, String period) {
 
 		// String sql =
 		// "select new ReportMemo(r.id, r.keyValue, r.keyDate, r.memo, r.isEnabled, r.memoBy, new ArrayList<Postscript>(r.postscripts) From ReportMemo r, MenuItem m where r.keyValue = m.ID and r.keyValue in (:values) and r.memo like :memo";
@@ -105,6 +105,11 @@ public class ReportMemoDAO implements
 			sql = sql + " and r.indicator.id = :indicator";
 		}
 		
+		
+		if(period != ""){
+			
+			sql = sql + " and r.period like :period";
+		}
 
 		if(indicatorSet!=null){
 			
@@ -126,6 +131,12 @@ public class ReportMemoDAO implements
 			
 			q.setParameter("indicatorSet", indicatorSet);
 		}
+		
+		if(period != ""){
+			
+			q.setParameter("period", period+"%");
+		}
+
 
 		if (enabled != null && indicator == 0) {
 			q.setParameter("isEnabled", enabled);
@@ -157,7 +168,7 @@ public class ReportMemoDAO implements
 	}
 
 	public Long getMemoCountInList(List<String> menuIds, Boolean enabled,
-			String searchToken, Boolean forEdit, String fullName, Long indicator, Long indicatorSet) {
+			String searchToken, Boolean forEdit, String fullName, Long indicator, Long indicatorSet, String period) {
 
 		String sql = "select count(*) From ReportMemo where keyValue in (:values) and memo like :memo ";
 
@@ -175,6 +186,13 @@ public class ReportMemoDAO implements
 			
 			sql += " and indicator.indicatorSet.id = :indicatorSet ";
 		}
+		
+		
+		if(period != ""){
+			
+			sql += " and period like :period ";
+		}
+
 
 		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
@@ -196,6 +214,12 @@ public class ReportMemoDAO implements
 			
 			q.setParameter("indicator", indicator);
 		}
+		
+		if(period != ""){
+			
+			q.setParameter("period", period+"%");
+		}
+
 
 		// if (forEdit != null && forEdit) {
 

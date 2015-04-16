@@ -17,7 +17,7 @@
     <body>
 
         <script language="javascript">
-        var redirectUrl = "dashboard.jsp";
+        var redirectUrl = "dashboard.jsp?version="+now();
         var width = screen.width;
         var height = screen.height;
         if (height == 768) height -= 75;

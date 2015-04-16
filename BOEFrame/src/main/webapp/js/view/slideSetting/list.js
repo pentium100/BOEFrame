@@ -194,6 +194,8 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery',
 
 							}).on('load-success.bs.table', this,
 							this.updateCheckStatus);
+					
+					this.$('.selectpicker').selectpicker();
 				},
 
 				updateCheckStatus : function(event, rows) {

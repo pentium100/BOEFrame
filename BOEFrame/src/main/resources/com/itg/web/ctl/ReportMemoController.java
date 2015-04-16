@@ -165,6 +165,7 @@ public class ReportMemoController {
 			@RequestParam(value = "forEdit", required = false) Boolean forEdit,
 			@RequestParam(value = "indicator", required = false) Long indicator,
 			@RequestParam(value = "indicatorSet", required = false) Long indicatorSet,
+			@RequestParam(value = "period", required = false) String period,
 			HttpServletRequest request) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -205,12 +206,17 @@ public class ReportMemoController {
 		if (searchToken == null) {
 			searchToken = "";
 		}
+		
+		
+		if(period==null){
+			period = "";
+		}
 
 		List<ReportMemo> memos = reportMemoDAO.getMemoInList(menuIds,
-				isEnabled, start, limit, searchToken, indicator, indicatorSet);
+				isEnabled, start, limit, searchToken, indicator, indicatorSet, period);
 
 		Long count = reportMemoDAO.getMemoCountInList(menuIds, isEnabled,
-				searchToken, forEdit, fullName, indicator, indicatorSet);
+				searchToken, forEdit, fullName, indicator, indicatorSet, period);
 
 		ArrayList<Map> result = new ArrayList<Map>();
 		for (ReportMemo memo : memos) {
@@ -230,6 +236,7 @@ public class ReportMemoController {
 			m.put("isEnabled", memo.getIsEnabled());
 			m.put("keyDate", sdf.format(memo.getKeyDate()));
 			m.put("memoBy", memo.getMemoBy());
+			m.put("period", memo.getPeriod());
 			m.put("indicator", memo.getIndicator().getId());
 
 			List<Map> postscripts = new ArrayList<Map>();
@@ -423,6 +430,7 @@ public class ReportMemoController {
 			@RequestParam(value = "keyDate", required = false) Date keyDate,
 			@RequestParam(value = "isEnabled", required = false) Boolean isEnabled,
 			@RequestParam(value = "memo", required = false) String memo,
+			@RequestParam(value = "period", required = false) String period,
 			@RequestParam(value = "indicator", required = false) Long indicator,
 			HttpServletRequest request
 
@@ -474,6 +482,7 @@ public class ReportMemoController {
 
 		reportMemo.setKeyDate(keyDate);
 		reportMemo.setKeyValue(keyValue);
+		reportMemo.setPeriod(period);
 		Indicator indicator2 = indicatorDAO.findById(indicator);
 
 		reportMemo.setIndicator(indicator2);

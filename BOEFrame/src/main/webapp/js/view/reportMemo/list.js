@@ -1,10 +1,11 @@
 define(['backbone', 'underscore', 'handlebars', 'jquery',
     'text!template/reportMemo/list.hbs', 'view/ModalMarkMemoView',
     'collection/reportMemos', 'text!template/reportMemo/tool-bar.hbs',
-    'bootstrap-table', 'bootstrap-datepicker', 'bootstrap-table-ench'
+    'collection/indicators',
+    'bootstrap-table', 'bootstrap-datepicker', 'bootstrap-table-ench','bootstrap-select'
 ], function(
     Backbone, _, Handlebars, $, reportMemoListTemplate,
-    ModalMarkMemoView, ReportMemoCollection, ToolbarTemplate, BootstrapTable) {
+    ModalMarkMemoView, ReportMemoCollection, ToolbarTemplate, IndicatorCollection, BootstrapTable) {
 
     var ReportMemoList = Backbone.View.extend({
 
@@ -13,6 +14,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
         initialize: function(options) {
 
             this.collection = new ReportMemoCollection();
+            this.indicatorCollection = new IndicatorCollection();
             this.listenTo(this.collection, 'sync', this.render);
             this.menuCollection = options.menus;
             this.options = options;
@@ -101,9 +103,48 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             // this.markMemoView.render();
             var $content = this.template(this.collection);
             $(this.el).html($content);
+            var view = this;
+            this.indicatorCollection.fetch({
+            	
+            	success: function(items){
+            		
+            		$('#searchIndicator', view.el).append($('<option>', { 
+        		        value: null,
+        		        text : '全部指标' 
+        		    }));
+            		$.each(items.models, function (i, item) {
+            			$('#searchIndicator', view.el).append($('<option>', { 
+            		        value: item.get('id'),
+            		        text : item.get('name') 
+            		    }));
+            		});
+            		$('#searchIndicator', view.el).selectpicker();
+            		
+            		$('#searchIndicator', view.el).on('change', function(){
+            		    
+            			
+            			$('table', view.el).bootstrapTable('refresh');
+            		  });
+            		
+            		$('#searchPeriod', view.el).on('change', function(){
+            		    
+           			
+            			$('table', view.el).bootstrapTable('refresh');
+            		  });
+            		
+                    $('#searchPeriod', view.el).datepicker({
+                        format: "yyyy-mm",
+                        minViewMode: 1,
+                        autoclose: true,
+                        clearBtn: true
+                    });
+            		
+            	}
+            });
             $('#custem-toolbar').html(Handlebars.compile(ToolbarTemplate)());
             $('table', this.el).bootstrapTable({
                 queryParams: this.queryParams,
+                parentView: this.el,
 
                 toolbar: ToolbarTemplate,
 
@@ -136,6 +177,8 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
 
             });
+            
+            
 
 
         },
@@ -144,7 +187,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
             var isShow = row.isEnabled ? '显示' : '不显示';
 
-            return row.memoBy + '<br>' + row.keyDate + '<br>' + isShow;
+            return row.memoBy + '<br>' + row.keyDate + '<br>' + isShow + '<br>' + row.period;
         },
 
         formatSnapShot: function(value) {
@@ -223,7 +266,9 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                 start: options.offset,
                 limit: options.limit,
                 searchToken: options.search,
-                forEdit: true
+                forEdit: true,
+                indicator : $('#searchIndicator', this.parentView).val()>0?$('#searchIndicator', this.parentView).val():null,
+                period : $('#searchPeriod', this.parentView).val()
             };
 
         }

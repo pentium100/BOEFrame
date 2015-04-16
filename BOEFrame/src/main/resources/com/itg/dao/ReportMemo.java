@@ -24,6 +24,17 @@ public class ReportMemo {
 	private String memoBy; // 备注人
 	private String memoTitle; // 备注人
 	private Date memoAt; // 备注时间
+	
+	@Column(length=7)
+	private String period; // 报表期间
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
+	}
 
 	private Boolean isEnabled;
 	

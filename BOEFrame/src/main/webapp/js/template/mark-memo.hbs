@@ -25,7 +25,7 @@
 
     <div class="form-group date">
         <label for="keyDate" class="col-md-2 control-label">注释日期</label>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="input-group date">
                 <input type="text" name="keyDate" id="keyDate" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
             </div>
@@ -36,6 +36,17 @@
             </label>
 
         </div>
+
+        <div class="form-group">
+              	<label for="period" class="col-md-1 control-label">期间</label>
+           		<div class="col-md-2">
+                	<div class="input-group">
+                            <input type="text"  pattern="\d{4}-\d{2}" required oninvalid="setCustomValidity('请按2015-03的格式输入!')"
+                            	    onchange="try{setCustomValidity('')}catch(e){}" readonly name="period" id="period" class="form-control">
+                	</div>
+              	</div>
+         </div>
+        
     </div>
 
     <div class="form-group">
