@@ -40,7 +40,7 @@ public class IndicatorSetDAO implements IIndicatorSetDAO{
 		String sql = "from IndicatorSet ";
 
 
-		sql = sql + " order by name ";
+		sql = sql + " order by id ";
 
 		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 

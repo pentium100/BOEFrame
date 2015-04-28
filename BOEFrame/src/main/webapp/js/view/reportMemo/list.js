@@ -1,11 +1,11 @@
 define(['backbone', 'underscore', 'handlebars', 'jquery',
     'text!template/reportMemo/list.hbs', 'view/ModalMarkMemoView',
     'collection/reportMemos', 'text!template/reportMemo/tool-bar.hbs',
-    'collection/indicators',
-    'bootstrap-table', 'bootstrap-datepicker', 'bootstrap-table-ench','bootstrap-select'
+    'collection/indicators', 'collection/indicatorSets',
+    'bootstrap-table', 'bootstrap-datepicker.zh-cn', 'bootstrap-table-ench','bootstrap-select'
 ], function(
     Backbone, _, Handlebars, $, reportMemoListTemplate,
-    ModalMarkMemoView, ReportMemoCollection, ToolbarTemplate, IndicatorCollection, BootstrapTable) {
+    ModalMarkMemoView, ReportMemoCollection, ToolbarTemplate, IndicatorCollection, IndicatorSetCollection, BootstrapTable) {
 
     var ReportMemoList = Backbone.View.extend({
 
@@ -15,11 +15,18 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
             this.collection = new ReportMemoCollection();
             this.indicatorCollection = new IndicatorCollection();
+            this.indicatorSetCollection = new IndicatorSetCollection();
             this.listenTo(this.collection, 'sync', this.render);
             this.menuCollection = options.menus;
             this.options = options;
+            
             this.render();
             this.listenTo(this, 'closeView', this.close);
+            
+            
+            this.listenTo(this.indicatorSetCollection, 'sync', this.updateIndicatorSetOption);
+            this.listenTo(this.indicatorCollection, 'sync', this.updateIndicatorOption)
+            
             // this.collection.fetch({
             // data : {
             // node : 900,
@@ -30,9 +37,54 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
         },
         events: {
             'dbl-click-row.bs.table table': 'editMemo',
-            'click button#newReportMemo': 'newMemo'
+            'click button#newReportMemo': 'newMemo',
+            'change #searchIndicatorSet': 'searchIndicatorSetChange',
+            'change #searchIndicator': 'refreshData',
+            'change #searchPeriod': 'refreshData'
+            
+    		
 
+        },
+        
+        
+        refreshData: function(e){
+        	$('table', this.el).bootstrapTable('refresh');
+        	
+        	
+        }, 
+        
+        updateIndicatorOption: function(items){
+        	
 
+            $('#searchIndicator', this.el).empty();
+    		$('#searchIndicator', this.el).append($('<option>', { 
+		        value: 0,
+		        text : '全部指标' 
+		    }));
+    		$.each(items.models, function (i, item) {
+    			$('#searchIndicator', this.el).append($('<option>', { 
+    		        value: item.get('id'),
+    		        text : item.get('name') 
+    		    }));
+    		});
+    		$('#searchIndicator', this.el).selectpicker('refresh');
+    		
+        	
+        	
+        }, 
+        searchIndicatorSetChange: function(e){
+        	
+        	this.indicatorCollection.fetch({
+        		data:{
+        			indicatorSet: $(e.target).selectpicker('val')
+        			
+        		}
+        		
+        	});
+
+            this.refreshData();
+        	
+        	
         },
 
 
@@ -48,6 +100,24 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
         },
 
+        updateIndicatorSetOption:function(collection){
+        	
+
+            $('#searchIndicatorSet', this.el).empty();
+        	$('#searchIndicatorSet', this.el).append($('<option>', { 
+		        value: 0,
+		        text : '全部指标集' 
+		    }));
+    		$.each(collection.models, function (i, item) {
+    			$('#searchIndicatorSet', this.el).append($('<option>', { 
+    		        value: item.get('id'),
+    		        text : item.get('name') 
+    		    }));
+    		});
+        	
+        	$('#searchIndicatorSet', this.el).selectpicker('refresh');
+            
+        },
 
         newMemo: function(event) {
 
@@ -104,44 +174,15 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             var $content = this.template(this.collection);
             $(this.el).html($content);
             var view = this;
-            this.indicatorCollection.fetch({
-            	
-            	success: function(items){
-            		
-            		$('#searchIndicator', view.el).append($('<option>', { 
-        		        value: null,
-        		        text : '全部指标' 
-        		    }));
-            		$.each(items.models, function (i, item) {
-            			$('#searchIndicator', view.el).append($('<option>', { 
-            		        value: item.get('id'),
-            		        text : item.get('name') 
-            		    }));
-            		});
-            		$('#searchIndicator', view.el).selectpicker();
-            		
-            		$('#searchIndicator', view.el).on('change', function(){
-            		    
-            			
-            			$('table', view.el).bootstrapTable('refresh');
-            		  });
-            		
-            		$('#searchPeriod', view.el).on('change', function(){
-            		    
-           			
-            			$('table', view.el).bootstrapTable('refresh');
-            		  });
-            		
-                    $('#searchPeriod', view.el).datepicker({
-                        format: "yyyy-mm",
-                        minViewMode: 1,
-                        autoclose: true,
-                        clearBtn: true
-                    });
-            		
-            	}
-            });
-            $('#custem-toolbar').html(Handlebars.compile(ToolbarTemplate)());
+            
+            this.indicatorSetCollection.fetch();
+         
+            
+            this.indicatorCollection.fetch();
+            //$('#custem-toolbar', view.el).html(Handlebars.compile(ToolbarTemplate)());
+            
+    		$('#searchIndicatorSet', this.el).selectpicker();
+            
             $('table', this.el).bootstrapTable({
                 queryParams: this.queryParams,
                 parentView: this.el,
@@ -176,6 +217,15 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                 ]
 
 
+            });
+
+            
+            $('#searchPeriod', view.el).datepicker({
+                format: "yyyy-mm",
+                minViewMode: 1,
+                language: "zh-CN",
+                autoclose: true,
+                clearBtn: true
             });
             
             
@@ -268,7 +318,8 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                 searchToken: options.search,
                 forEdit: true,
                 indicator : $('#searchIndicator', this.parentView).val()>0?$('#searchIndicator', this.parentView).val():null,
-                period : $('#searchPeriod', this.parentView).val()
+                period : $('#searchPeriod', this.parentView).val(),
+                indicatorSet: $('#searchIndicatorSet', this.parentView).val()>0?$('#searchIndicatorSet', this.parentView).val():null
             };
 
         }

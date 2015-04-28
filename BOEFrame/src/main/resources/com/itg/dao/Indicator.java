@@ -20,6 +20,16 @@ public class Indicator {
 	private String name;
 	
 	
+	private Integer sortId; // ≈≈–Ú¬Î
+	
+	public Integer getSortId() {
+		return sortId;
+	}
+
+	public void setSortId(Integer sortId) {
+		this.sortId = sortId;
+	}
+	
 	@ManyToOne
 	private IndicatorSet indicatorSet;
 	

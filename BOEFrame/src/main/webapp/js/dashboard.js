@@ -38,6 +38,10 @@ require.config({
         'jquery.smartmenus.bootstrap': {
             deps: ['jquery', 'jquery.smartmenus']
 
+        },
+        'bootstrap-datepicker.zh-cn': {
+            deps: ['bootstrap-datepicker']
+
         }
     },
     paths: {
@@ -49,6 +53,7 @@ require.config({
         backbone: 'libs/backbone',
         underscore: 'libs/underscore',
         'bootstrap-datepicker': 'libs/bootstrap-datepicker',
+        'bootstrap-datepicker.zh-cn': 'libs/locales/bootstrap-datepicker.zh-CN',
         'bootstrap-table': 'libs/bootstrap-table',
 
         'fileinput': 'libs/fileinput',
@@ -65,7 +70,8 @@ require.config({
 
 
     urlMap: {
-        "dashboard_20150416.js": "dashboard_20150416-5d17c5dc.js",
+        "dashboard.js": "dashboard-91fc69eb.js",
+        "dashboard_20150423.js": "dashboard_20150423-51153aee.js",
         "javascript.js": "javascript-bb907479.js",
         "collection/indicators.js": "collection/indicators-d8c6751a.js",
         "collection/indicatorSets.js": "collection/indicatorSets-d39e0674.js",
@@ -112,18 +118,18 @@ require.config({
         "libs/require.js": "libs/require-f1c61e00.js",
         "libs/text.js": "libs/text-b061e680.js",
         "libs/underscore.js": "libs/underscore-698a1e2a.js",
-        "model/indicator.js": "model/indicator-7296c909.js",
-        "model/indicatorSet.js": "model/indicatorSet-3d3a2b93.js",
-        "model/menu.js": "model/menu-4b3e1ebe.js",
-        "model/reportMemo.js": "model/reportMemo-3922d9f1.js",
-        "template/mark-memo.hbs": "template/mark-memo-17517092.hbs",
+        "template/mark-memo.hbs": "template/mark-memo-d39e7224.hbs",
         "template/menu.hbs": "template/menu-75454cfc.hbs",
         "template/menuList.hbs": "template/menuList-17daf417.hbs",
         "template/modal-view.hbs": "template/modal-view-65ddf46b.hbs",
         "template/slide-indicator.hbs": "template/slide-indicator-79edacf7.hbs",
         "template/slide-item.hbs": "template/slide-item-0b342b74.hbs",
         "template/slide.hbs": "template/slide-ca841fd4.hbs",
-        "view/MarkMemoView.js": "view/MarkMemoView-7c02b80a.js",
+        "model/indicator.js": "model/indicator-7296c909.js",
+        "model/indicatorSet.js": "model/indicatorSet-3d3a2b93.js",
+        "model/menu.js": "model/menu-4b3e1ebe.js",
+        "model/reportMemo.js": "model/reportMemo-3922d9f1.js",
+        "view/MarkMemoView.js": "view/MarkMemoView-36dea8cd.js",
         "view/ModalMarkMemoView.js": "view/ModalMarkMemoView-6eea59a9.js",
         "libs/i18n/defaults-cs_CZ.js": "libs/i18n/defaults-cs_CZ-89768a64.js",
         "libs/i18n/defaults-cs_CZ.min.js": "libs/i18n/defaults-cs_CZ.min-0ecf9acb.js",
@@ -155,6 +161,9 @@ require.config({
         "libs/i18n/defaults-zh_CN.min.js": "libs/i18n/defaults-zh_CN.min-006cc85b.js",
         "libs/i18n/defaults-zh_TW.js": "libs/i18n/defaults-zh_TW-c1b2910e.js",
         "libs/i18n/defaults-zh_TW.min.js": "libs/i18n/defaults-zh_TW.min-1d1fbc7a.js",
+        "template/indicator/edit.hbs": "template/indicator/edit-a93fc1eb.hbs",
+        "template/indicator/list.hbs": "template/indicator/list-9fb8dd08.hbs",
+        "template/indicator/tool-bar.hbs": "template/indicator/tool-bar-30f8f455.hbs",
         "libs/locale/bootstrap-table-da-DK.js": "libs/locale/bootstrap-table-da-DK-a26ed1bb.js",
         "libs/locale/bootstrap-table-da-DK.min.js": "libs/locale/bootstrap-table-da-DK.min-5a081a97.js",
         "libs/locale/bootstrap-table-el-GR.js": "libs/locale/bootstrap-table-el-GR-17f82521.js",
@@ -185,11 +194,9 @@ require.config({
         "libs/locale/bootstrap-table-zh-TW.js": "libs/locale/bootstrap-table-zh-TW-dedc3bff.js",
         "libs/locale/bootstrap-table-zh-TW.min.js": "libs/locale/bootstrap-table-zh-TW.min-6bc986fc.js",
         "libs/locale/README.md": "libs/locale/README-2501d577.md",
-        "template/indicator/edit.hbs": "template/indicator/edit-a3612386.hbs",
-        "template/indicator/list.hbs": "template/indicator/list-d22c4cf4.hbs",
-        "template/indicator/tool-bar.hbs": "template/indicator/tool-bar-30f8f455.hbs",
         "template/reportMemo/list.hbs": "template/reportMemo/list-5df3aafd.hbs",
-        "template/reportMemo/tool-bar.hbs": "template/reportMemo/tool-bar-d602c357.hbs",
+        "template/reportMemo/tool-bar.hbs": "template/reportMemo/tool-bar-b4f12125.hbs",
+        "template/slideSetting/list.hbs": "template/slideSetting/list-30688495.hbs",
         "libs/locales/bootstrap-datepicker.ar.js": "libs/locales/bootstrap-datepicker.ar-c394f59b.js",
         "libs/locales/bootstrap-datepicker.az.js": "libs/locales/bootstrap-datepicker.az-b60d0405.js",
         "libs/locales/bootstrap-datepicker.bg.js": "libs/locales/bootstrap-datepicker.bg-e60dc33e.js",
@@ -241,11 +248,10 @@ require.config({
         "libs/locales/bootstrap-datepicker.vi.js": "libs/locales/bootstrap-datepicker.vi-ddd41519.js",
         "libs/locales/bootstrap-datepicker.zh-CN.js": "libs/locales/bootstrap-datepicker.zh-CN-70fb6946.js",
         "libs/locales/bootstrap-datepicker.zh-TW.js": "libs/locales/bootstrap-datepicker.zh-TW-7d244784.js",
-        "template/slideSetting/list.hbs": "template/slideSetting/list-30688495.hbs",
-        "view/indicator/edit.js": "view/indicator/edit-32a4ac32.js",
+        "view/indicator/edit.js": "view/indicator/edit-4fd8c1ce.js",
         "view/indicator/list.js": "view/indicator/list-9d97b679.js",
-        "view/reportMemo/list.js": "view/reportMemo/list-3b36c744.js",
-        "view/slideSetting/list.js": "view/slideSetting/list-64dbae4c.js",
+        "view/reportMemo/list.js": "view/reportMemo/list-a2d5dacd.js",
+        "view/slideSetting/list.js": "view/slideSetting/list-4eeeb495.js",
         "libs/bootstrap-select.js.map": "libs/bootstrap-select.js-2364340c.map"
     },
 
@@ -273,7 +279,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     'text!template/slide-item.hbs', 'text!template/slide.hbs', 'collection/indicators', 'jquery', 'bootstrap',
     'handlebars', 'collection/menus',
     'collection/reportMemos', 'collection/indicatorSets', 'backbone', 'jquery-cookie',
-    'jquery-fullscreen'
+    'jquery-fullscreen', 'bootstrap-select'
 ], function(menuSrc, slideIndicatorSrc,
     slideItemSrc, slideSrc, Indicators, jquery, bootstrap, Handlebars, MenuCollection,
     ReportMemoCollection, IndicatorSets, Backbone) {
@@ -449,6 +455,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     var LoadIndicatorList = function() {
 
+        resetSelectPicker();
+
         require(['view/indicator/list'], function(IndicatorListView) {
 
             if (currentView !== null) {
@@ -500,8 +508,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         var sIds = $.cookie(memoIdsCookieName);
         var sIds2 = $.cookie(memoIdsCookieName2);
         var interval = $.cookie(intervalCookieName);
-        if (interval === undefined) {
-            interval = 10000;
+        if (interval === undefined || interval === 10000) {
+            interval = 6000 * 1000;
         } else {
             interval = interval * 1000;
         }
@@ -635,6 +643,10 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         if (event !== undefined && event.target) {
             indicatorSet = $(event.target).attr('data-indicatorSet-id');
 
+            if(indicatorSet==undefined){
+
+                indicatorSet = $(event.target).val();
+            }
 
 
         } else {
@@ -658,6 +670,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
             setMenuItemActive($('#mainTab'), $('#indicatorSetMenu>a'));
 
+            $('#indicatorSetMenu>a').text($(event.target).text());
 
         }
 
@@ -671,7 +684,12 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         if (event !== undefined && event.target) {
             newIndicator = $(event.target).attr('data-indicator-id');
 
+            if(newIndicator==undefined){
 
+                newIndicator = $(event.target).val();
+            }
+
+ 
 
         } else {
             newIndicator = 0;
@@ -701,7 +719,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         if (indicator > 0) {
 
 
-            setMenuItemActive($('#mainTab'), $('#indicatorMenu>a'));
+            setMenuItemActive($('#mainTab'), $('#indicatorMenu2>a'));
             //$('#indicatorMenu').addClass('active');
 
             //$('#jumpToSlide').parent('li').removeClass('active');
@@ -722,6 +740,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     //vent.bind('app:updateSlide', loadSlideItem);
     var loadMenuItem = function() {
 
+        resetSelectPicker();
         menus = new MenuCollection();
 
         menus.fetch({
@@ -780,9 +799,34 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     };
 
+    var resetSelectPicker = function(){
+
+
+        //$('#indicatorH').selectpicker('val', 0);
+        //$('#indicatorSetH').selectpicker('val', 0);
+        $('#indicatorSetH').val(0)
+        $('#indicatorSetH').selectpicker('refresh');
+
+
+        var indicators = new Indicators();
+        indicators.on('sync', updateIndicatorHOptions, indicators);
+        indicators.fetch({
+
+            data: {
+                indicatorSet:0
+
+            }
+        })
+
+
+
+
+    };
+
     var currentView = null;
 
     var LoadReportMemoList = function() {
+        resetSelectPicker();
 
         require(['view/reportMemo/list'], function(ReportMemoListView) {
 
@@ -804,6 +848,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     };
 
     var LoadMemoOptions = function() {
+
+        resetSelectPicker();
 
         require(['view/slideSetting/list'], function(SlideSettingView) {
 
@@ -828,6 +874,75 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
 
 
+    var updateIndicatorHOptions = function(event){
+
+
+        var preMenu = "";
+        var $level1 = $('#indicatorH');
+        $level1.empty();
+
+        $level1.append($('<option >', {
+                value: 0,
+                text: '全部指标'
+        }));
+
+
+        event.models.forEach(function(value, idx) {
+
+
+            $level1.append($('<option>', {
+                "data-indicator-set-id": value.get('id') ,
+                value: value.get('id'),
+                text: value.get('name')
+            }));
+
+
+            //$level1.append('<li><a href="#sliderTab" data-indicatorSet-id="' + value.get('id') + '">' + value.get('name') + '</a></li>');
+
+        });
+
+        $level1.selectpicker('refresh');
+
+    };
+
+
+    var updateIndicatorsOptions2 = function(event) {
+
+
+
+        var $level1 = $('#indicatorMenu2>ul');
+
+
+        $level1.empty();
+        var indicators = new Indicators();
+
+        indicators.fetch({
+
+            data: {
+                indicatorSet: $(event.target).attr('data-indicatorset-id')
+            },
+            success: function(items) {
+
+                items.forEach(function(value, idx) {
+
+
+                    $level1.append('<li><a href="#sliderTab" data-indicator-id="' + value.get('id') + '">' + value.get('name') + '</a></li>');
+
+                });
+
+
+            }
+
+
+        });
+
+
+
+
+        $level1.on('click', 'a[data-indicator-id]', loadSlideItem);
+
+
+    }
 
     var updateIndicatorsOptions = function(event) {
 
@@ -863,16 +978,43 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
         level1.on('click', 'a[data-indicator-id]', loadSlideItem);
 
-        //$('#indicatorMenu>ul').smartmenus({
-        //    hideOnClick:true
-        //});
+    };
 
 
 
+    var updateIndicatorSetHeaderOptions = function(event) {
+
+
+        var preMenu = "";
+        var $level1 = $('#indicatorSetH');
+        $level1.empty();
+
+        $level1.append($('<option>', {
+                value: 0,
+                text: '全部指标集'
+        }));
+
+
+        event.models.forEach(function(value, idx) {
+
+
+            $level1.append($('<option>', {
+                "data-indicator-set-id": value.get('id') ,
+                value: value.get('id'),
+                text: value.get('name')
+            }));
+
+
+            //$level1.append('<li><a href="#sliderTab" data-indicatorSet-id="' + value.get('id') + '">' + value.get('name') + '</a></li>');
+
+        });
+
+        $level1.selectpicker('refresh');
 
     };
 
-    var updateIndicatorSetsOptions = function(event) {
+
+    var updateIndicatorSetOptions = function(event) {
 
 
         var preMenu = "";
@@ -888,6 +1030,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
 
         $level1.on('click', 'a[data-indicatorSet-id]', loadSlideItemByIndicatorSet);
+
+        $level1.on('click', 'a[data-indicatorSet-id]', updateIndicatorsOptions2);
 
         //$('#indicatorMenu>ul').smartmenus({
         //    hideOnClick:true
@@ -906,14 +1050,33 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
         var indicators = new Indicators();
         indicators.on('sync', updateIndicatorsOptions, indicators);
+        indicators.on('sync', updateIndicatorHOptions, indicators);
+        
         indicators.fetch();
 
         $('#jumpToSlide').on('click', loadSlideItem);
 
 
         var indicatorSets = new IndicatorSets();
-        indicatorSets.on('sync', updateIndicatorSetsOptions, indicatorSets);
+        indicatorSets.on('sync', updateIndicatorSetOptions, indicatorSets);
+        indicatorSets.on('sync', updateIndicatorSetHeaderOptions, indicatorSets);
         indicatorSets.fetch();
+
+
+        $('#indicatorSetH').on('change', loadSlideItemByIndicatorSet);
+        $('#indicatorH').on('change', loadSlideItem);
+        $('#indicatorSetH').on('change', function(event) {
+
+                indicators.fetch({
+                    data: {
+                        indicatorSet: $(event.target).val()
+                    }
+            });
+
+
+        });
+
+
 
 
 
@@ -926,6 +1089,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     $('#reportMemoLink').on('click', LoadReportMemoList);
     $('a[href=#slideSetting]').on('click', LoadMemoOptions);
     $('a[href=#indicatorMaintain]').on('click', LoadIndicatorList);
+
+    $('.selectpicker').selectpicker();
 
 
 

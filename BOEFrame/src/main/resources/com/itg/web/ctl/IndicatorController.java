@@ -81,6 +81,7 @@ public class IndicatorController {
 			@RequestParam(value = "offset", required = false) Integer start,
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "menu", required = false) Integer menuId,
+			@RequestParam(value = "indicatorSet", required = false) Long indicatorSet,
 			HttpServletRequest request) {
 
 		if (start == null) {
@@ -90,6 +91,11 @@ public class IndicatorController {
 		if (limit == null) {
 
 			limit = 9999999;
+		}
+		
+		if(indicatorSet!=null && indicatorSet==0){
+			
+			indicatorSet = null;
 		}
 
 		MenuItem menu = null;
@@ -113,8 +119,8 @@ public class IndicatorController {
 			}
 		}
 
-		List<Indicator> indiactors = indicatorDAO.getAll(start, limit, menuIds);
-		Long count = indicatorDAO.getCount(menuIds);
+		List<Indicator> indiactors = indicatorDAO.getAll(start, limit, menuIds, indicatorSet);
+		Long count = indicatorDAO.getCount(menuIds, indicatorSet);
 
 		JSONObject json = new JSONObject();
 		json.put("total", count);
@@ -126,6 +132,7 @@ public class IndicatorController {
 			indicatorJson.put("id", indicator.getId());
 			indicatorJson.put("name", indicator.getName());
 			indicatorJson.put("menuText", indicator.getMenu().getMenuText());
+			indicatorJson.put("sortId", indicator.getSortId());
 			indicatorJson.put("indicatorSet", indicator.getIndicatorSet()!=null?indicator.getIndicatorSet().getId():0);
 			indicatorJson.put("indicatorSetName", indicator.getIndicatorSet()!=null?indicator.getIndicatorSet().getName():"");
 			indicatorJson.put("menu", indicator.getMenu().getID());
@@ -145,6 +152,7 @@ public class IndicatorController {
 			@RequestParam(value = "id", required = false) Long id,
 			@RequestParam(value = "name") String name,
 			@RequestParam(value = "menu") Long menu,
+			@RequestParam(value = "sortId") Integer sortId,
 			@RequestParam(value = "indicatorSet") Long indicatorSet) {
 
 		Indicator indicator = null;
@@ -157,6 +165,7 @@ public class IndicatorController {
 		indicator.setMenu(menuItemDAO.selectMenuItemByID(Integer.valueOf(menu
 				.toString())));
 		indicator.setName(name);
+		indicator.setSortId(sortId);
 		indicator.setIndicatorSet(indicatorSetDAO.findById(indicatorSet));
 		indicatorDAO.modifyIndicator(indicator);
 		JSONObject json = new JSONObject();

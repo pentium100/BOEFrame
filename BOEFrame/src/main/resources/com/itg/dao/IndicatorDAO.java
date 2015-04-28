@@ -40,7 +40,7 @@ public class IndicatorDAO implements IIndicatorDAO {
 	}
 
 	public List<Indicator> getAll(Integer start, Integer limit,
-			List<Integer> menuIds) {
+			List<Integer> menuIds, Long indicatorSet) {
 		String sql = "from Indicator ";
 
 		if (menuIds.size() > 0) {
@@ -48,6 +48,14 @@ public class IndicatorDAO implements IIndicatorDAO {
 			sql = sql + " where menu.id in  (:menus) ";
 
 		}
+
+		
+		if (indicatorSet!=null){
+			
+			sql += " and indicatorSet.id = " + String.valueOf(indicatorSet) +" ";
+			
+		}
+
 
 		sql = sql + " order by menu.menuText ";
 
@@ -65,14 +73,20 @@ public class IndicatorDAO implements IIndicatorDAO {
 		return (List<Indicator>) findByNamedQuery;
 	}
 
-	public Long getCount(List<Integer> menuIds) {
+	public Long getCount(List<Integer> menuIds , Long indicatorSet) {
 
 		String sql = "select count(*) From Indicator ";
 
 		if (menuIds.size() > 0) {
 
-			sql += " where menu.id in (:menus) ";
+			sql += " where menu.id in (:menus)  ";
 
+		}
+		
+		if (indicatorSet!=null){
+			
+			sql += " and indicatorSet.id = " + String.valueOf(indicatorSet) +" ";
+			
 		}
 		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
 

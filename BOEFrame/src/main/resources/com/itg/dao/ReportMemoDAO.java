@@ -111,12 +111,12 @@ public class ReportMemoDAO implements
 			sql = sql + " and r.period like :period";
 		}
 
-		if(indicatorSet!=null){
+		if(indicatorSet!=null && indicatorSet!=0){
 			
 			sql = sql + " and r.indicator.indicatorSet.id = :indicatorSet";
 		}		
 
-		sql = sql + " order by m.menuText, r.keyDate desc ";
+		sql = sql + " order by m.menuText, r.indicator.sortId , r.keyDate desc";
 
 		org.hibernate.Query q =sessionFactory.getCurrentSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
@@ -127,7 +127,7 @@ public class ReportMemoDAO implements
 			q.setParameter("indicator", indicator);
 		}
 
-		if(indicatorSet!=null){
+		if(indicatorSet!=null  && indicatorSet!=0){
 			
 			q.setParameter("indicatorSet", indicatorSet);
 		}
@@ -182,7 +182,7 @@ public class ReportMemoDAO implements
 		}
 
 		
-		if(indicatorSet!=null){
+		if(indicatorSet!=null  && indicatorSet!=0 ){
 			
 			sql += " and indicator.indicatorSet.id = :indicatorSet ";
 		}
@@ -201,7 +201,7 @@ public class ReportMemoDAO implements
 		
 		
 
-		if(indicatorSet!=null){
+		if(indicatorSet!=null && indicatorSet!=0){
 			
 			q.setParameter("indicatorSet", indicatorSet);
 		}

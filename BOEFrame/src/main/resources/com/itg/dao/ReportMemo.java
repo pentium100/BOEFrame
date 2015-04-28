@@ -25,6 +25,8 @@ public class ReportMemo {
 	private String memoTitle; // 备注人
 	private Date memoAt; // 备注时间
 	
+
+
 	@Column(length=7)
 	private String period; // 报表期间
 

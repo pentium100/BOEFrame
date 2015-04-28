@@ -28,6 +28,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
         bindings: {
             '#indicatorName': 'name',
             '#id': 'id',
+            '#sortId': 'sortId',
             'select#menu': {
                 observe: 'menu',
                 selectOptions: {
@@ -206,6 +207,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     'id': this.model.get('id'),
                     'name': this.model.get('name'),
                     'menu': this.model.get('menu'),
+                    'sortId':this.model.get('sortId'), 
                     'indicatorSet': this.model.get('indicatorSet')
                 },
                 //async: false,

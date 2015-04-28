@@ -1,5 +1,5 @@
 define(['backbone', 'underscore', 'handlebars', 'jquery',
-    'text!template/mark-memo.hbs', 'collection/indicators', 'bootstrap-datepicker',
+    'text!template/mark-memo.hbs', 'collection/indicators', 'bootstrap-datepicker.zh-cn',
     'fileinput', 'backbone.stickit', 'bootstrap-select', 'jquery.fileDownload'
 ], function(Backbone, _,
     Handlebars, $, markMemoTemplate, Indicators) {
@@ -177,6 +177,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             $('.input-group.date', this.el).datepicker({
                 format: "yyyy/mm/dd",
                 autoclose: true,
+                language: "zh-CN",
                 todayHighlight: true
             });
             
@@ -184,6 +185,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             $('#period', this.el).datepicker({
                 format: "yyyy-mm",
                 minViewMode: 1,
+                language: "zh-CN",
                 autoclose: true,
                 clearBtn: true
             });
@@ -273,6 +275,26 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
         },
 
+
+        checkIsNotNull:function(field, element){
+
+
+            if (field === undefined || field === 0 || field === "") {
+
+
+                element.closest('div.form-group').addClass('has-error');
+                return false;
+
+            } else {
+
+                element.closest('div.form-group').removeClass('has-error');
+                return true;
+            }
+
+
+
+        },
+
         submitForm: function(event, data) {
 
             event.preventDefault();
@@ -281,15 +303,20 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             // form.submit();
 
 
-            if (this.model.get('indicator') === undefined || this.model.get('indicator') === 0) {
 
 
-                this.$('#indicator').addClass('has-error');
 
-            } else {
+            if(!this.checkIsNotNull(this.model.get('indicator'), this.$('#indicator')))return;
+            if(!this.checkIsNotNull(this.model.get('period'), this.$('#period')))return;
+            //if (this.model.get('indicator') === undefined || this.model.get('indicator') === 0) {
 
-                this.$('#indicator').removeClass('has-error');
-            }
+
+             //   this.$('#indicator').parent('div.form-group').addClass('has-error');
+
+            //} else {
+
+            //    this.$('#indicator').parent('div.form-group').removeClass('has-error');
+            //}
 
             if (($('#picFile', form).data('fileinput').initialPreviewCount < 1) && ($('#picFile', form).data('fileinput').$element
                     .prop("files").length < 1)) {

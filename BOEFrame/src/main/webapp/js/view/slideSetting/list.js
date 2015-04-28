@@ -146,7 +146,7 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery',
 
 					var interval = $.cookie(this.intervalCookieName);
 					if (interval === undefined) {
-						interval = 10;
+						interval = 6000;
 					}
 
 					var $content = this.template({
@@ -195,7 +195,7 @@ define(	['backbone', 'underscore', 'handlebars', 'jquery',
 							}).on('load-success.bs.table', this,
 							this.updateCheckStatus);
 					
-					this.$('.selectpicker').selectpicker();
+					//this.$('.selectpicker').selectpicker();
 				},
 
 				updateCheckStatus : function(event, rows) {
