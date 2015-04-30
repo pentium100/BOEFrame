@@ -1,0 +1,502 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"new",
+				"newIndicator"
+			],
+			[
+				"customers",
+				"Customers"
+			],
+			[
+				"re",
+				"response"
+			],
+			[
+				"Customer",
+				"CustomerService"
+			],
+			[
+				"ind",
+				"indicatorSet"
+			],
+			[
+				"searchIndicato",
+				"searchIndicatorSet"
+			],
+			[
+				"in",
+				"indicatorSet"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/main/webapp/js/dashboard.js",
+			"settings":
+			{
+				"buffer_size": 39268,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/webapp/dashboard.jsp",
+			"settings":
+			{
+				"buffer_size": 5836,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/webapp/dist/js/rev-manifest.json",
+			"settings":
+			{
+				"buffer_size": 14783,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 81.0,
+		"last_filter": "INSTALL",
+		"selected_items":
+		[
+			[
+				"INSTALL",
+				"Package Control: Install Package"
+			],
+			[
+				"jsl",
+				"JSLint"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/workspace-sts/BOEFrameX/BOEFrame",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js"
+	],
+	"file_history":
+	[
+		"/D/workspace-sts/BOEFrameX/BOEFrame/Gruntfile.js",
+		"/D/workspace-idea/ionic/myapp/www/js/controller/customer.js",
+		"/D/workspace-idea/ionic/myapp/www/templates/customer/filter.html",
+		"/D/workspace-idea/ionic/myapp/www/templates/customer/customers2.html",
+		"/D/workspace-idea/ionic/myapp/www/templates/customer/customers.html",
+		"/D/workspace-idea/ionic/myapp/www/js/service/customerService.js",
+		"/D/workspace-idea/ionic/myapp/www/js/controller/result.js",
+		"/D/workspace-idea/ionic/myapp/www/lib/bootstrap/dist/js/npm.js",
+		"/D/workspace-idea/ionic/myapp/gulpfile.js",
+		"/D/workspace-idea/ionic/myapp/www/lib/bootstrap/dist/css/bootstrap.css",
+		"/D/workspace-idea/ionic/myapp/www/lib/bootstrap/dist/css/bootstrap.min.css",
+		"/D/workspace-idea/ionic/myapp/www/index.html",
+		"/D/workspace-idea/ionic/myapp/www/data/customers/searchIndex.json",
+		"/D/workspace-idea/ionic/myapp/www/data/customers/userList.json",
+		"/D/workspace-idea/ionic/myapp/www/js/controllers.js",
+		"/D/workspace-idea/ionic/myapp/www/js/app.js",
+		"/D/workspace-idea/ionic/myapp/www/templates/customer/index.html",
+		"/D/workspace-idea/ionic/myapp/.bowerrc",
+		"/D/workspace-idea/ionic/myapp/www/lib/bootstrap/.bower.json",
+		"/D/workspace-idea/ionic/myapp/www/lib/bootstrap/bower.json",
+		"/D/workspace-idea/ionic/myapp/www/templates/browse.html",
+		"/D/workspace-idea/ionic/myapp/bower.json",
+		"/D/workspace-idea/jhipster/src/main/webapp/scripts/app/entities/entity.js",
+		"/D/workspace-idea/ionic/myapp/www/js/service/jrdCache.js",
+		"/D/workspace-idea/jhipster/src/main/webapp/scripts/components/user/user.service.js",
+		"/D/workspace-idea/ionic/myapp/scss/ionic.app.scss",
+		"/D/workspace-idea/ionic/myapp/www/lib/ionic/version.json",
+		"/D/workspace-idea/ionic/myapp/www/templates/search.html",
+		"/D/workspace-idea/ionic/myapp/www/templates/playlist.html",
+		"/D/workspace-idea/jhipster/src/main/webapp/scripts/app/account/login/login.controller.js",
+		"/D/workspace-idea/jhipster/src/main/webapp/index.html",
+		"/D/workspace-idea/ionic/myapp/www/templates/menu.html",
+		"/D/workspace-idea/jhipster/src/main/webapp/scripts/app/account/activate/activate.controller.js",
+		"/D/workspace-idea/ionic/myapp/www/lib/ionic/js/angular/angular.js",
+		"/D/workspace-idea/ionic/myapp/www/lib/ionic/css/ionic.css",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dashboard.jsp",
+		"/D/workspace-bos/ITGEAS/src/com/kingdee/eas/jhx/webservice/jzww.properties",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/reportMemo/list.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/reportMemo/tool-bar.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/slideSetting/list.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dist/js/rev-manifest.json",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard_20150424.js",
+		"/D/workspace-sts-3.2.0.RELEASE/jhxtest/src/test/java/com/liwei/jhxtest/AppTest.java",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/BOEFrame/dashboard.jsp",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/gulpfile.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/MarkMemoView.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/bootstrap-datepicker.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/i18n/defaults-fr_FR.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/locales/bootstrap-datepicker.zh-CN.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/reportMemo/list.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/mark-memo.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard_20150423.js",
+		"/C/Windows/System32/CT_CAP_ProjectBillingEntrys.txt",
+		"/D/workspace-sts-3.2.0.RELEASE/soabus/soabus-logistic/src/main/java/com/itg/soabus/logistic/service/SupplierServiceImpl.java",
+		"/C/Users/lenovo/Desktop/建表语句.sql",
+		"//172.16.10.166/d$/Kingdee/eas/server/profiles/server1/config/log4j.properties",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard_20150418.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slideSetting/list.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/model/indicatorSet.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/model/reportMemo.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/require.js",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/BOEFrame/dashboardWrap.jsp",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard_20150417.js",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/BOEFrame/js/dashboard_20150417.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dist/js/libs/require-640929da.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dist/js/dashboard-5f62cde1.js",
+		"/D/workspace-bos/ITGEAS/src/com/kingdee/eas/jhx/webservice/jzww.dev.properties",
+		"/C/Users/lenovo/AppData/Roaming/Sublime Text 3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dist/js/javascript-bb907479.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/gruntfile.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dist/js/dashboard.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/node_modules/grunt-require-rev/tasks/requireRev.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/node_modules/grunt-require-rev/Gruntfile.js",
+		"/D/workspace-idea/jhipster/Gruntfile.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/package.json",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/node_modules/grunt-require-rev/.npmignore",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/node_modules/grunt-require-rev/tmp/custom_options/scripts/services/twitter.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/node_modules/grunt-require-rev/tmp/default_options/scripts/8fb5d34c.app.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/node_modules/grunt-require-rev/test/require_rev_test.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/node_modules/grunt-require-rev/package.json",
+		"/D/My Documents/Tencent Files/606539/FileRecv/附件2：货代（报关报检、运输）供应商考核评分表.xls",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/WEB-INF/applicationContext.xml",
+		"/D/Workspace2/changePWD/WEB-INF/classes/it/service/ADConnection.jad",
+		"/D/workspace-bos/ITGEAS/target/sqlScript/ITGCWDB/update.sql",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/BOEFrame/WEB-INF/applicationContext.xml",
+		"//172.16.10.166/d$/Kingdee/eas/server/profiles/server1/logs/apusic.log.0",
+		"//172.16.10.163/c$/Kingdee/eas/server/profiles/server1/config/log4j.properties",
+		"/D/workspace-sts-3.2.0.RELEASE/jhxtest/src/main/java/com/liwei/jhxtest/App.java",
+		"/D/workspace-idea/jhipster/src/main/webapp/scripts/components/navbar/navbar.html",
+		"/D/workspace-idea/jhipster/src/main/webapp/scripts/app/main/main.html",
+		"/C/Users/lenovo/Desktop/stk.ini",
+		"/D/workspace-bos/ITGEAS/metadata/com/kingdee/eas/fi/cas/app/PaymentBill.entity",
+		"/D/temp/PaymentBill.entity",
+		"/D/workspace-bos/ITGEAS/deployed_metas/com/kingdee/eas/fi/cas/app/PaymentBill.entity",
+		"/D/workspace-idea/jhipster/src/main/webapp/scripts/app/admin/logs/logs.html",
+		"//172.16.10.166/d$/Kingdee/eas/server/profiles/server1/logs/forwarn.log",
+		"//172.16.10.166/d$/Kingdee/eas/server/profiles/server1/logs/apusic.log.1",
+		"/C/Users/lenovo/Desktop/sheet1.xml",
+		"/C/Users/lenovo/Desktop/sheet2.xml",
+		"/D/workspace-idea/jhipster/.jhipster/Team.json",
+		"/D/springsource/apache-maven-3.0.4/conf/settings.xml",
+		"/D/workspace-sts-3.2.0.RELEASE/soabus/soabus-logistic/pom.xml",
+		"/D/JetBrains/IntelliJ IDEA 14.0/bin/idea.bat",
+		"/E/shadowsocks/config.json",
+		"/D/workspace-idea/jhipster/.jhipster/Country.json",
+		"/D/workspace-sts-3.2.0.RELEASE/soabus/soabus-logistic/src/main/java/com/itg/soabus/logistic/web/ScoreTableController.java",
+		"/D/workspace-idea/jhipster/node_modules/karma-phantomjs-launcher/node_modules/phantomjs/bin/phantomjs",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/VoyagerClient/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/PlatformServices/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/PartnerPlatformService/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/PerformanceManagement/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/InfoViewAppActions/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/CrystalReports/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/CmcAppActions/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/Xcelsius/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/CmcApp/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/dswsbobje/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/AdminTools/WEB-INF/web.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/dswsbobje/WEB-INF/conf/axis2.xml",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/BusinessObjects Enterprise 12.0/win32_x86/dataAccess/connectionServer/odbc/odbc.prm",
+		"/D/springsource/sts-3.6.2.RELEASE/STS.ini",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/BusinessObjects Enterprise 12.0/win32_x86/dataAccess/connectionServer/cs.cfg",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/BusinessObjects Enterprise 12.0/win32_x86/dataAccess/connectionServer/driver.cfg",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/BusinessObjects Enterprise 12.0/win32_x86/dataAccess/connectionServer/odbc/odbc.crs",
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/AnalyticalReporting/WEB-INF/web.xml",
+		"/D/My Documents/Tencent Files/606539/FileRecv/sheet2.xml",
+		"/D/My Documents/Tencent Files/606539/FileRecv/sheet3.xml"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"hide",
+			"resetsele",
+			"loadSlideItem",
+			"jumpToSlide",
+			"demand",
+			"marry",
+			"Marry",
+			"sex",
+			"Sex",
+			"age",
+			"Age",
+			"customerService",
+			"filter",
+			"industry",
+			"demand",
+			"Demand",
+			"demand",
+			"searchOptions",
+			"all",
+			"item",
+			"searchData",
+			"module",
+			"jrdCache",
+			"jrd",
+			"views",
+			"loadSlideItemByIndicatorSet",
+			"updateIndicatorSetsOptions",
+			"language",
+			"nametourl",
+			"expand",
+			"multiapprove",
+			"permiss",
+			"controllerBeanEx",
+			"bankNumber",
+			"sheetProtection",
+			"session-timeout",
+			"timeout",
+			"sessionitimeout",
+			"timeout",
+			"sheetpro",
+			"sheetproe",
+			"getcookie"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/main/webapp/js/dashboard.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 39268,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18072,
+								18072
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3420.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/main/webapp/dashboard.jsp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5836,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5733,
+								5733
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2295.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/main/webapp/dist/js/rev-manifest.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14783,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								14783
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 2535.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 25.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "boeframe.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 281.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

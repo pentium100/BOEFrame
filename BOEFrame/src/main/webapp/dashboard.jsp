@@ -59,6 +59,45 @@ navbar navbar-default navbar-fixed-top
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav nav-tabs22 nav-pills"  id="mainTab">
 
+
+                        <li class=""><a href="#home" >指标数据主题</a>
+                        </li>
+
+                        
+                        <li class="active"><a href="#sliderTab" id="jumpToSlide">浏览分析报告</a>
+                        </li>
+
+
+						<!--
+
+                        <li id="indicatorMenu" class="dropdown"><a href="#"  class="dropdown-toggle" data-toggle="dropdown" >单个指标多月浏览<span class="caret"></span></a>
+
+                            <ul class="dropdown-menu multi-level">
+                            </ul>  
+
+                        </li>
+
+                        -->
+
+                        
+
+                        <li class="" style="margin-top:10px;margin-bottom:5px;">
+                        
+                
+                        <select class="selectpicker" id="indicatorSetH" name="indicatorSetH">
+
+
+                        </select>
+                        </li>
+                        
+                
+                        <li class="" style="margin-top:10px;margin-bottom:5px;">
+                        
+                
+                        <select class="selectpicker" id="indicatorH" name="indicatorH">
+                        </select>
+                        </li>
+                
                         <li class="dropdown" id="settingMenu" ><a href="#" class="dropdown-toggle" data-toggle="dropdown">设置<span class="caret"></span></a>
 
                             <ul  class="dropdown-menu" role="menu">
@@ -74,47 +113,14 @@ navbar navbar-default navbar-fixed-top
 
                         </li>
 
-                        <li class=""><a href="#home" >指标数据主题集</a>
-                        </li>
-
                         <!--
-                        <li class="active"><a href="#sliderTab" id="jumpToSlide">最新月所有指标浏览</a>
-                        </li>
-
-
-
-
-                        <li id="indicatorMenu" class="dropdown"><a href="#"  class="dropdown-toggle" data-toggle="dropdown" >单个指标多月浏览<span class="caret"></span></a>
-
-                            <ul class="dropdown-menu multi-level">
-                            </ul>  
-
-                        </li>
-
-                        -->
-
-                        <li class="" style="margin-top:10px;margin-bottom:5px;">
                         <label for="searchIndicatorSetH" class="control-label">指标集</label>
-                
-                        <select class="selectpicker" id="indicatorSetH" name="indicatorSetH">
-
-
-                        </select>
-                        </li>
-                        
-                
-                        <li class="" style="margin-top:10px;margin-bottom:5px;">
                         <label for="searchIndicatorH" class="control-label">指标名称</label>
-                
-                        <select class="selectpicker" id="indicatorH" name="indicatorH">
-                        </select>
-                        </li>
-                
-
-                        <!--
                         <a class="navbar-brand" style="font-size:14px" href="#">
                             指标集
                         </a>
+                        
+                        
                         
                         <li id="indicatorSetMenu" class="dropdown"><a href="#"  class="dropdown-toggle" data-toggle="dropdown" >指标集浏览<span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -159,7 +165,7 @@ navbar navbar-default navbar-fixed-top
 
 
             <!-- jQuery Version 1.11.0 --> 
-            <script data-main="js/dashboard" src="js/libs/require.js"></script>
+            <script data-main="js/dashboard_20150430" src="js/libs/require.js"></script>
             
             
         </div>
