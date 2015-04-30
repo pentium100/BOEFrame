@@ -20,6 +20,16 @@ public class Indicator {
 	private String name;
 	
 	
+	private Boolean canRedirect;
+	
+	public Boolean getCanRedirect() {
+		return canRedirect;
+	}
+
+	public void setCanRedirect(Boolean canRedirect) {
+		this.canRedirect = canRedirect;
+	}
+
 	private Integer sortId; // ≈≈–Ú¬Î
 	
 	public Integer getSortId() {

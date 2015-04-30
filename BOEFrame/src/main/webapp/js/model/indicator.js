@@ -9,7 +9,8 @@ define(['backbone'], function(Backbone) {
 							id:0,
 							name:'',
 							menu:0,
-							indicatorSet:0
+							indicatorSet:0,
+							canRedirect: false
 						}
 
 					});

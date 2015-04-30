@@ -29,6 +29,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             '#indicatorName': 'name',
             '#id': 'id',
             '#sortId': 'sortId',
+            '#canRedirect': 'canRedirect',
             'select#menu': {
                 observe: 'menu',
                 selectOptions: {
@@ -208,6 +209,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     'name': this.model.get('name'),
                     'menu': this.model.get('menu'),
                     'sortId':this.model.get('sortId'), 
+                    'canRedirect': this.model.get('canRedirect'),
                     'indicatorSet': this.model.get('indicatorSet')
                 },
                 //async: false,

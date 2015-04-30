@@ -127,8 +127,9 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
             this.model = new Backbone.Model({
 
                 keyDate: $().datepicker.DPGlobal.formatDate(new Date(), 'yyyy/mm/dd', 'en'),
-                keyValue: 901,
-                isEnabled: true
+                keyValue: 0,
+                isEnabled: true,
+                indicator: 0
             });
 
             var view = new ModalMarkMemoView({

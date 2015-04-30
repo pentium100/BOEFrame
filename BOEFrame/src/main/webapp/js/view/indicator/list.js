@@ -50,7 +50,10 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
 
 
             var modalId = _.uniqueId("modal_");
-            this.model = new IndicatorModel();
+            this.model = new IndicatorModel({
+
+                canRedirect: true
+            });
             var editView = new EditView({
 
                 model: this.model,

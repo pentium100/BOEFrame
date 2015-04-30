@@ -70,13 +70,15 @@ require.config({
 
 
     urlMap: {
-        "dashboard.js": "dashboard-fe6230fe.js",
-        "dashboard_20150424.js": "dashboard_20150424-3bc3e0e2.js",
+        "dashboard.js": "dashboard-fc5060f1.js",
         "javascript.js": "javascript-bb907479.js",
         "collection/indicators.js": "collection/indicators-d8c6751a.js",
         "collection/indicatorSets.js": "collection/indicatorSets-d39e0674.js",
         "collection/menus.js": "collection/menus-22736c89.js",
         "collection/reportMemos.js": "collection/reportMemos-8a168c56.js",
+        "DataMaintain/UserForm.js": "DataMaintain/UserForm-7840fd00.js",
+        "DataMaintain/UserGrid.js": "DataMaintain/UserGrid-d1a4a220.js",
+        "DataMaintain/writer.js": "DataMaintain/writer-7f21e823.js",
         "ench/bootstrap-table-ench.js": "ench/bootstrap-table-ench-cd67e603.js",
         "ie/html5shiv-printshiv.js": "ie/html5shiv-printshiv-d0d9a764.js",
         "ie/html5shiv-printshiv.min.js": "ie/html5shiv-printshiv.min-8c3c50c9.js",
@@ -86,6 +88,10 @@ require.config({
         "ie/respond.matchmedia.addListener.src.js": "ie/respond.matchmedia.addListener.src-56c75758.js",
         "ie/respond.min.js": "ie/respond.min-9cccbcd9.js",
         "ie/respond.src.js": "ie/respond.src-e5d7fffb.js",
+        "model/indicator.js": "model/indicator-c7bf48b5.js",
+        "model/indicatorSet.js": "model/indicatorSet-3d3a2b93.js",
+        "model/menu.js": "model/menu-4b3e1ebe.js",
+        "model/reportMemo.js": "model/reportMemo-3922d9f1.js",
         "libs/backbone.js": "libs/backbone-9f7946cb.js",
         "libs/backbone.stickit.js": "libs/backbone.stickit-8d657a45.js",
         "libs/backbone.stickit.min.js": "libs/backbone.stickit.min-dd638a9c.js",
@@ -115,22 +121,15 @@ require.config({
         "libs/require.js": "libs/require-f1c61e00.js",
         "libs/text.js": "libs/text-b061e680.js",
         "libs/underscore.js": "libs/underscore-698a1e2a.js",
-        "model/indicator.js": "model/indicator-7296c909.js",
-        "model/indicatorSet.js": "model/indicatorSet-3d3a2b93.js",
-        "model/menu.js": "model/menu-4b3e1ebe.js",
-        "model/reportMemo.js": "model/reportMemo-3922d9f1.js",
         "template/mark-memo.hbs": "template/mark-memo-d39e7224.hbs",
         "template/menu.hbs": "template/menu-75454cfc.hbs",
         "template/menuList.hbs": "template/menuList-17daf417.hbs",
         "template/modal-view.hbs": "template/modal-view-65ddf46b.hbs",
         "template/slide-indicator.hbs": "template/slide-indicator-79edacf7.hbs",
-        "template/slide-item.hbs": "template/slide-item-0b342b74.hbs",
+        "template/slide-item.hbs": "template/slide-item-d577b4f1.hbs",
         "template/slide.hbs": "template/slide-ca841fd4.hbs",
-        "view/MarkMemoView.js": "view/MarkMemoView-36dea8cd.js",
+        "view/MarkMemoView.js": "view/MarkMemoView-535e189c.js",
         "view/ModalMarkMemoView.js": "view/ModalMarkMemoView-6eea59a9.js",
-        "DataMaintain/UserForm.js": "DataMaintain/UserForm-7840fd00.js",
-        "DataMaintain/UserGrid.js": "DataMaintain/UserGrid-d1a4a220.js",
-        "DataMaintain/writer.js": "DataMaintain/writer-7f21e823.js",
         "libs/i18n/defaults-cs_CZ.js": "libs/i18n/defaults-cs_CZ-89768a64.js",
         "libs/i18n/defaults-cs_CZ.min.js": "libs/i18n/defaults-cs_CZ.min-0ecf9acb.js",
         "libs/i18n/defaults-de_DE.js": "libs/i18n/defaults-de_DE-f195ccdc.js",
@@ -161,9 +160,6 @@ require.config({
         "libs/i18n/defaults-zh_CN.min.js": "libs/i18n/defaults-zh_CN.min-006cc85b.js",
         "libs/i18n/defaults-zh_TW.js": "libs/i18n/defaults-zh_TW-c1b2910e.js",
         "libs/i18n/defaults-zh_TW.min.js": "libs/i18n/defaults-zh_TW.min-1d1fbc7a.js",
-        "template/indicator/edit.hbs": "template/indicator/edit-a93fc1eb.hbs",
-        "template/indicator/list.hbs": "template/indicator/list-9fb8dd08.hbs",
-        "template/indicator/tool-bar.hbs": "template/indicator/tool-bar-30f8f455.hbs",
         "libs/locale/bootstrap-table-da-DK.js": "libs/locale/bootstrap-table-da-DK-a26ed1bb.js",
         "libs/locale/bootstrap-table-da-DK.min.js": "libs/locale/bootstrap-table-da-DK.min-5a081a97.js",
         "libs/locale/bootstrap-table-el-GR.js": "libs/locale/bootstrap-table-el-GR-17f82521.js",
@@ -194,6 +190,9 @@ require.config({
         "libs/locale/bootstrap-table-zh-TW.js": "libs/locale/bootstrap-table-zh-TW-dedc3bff.js",
         "libs/locale/bootstrap-table-zh-TW.min.js": "libs/locale/bootstrap-table-zh-TW.min-6bc986fc.js",
         "libs/locale/README.md": "libs/locale/README-2501d577.md",
+        "template/indicator/edit.hbs": "template/indicator/edit-56008570.hbs",
+        "template/indicator/list.hbs": "template/indicator/list-76696815.hbs",
+        "template/indicator/tool-bar.hbs": "template/indicator/tool-bar-30f8f455.hbs",
         "template/reportMemo/list.hbs": "template/reportMemo/list-5df3aafd.hbs",
         "template/reportMemo/tool-bar.hbs": "template/reportMemo/tool-bar-b4f12125.hbs",
         "template/slideSetting/list.hbs": "template/slideSetting/list-30688495.hbs",
@@ -248,9 +247,9 @@ require.config({
         "libs/locales/bootstrap-datepicker.vi.js": "libs/locales/bootstrap-datepicker.vi-ddd41519.js",
         "libs/locales/bootstrap-datepicker.zh-CN.js": "libs/locales/bootstrap-datepicker.zh-CN-70fb6946.js",
         "libs/locales/bootstrap-datepicker.zh-TW.js": "libs/locales/bootstrap-datepicker.zh-TW-7d244784.js",
-        "view/indicator/edit.js": "view/indicator/edit-4fd8c1ce.js",
-        "view/indicator/list.js": "view/indicator/list-9d97b679.js",
-        "view/reportMemo/list.js": "view/reportMemo/list-a2d5dacd.js",
+        "view/indicator/edit.js": "view/indicator/edit-e6ef1f3d.js",
+        "view/indicator/list.js": "view/indicator/list-66213755.js",
+        "view/reportMemo/list.js": "view/reportMemo/list-38265e91.js",
         "view/slideSetting/list.js": "view/slideSetting/list-4eeeb495.js",
         "libs/bootstrap-select.js.map": "libs/bootstrap-select.js-2364340c.map"
     },
@@ -579,6 +578,17 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
                     win.focus();
                 } else {
 
+
+                    var indicatorId = $(target).attr('data-indicator');
+                    var indicator = indicators.where({
+                        id: parseInt(indicatorId)
+                    });
+                    if (!indicator[0].get('canRedirect')) {
+
+                        $('#redirectModal').modal();
+                        return;
+                    }
+
                     win = window
                         .open(
                             "queryReport.do?menuId=" + id,
@@ -824,6 +834,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
             });
 
     };
+    var indicators = new Indicators();
 
     var resetSelectPicker = function() {
 
@@ -834,7 +845,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         $('#indicatorSetH').selectpicker('refresh');
 
 
-        var indicators = new Indicators();
+
         indicators.on('sync', updateIndicatorHOptions, indicators);
         indicators.fetch({
 
@@ -942,7 +953,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
 
         $level1.empty();
-        var indicators = new Indicators();
+        //var indicators = new Indicators();
 
         indicators.fetch({
 
@@ -1076,7 +1087,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
 
 
-        var indicators = new Indicators();
+        //var indicators = new Indicators();
         indicators.on('sync', updateIndicatorsOptions, indicators);
         indicators.on('sync', updateIndicatorHOptions, indicators);
 

@@ -136,6 +136,7 @@ public class IndicatorController {
 			indicatorJson.put("indicatorSet", indicator.getIndicatorSet()!=null?indicator.getIndicatorSet().getId():0);
 			indicatorJson.put("indicatorSetName", indicator.getIndicatorSet()!=null?indicator.getIndicatorSet().getName():"");
 			indicatorJson.put("menu", indicator.getMenu().getID());
+			indicatorJson.put("canRedirect", indicator.getCanRedirect());
 			jsonArray.add(indicatorJson);
 
 		}
@@ -153,7 +154,8 @@ public class IndicatorController {
 			@RequestParam(value = "name") String name,
 			@RequestParam(value = "menu") Long menu,
 			@RequestParam(value = "sortId") Integer sortId,
-			@RequestParam(value = "indicatorSet") Long indicatorSet) {
+			@RequestParam(value = "indicatorSet") Long indicatorSet,
+			@RequestParam(value = "canRedirect") Boolean canRedirect) {
 
 		Indicator indicator = null;
 		if (id != null && id != 0) {
@@ -166,6 +168,7 @@ public class IndicatorController {
 				.toString())));
 		indicator.setName(name);
 		indicator.setSortId(sortId);
+		indicator.setCanRedirect(canRedirect);
 		indicator.setIndicatorSet(indicatorSetDAO.findById(indicatorSet));
 		indicatorDAO.modifyIndicator(indicator);
 		JSONObject json = new JSONObject();

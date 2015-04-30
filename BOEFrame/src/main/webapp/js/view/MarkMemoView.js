@@ -25,10 +25,12 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     // For example: `collection:'this.stooges'` would reference `view.stooges`.
                     collection: 'this.menus',
                     labelPath: 'text',
-                    valuePath: 'id'
+                    valuePath: 'id',
+                    defaultOption:{label: "请选择...", value: null}
                 },
                 onGet: 'formatKeyValue',
-                onSet: 'updateIndicatorList',
+                onSet: 'updateIndicatorList'
+                
 
             },
 
@@ -39,7 +41,8 @@ define(['backbone', 'underscore', 'handlebars', 'jquery',
                     // For example: `collection:'this.stooges'` would reference `view.stooges`.
                     collection: 'this.indicators',
                     labelPath: 'name',
-                    valuePath: 'id'
+                    valuePath: 'id',
+                    defaultOption:{label: "请选择...", value: null}
                 }
 
             }

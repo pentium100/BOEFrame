@@ -39,7 +39,7 @@
 			"file": "src/main/webapp/js/dashboard.js",
 			"settings":
 			{
-				"buffer_size": 39268,
+				"buffer_size": 39573,
 				"line_ending": "Windows"
 			}
 		},
@@ -47,7 +47,15 @@
 			"file": "src/main/webapp/dashboard.jsp",
 			"settings":
 			{
-				"buffer_size": 5836,
+				"buffer_size": 6427,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/BOEFrame/dashboard.jsp",
+			"settings":
+			{
+				"buffer_size": 6427,
 				"line_ending": "Windows"
 			}
 		},
@@ -55,7 +63,7 @@
 			"file": "src/main/webapp/dist/js/rev-manifest.json",
 			"settings":
 			{
-				"buffer_size": 14783,
+				"buffer_size": 14905,
 				"line_ending": "Unix"
 			}
 		}
@@ -109,11 +117,34 @@
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js"
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dist",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dist/js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/model",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/indicator",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/indicator",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/reportMemo"
 	],
 	"file_history":
 	[
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dist/js/rev-manifest.json",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dashboard.jsp",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/model/indicator.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/model/indicatorSet.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/indicator/list.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/indicator/list.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slide-item.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/indicator/edit.hbs",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/indicator/edit.js",
+		"/C/Users/lenovo/AppData/Roaming/Sublime Text 3/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/MarkMemoView.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/reportMemo/list.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/Gruntfile.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/ModalMarkMemoView.js",
+		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/model/reportMemo.js",
 		"/D/workspace-idea/ionic/myapp/www/js/controller/customer.js",
 		"/D/workspace-idea/ionic/myapp/www/templates/customer/filter.html",
 		"/D/workspace-idea/ionic/myapp/www/templates/customer/customers2.html",
@@ -148,18 +179,13 @@
 		"/D/workspace-idea/jhipster/src/main/webapp/scripts/app/account/activate/activate.controller.js",
 		"/D/workspace-idea/ionic/myapp/www/lib/ionic/js/angular/angular.js",
 		"/D/workspace-idea/ionic/myapp/www/lib/ionic/css/ionic.css",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dashboard.jsp",
 		"/D/workspace-bos/ITGEAS/src/com/kingdee/eas/jhx/webservice/jzww.properties",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard.js",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/reportMemo/list.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/reportMemo/tool-bar.hbs",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/slideSetting/list.js",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/dist/js/rev-manifest.json",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard_20150424.js",
 		"/D/workspace-sts-3.2.0.RELEASE/jhxtest/src/test/java/com/liwei/jhxtest/AppTest.java",
 		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/BOEFrame/dashboard.jsp",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/gulpfile.js",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/view/MarkMemoView.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/bootstrap-datepicker.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/i18n/defaults-fr_FR.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/locales/bootstrap-datepicker.zh-CN.js",
@@ -172,8 +198,6 @@
 		"//172.16.10.166/d$/Kingdee/eas/server/profiles/server1/config/log4j.properties",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard_20150418.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/template/slideSetting/list.hbs",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/model/indicatorSet.js",
-		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/model/reportMemo.js",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/libs/require.js",
 		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/BOEFrame/dashboardWrap.jsp",
 		"/D/workspace-sts/BOEFrameX/BOEFrame/src/main/webapp/js/dashboard_20150417.js",
@@ -232,15 +256,7 @@
 		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/CmcApp/WEB-INF/web.xml",
 		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/dswsbobje/WEB-INF/web.xml",
 		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/AdminTools/WEB-INF/web.xml",
-		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/dswsbobje/WEB-INF/conf/axis2.xml",
-		"//itgbop.itg.net/d$/Program Files/Business Objects/BusinessObjects Enterprise 12.0/win32_x86/dataAccess/connectionServer/odbc/odbc.prm",
-		"/D/springsource/sts-3.6.2.RELEASE/STS.ini",
-		"//itgbop.itg.net/d$/Program Files/Business Objects/BusinessObjects Enterprise 12.0/win32_x86/dataAccess/connectionServer/cs.cfg",
-		"//itgbop.itg.net/d$/Program Files/Business Objects/BusinessObjects Enterprise 12.0/win32_x86/dataAccess/connectionServer/driver.cfg",
-		"//itgbop.itg.net/d$/Program Files/Business Objects/BusinessObjects Enterprise 12.0/win32_x86/dataAccess/connectionServer/odbc/odbc.crs",
-		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/AnalyticalReporting/WEB-INF/web.xml",
-		"/D/My Documents/Tencent Files/606539/FileRecv/sheet2.xml",
-		"/D/My Documents/Tencent Files/606539/FileRecv/sheet3.xml"
+		"//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/dswsbobje/WEB-INF/conf/axis2.xml"
 	],
 	"find":
 	{
@@ -258,6 +274,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"new Indicators",
 			"hide",
 			"resetsele",
 			"loadSlideItem",
@@ -317,7 +334,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -326,15 +343,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 39268,
+						"buffer_size": 39573,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18072,
-								18072
+								16625,
+								16625
 							]
 						],
 						"settings":
@@ -343,11 +360,11 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 3420.0,
+						"translation.x": 7.0,
+						"translation.y": 3900.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -356,15 +373,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5836,
+						"buffer_size": 6427,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5733,
-								5733
+								6377,
+								6377
 							]
 						],
 						"settings":
@@ -374,19 +391,19 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2295.0,
+						"translation.y": 1665.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "src/main/webapp/dist/js/rev-manifest.json",
+					"file": "//itgbop.itg.net/d$/Program Files/Business Objects/Tomcat7/webapps/BOEFrame/dashboard.jsp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14783,
+						"buffer_size": 6427,
 						"regions":
 						{
 						},
@@ -394,7 +411,37 @@
 						[
 							[
 								0,
-								14783
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1665.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/main/webapp/dist/js/rev-manifest.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14905,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								14905
 							]
 						],
 						"settings":
@@ -403,11 +450,11 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
-						"translation.y": 2535.0,
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]

@@ -178,7 +178,17 @@ public class ReportMemoController {
 
 		for (MenuItem m : menus) {
 
-			menuIds.add(String.valueOf(m.getID()));
+			if(m.getID()==931){
+				
+				if(checkHasAuthValue(request, "ZBIZ_GRP", "8000")){
+					
+					menuIds.add(String.valueOf(m.getID()));
+				}
+				
+				
+			}else{
+				menuIds.add(String.valueOf(m.getID()));
+			}
 		}
 
 		if (limit == null || limit == 0) {

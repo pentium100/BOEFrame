@@ -116,7 +116,7 @@ public class ReportMemoDAO implements
 			sql = sql + " and r.indicator.indicatorSet.id = :indicatorSet";
 		}		
 
-		sql = sql + " order by m.menuText, r.indicator.sortId , r.keyDate desc";
+		sql = sql + " order by r.indicator.indicatorSet.name, r.indicator.sortId , m.menuText, r.keyDate desc";
 
 		org.hibernate.Query q =sessionFactory.getCurrentSession().createQuery(sql);
 		q.setParameterList("values", menuIds);
