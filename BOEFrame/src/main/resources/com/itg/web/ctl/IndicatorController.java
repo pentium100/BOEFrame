@@ -21,6 +21,7 @@ import com.itg.dao.IIndicatorDAO;
 import com.itg.dao.IIndicatorSetDAO;
 import com.itg.dao.IMenuItemDAO;
 import com.itg.dao.Indicator;
+import com.itg.dao.IndicatorSet;
 import com.itg.dao.MenuItem;
 
 @Controller
@@ -75,6 +76,49 @@ public class IndicatorController {
 	public void setReportMemoController(ReportMemoController reportMemoController) {
 		this.reportMemoController = reportMemoController;
 	}
+	
+	
+	private List<Long> getAuthIndicator(HttpServletRequest request, Long indicatorSet){
+		
+		
+		List<Long> indicatorSets = new ArrayList<Long>();
+		List<Long> toChecks = new ArrayList<Long>();
+		
+
+		if(indicatorSet!=null){
+			toChecks.add(indicatorSet);
+		}else{
+			
+			List<IndicatorSet> set =  indicatorSetDAO.getAll(0, 9999);
+			for(IndicatorSet item:set){
+				toChecks.add(item.getId());
+			}
+		}
+		
+		
+		for(Long id:toChecks){
+			
+			
+			boolean hasAuth = reportMemoController.checkHasAuthValue(request, "INDICATORSET", id.toString());
+			if(hasAuth){
+				
+				indicatorSets.add(id);
+				
+			}else{
+				
+				indicatorSets.add(-9999L);
+			}
+		}
+		
+		
+		return indicatorSets;
+		
+		
+		
+		
+		
+		
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAll(ModelMap map,
@@ -97,6 +141,9 @@ public class IndicatorController {
 			
 			indicatorSet = null;
 		}
+		
+		
+		List<Long> indicatorSets = getAuthIndicator(request, indicatorSet);
 
 		MenuItem menu = null;
 		if (menuId != null) {
@@ -119,8 +166,8 @@ public class IndicatorController {
 			}
 		}
 
-		List<Indicator> indiactors = indicatorDAO.getAll(start, limit, menuIds, indicatorSet);
-		Long count = indicatorDAO.getCount(menuIds, indicatorSet);
+		List<Indicator> indiactors = indicatorDAO.getAll(start, limit, menuIds, indicatorSets);
+		Long count = indicatorDAO.getCount(menuIds, indicatorSets);
 
 		JSONObject json = new JSONObject();
 		json.put("total", count);

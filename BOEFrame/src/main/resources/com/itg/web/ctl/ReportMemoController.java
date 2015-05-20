@@ -45,11 +45,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.itg.dao.IIndicatorDAO;
+import com.itg.dao.IIndicatorSetDAO;
 import com.itg.dao.IMenuItemDAO;
 import com.itg.dao.IReportMemoDAO;
 import com.itg.dao.IRolesDAO;
 import com.itg.dao.IUserRolesDAO;
 import com.itg.dao.Indicator;
+import com.itg.dao.IndicatorSet;
 import com.itg.dao.Postscript;
 import com.itg.dao.ReportMemo;
 import com.itg.dao.UserRole;
@@ -67,6 +69,15 @@ public class ReportMemoController {
 	private IRolesDAO rolesDAO;
 	private IMenuItemDAO menuItemDAO;
 	private IIndicatorDAO indicatorDAO;
+	private IIndicatorSetDAO indicatorSetDAO;
+
+	public IIndicatorSetDAO getIndicatorSetDAO() {
+		return indicatorSetDAO;
+	}
+
+	public void setIndicatorSetDAO(IIndicatorSetDAO indicatorSetDAO) {
+		this.indicatorSetDAO = indicatorSetDAO;
+	}
 
 	public IIndicatorDAO getIndicatorDAO() {
 		return indicatorDAO;
@@ -153,6 +164,49 @@ public class ReportMemoController {
 		return "resultOnly";
 
 	}
+	
+	
+	private List<Long> getAuthIndicator(HttpServletRequest request, Long indicatorSet){
+		
+		
+		List<Long> indicatorSets = new ArrayList<Long>();
+		List<Long> toChecks = new ArrayList<Long>();
+		
+
+		if(indicatorSet!=null){
+			toChecks.add(indicatorSet);
+		}else{
+			
+			List<IndicatorSet> set =  indicatorSetDAO.getAll(0, 9999);
+			for(IndicatorSet item:set){
+				toChecks.add(item.getId());
+			}
+		}
+		
+		
+		for(Long id:toChecks){
+			
+			
+			boolean hasAuth = checkHasAuthValue(request, "INDICATORSET", id.toString());
+			if(hasAuth){
+				
+				indicatorSets.add(id);
+				
+			}else{
+				
+				indicatorSets.add(-9999L);
+			}
+		}
+		
+		
+		return indicatorSets;
+		
+		
+		
+		
+		
+		
+	}
 
 	@RequestMapping(params = "method=getMemoList")
 	public String getReportMemos(
@@ -221,12 +275,14 @@ public class ReportMemoController {
 		if(period==null){
 			period = "";
 		}
+		
+		List<Long> indicatorSets = getAuthIndicator(request, indicatorSet);
 
 		List<ReportMemo> memos = reportMemoDAO.getMemoInList(menuIds,
-				isEnabled, start, limit, searchToken, indicator, indicatorSet, period);
+				isEnabled, start, limit, searchToken, indicator, indicatorSets, period);
 
 		Long count = reportMemoDAO.getMemoCountInList(menuIds, isEnabled,
-				searchToken, forEdit, fullName, indicator, indicatorSet, period);
+				searchToken, forEdit, fullName, indicator, indicatorSets, period);
 
 		ArrayList<Map> result = new ArrayList<Map>();
 		for (ReportMemo memo : memos) {

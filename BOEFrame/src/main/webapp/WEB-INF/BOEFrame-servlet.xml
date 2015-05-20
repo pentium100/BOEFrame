@@ -169,6 +169,13 @@
 			<ref bean="rolesDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
 		</property>
       		
+      		
+      	<property name="indicatorSetDAO">     <!-- 设置属性userDao为Hibernate的Dao对象 -->
+			<ref bean="indicatorSetDAOProxy" /> <!-- 注入一个bean(定义在Hibernate的配置文件里) -->
+		</property>
+		
+
+      		
 	</bean>
 </beans>
 

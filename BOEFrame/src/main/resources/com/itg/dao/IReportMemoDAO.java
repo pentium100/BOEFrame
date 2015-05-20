@@ -21,10 +21,10 @@ public interface IReportMemoDAO {
 	public ReportMemo getLastReportMemo(Date keyDate, String keyValue);
 
 	public List<ReportMemo> getMemoInList(List<String> menuIds, Boolean b,
-			Integer start, Integer limit, String searchToken, Long indicator, Long indicatorSet, String period);
+			Integer start, Integer limit, String searchToken, Long indicator, List<Long> indicatorSets, String period);
 
 	public Long getMemoCountInList(List<String> menuIds, Boolean enabled,
-			String memo, Boolean forEdit, String fullName, Long indicator, Long indicatorSet, String period);
+			String memo, Boolean forEdit, String fullName, Long indicator, List<Long> indicatorSets, String period);
 
 	public byte[] getReportMemoImage(Integer id);
 

@@ -10,9 +10,9 @@ public interface IIndicatorDAO {
 
 	public void deleteIndicator(Indicator indicator);
 
-	public List<Indicator> getAll(Integer start, Integer limit, List<Integer> menuIds, Long indicatorSet);
+	public List<Indicator> getAll(Integer start, Integer limit, List<Integer> menuIds, List<Long> indicatorSets);
 
-	public Long getCount(List<Integer> menuIds, Long indicatorSet);
+	public Long getCount(List<Integer> menuIds, List<Long> indicatorSets);
 
 	public Indicator findById(Long id);
 
