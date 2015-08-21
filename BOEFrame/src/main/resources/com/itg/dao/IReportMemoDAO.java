@@ -19,12 +19,15 @@ public interface IReportMemoDAO {
 	public ReportMemo findReportMemoById(Integer id);
 
 	public ReportMemo getLastReportMemo(Date keyDate, String keyValue);
+	public List<Postscript> getPostscripts(Integer id);
 
 	public List<ReportMemo> getMemoInList(List<String> menuIds, Boolean b,
 			Integer start, Integer limit, String searchToken, Long indicator, List<Long> indicatorSets, String period);
 
 	public Long getMemoCountInList(List<String> menuIds, Boolean enabled,
 			String memo, Boolean forEdit, String fullName, Long indicator, List<Long> indicatorSets, String period);
+	
+	public List<String> getPeriods(Integer topN);
 
 	public byte[] getReportMemoImage(Integer id);
 

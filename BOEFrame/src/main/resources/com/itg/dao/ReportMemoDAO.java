@@ -94,7 +94,19 @@ public class ReportMemoDAO implements
 		// String sql =
 		// "select new ReportMemo(r.id, r.keyValue, r.keyDate, r.memo, r.isEnabled, r.memoBy, new ArrayList<Postscript>(r.postscripts) From ReportMemo r, MenuItem m where r.keyValue = m.ID and r.keyValue in (:values) and r.memo like :memo";
 
-		String sql = "select r From ReportMemo r, MenuItem m where r.keyValue = m.ID and r.keyValue in (:values) and r.memo like :memo and  r.indicator.indicatorSet.id  in (:indicatorSets) ";
+		//m.put("id", memo.getId());
+		//m.put("memo", memo.getMemo());
+		//m.put("keyValue", memo.getKeyValue());
+		//m.put("isEnabled", memo.getIsEnabled());
+		//m.put("keyDate", sdf.format(memo.getKeyDate()));
+		//m.put("memoBy", memo.getMemoBy());
+		//m.put("period", memo.getPeriod());
+		//m.put("indicator", memo.getIndicator().getId());
+		
+		
+		//, new ArrayList<Postscripts>(r.postscripts)
+		String sql = "select new ReportMemo(r.id, r.memo, r.keyValue, r.isEnabled, r.keyDate, r.memoBy, r.period, r.indicator) From ReportMemo r, MenuItem m where r.keyValue = m.ID and r.keyValue in (:values) and r.memo like :memo and  r.indicator.indicatorSet.id  in (:indicatorSets) ";
+		//String sql = "select r From ReportMemo r, MenuItem m where r.keyValue = m.ID and r.keyValue in (:values) and r.memo like :memo and  r.indicator.indicatorSet.id  in (:indicatorSets) ";		
 
 		if (enabled != null && indicator == 0) {
 			sql = sql + " and r.isEnabled = :isEnabled ";
@@ -106,7 +118,7 @@ public class ReportMemoDAO implements
 		}
 		
 		
-		if(period != ""){
+		if(period != "" && !period.equals("0")){
 			
 			sql = sql + " and r.period like :period";
 		}
@@ -133,7 +145,7 @@ public class ReportMemoDAO implements
 		
 		//}
 		
-		if(period != ""){
+		if(!period.equals( "") && !period.equals("0")){
 			
 			q.setParameter("period", period+"%");
 		}
@@ -189,7 +201,7 @@ public class ReportMemoDAO implements
 		//}
 		
 		
-		if(period != ""){
+		if(!period.equals("")&& !period.equals("0")){
 			
 			sql += " and period like :period ";
 		}
@@ -216,7 +228,7 @@ public class ReportMemoDAO implements
 			q.setParameter("indicator", indicator);
 		}
 		
-		if(period != ""){
+		if(!period.equals("") && !period.equals("0") ){
 			
 			q.setParameter("period", period+"%");
 		}
@@ -242,6 +254,36 @@ public class ReportMemoDAO implements
 
 		List<Object> findByNamedQuery = q.list();
 		return (byte[]) findByNamedQuery.get(0);
+
+	}
+
+	public List<String> getPeriods(Integer topN) {
+		String sql = "select distinct period From ReportMemo where isEnabled = 1 order by period desc";
+		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
+		q.setMaxResults(topN);
+
+		
+
+		List<String> results = q.list();
+		
+
+		return results;
+	}
+
+	public List<Postscript> getPostscripts(Integer id) {
+		
+		String sql = " select postscripts From ReportMemo r where r.id=:id ";
+		
+		org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery(sql);
+		q.setParameter("id", id);
+		
+
+		
+
+		List<Postscript> results = q.list();
+		
+
+		return results;
 
 	}
 

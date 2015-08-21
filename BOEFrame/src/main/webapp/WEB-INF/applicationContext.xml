@@ -28,7 +28,7 @@
 
 		<property name="url">
 
-			<value>jdbc:jtds:sqlserver://localhost:1433/BOEFrame</value>
+			<value>jdbc:jtds:sqlserver://172.16.10.54:1433/BOEFrame</value>
 
 		</property>
 

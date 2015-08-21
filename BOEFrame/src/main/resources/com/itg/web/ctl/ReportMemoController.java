@@ -165,6 +165,23 @@ public class ReportMemoController {
 
 	}
 	
+	@RequestMapping(params = "method=getPeriods")
+	public String getPeriods(
+			ModelMap map,
+			HttpServletRequest request) {
+
+		List<String> periods = reportMemoDAO.getPeriods(10);
+		List<String> periods2 = new ArrayList<String>(); 
+		for(String period:periods){
+			
+			periods2.add("\""+period+"\"");
+		}
+		map.put("result", periods2);
+
+		return "resultOnly";
+
+	}
+	
 	
 	private List<Long> getAuthIndicator(HttpServletRequest request, Long indicatorSet){
 		
@@ -173,7 +190,7 @@ public class ReportMemoController {
 		List<Long> toChecks = new ArrayList<Long>();
 		
 
-		if(indicatorSet!=null){
+		if(indicatorSet!=null&&indicatorSet!=0){
 			toChecks.add(indicatorSet);
 		}else{
 			
@@ -306,7 +323,10 @@ public class ReportMemoController {
 			m.put("indicator", memo.getIndicator().getId());
 
 			List<Map> postscripts = new ArrayList<Map>();
-			for (Postscript p : memo.getPostscripts()) {
+			
+			
+			List<Postscript> postscripts2 = new ArrayList<Postscript>();//reportMemoDAO.getPostscripts(memo.getId())
+			for (Postscript p : postscripts2 ) {
 				Map postscriptMap = new HashMap<String, Object>();
 				postscriptMap.put("id", p.getId());
 				postscriptMap.put("fileName", p.getFileName());

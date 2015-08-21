@@ -60,11 +60,6 @@ navbar navbar-default navbar-fixed-top
 
                         -->
                         <li class="" style="margin-top:10px;margin-bottom:5px;">
-                            <select class="selectpicker" data-width="100px" id="periodH" name="periodH">
-                            </select>
-                        </li>
-
-                        <li class="" style="margin-top:10px;margin-bottom:5px;">
                             <select class="selectpicker" id="indicatorSetH" name="indicatorSetH">
                             </select>
                         </li>
@@ -137,6 +132,6 @@ navbar navbar-default navbar-fixed-top
         </div>
 
     </body>
-    <script data-main="js/dashboard-150821" src="js/libs/require.js"></script>
+    <script data-main="js/dashboard_20150434" src="js/libs/require.js"></script>
 
     </html>

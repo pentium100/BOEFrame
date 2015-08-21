@@ -15,7 +15,9 @@ import net.sf.json.JSONObject;
 @Table(name = "ReportMemo")
 @XmlRootElement(name = "reportMemo")
 public class ReportMemo {
-
+	
+	
+	
 	private int id;
 	private Date keyDate; // 关键日期
 	private String keyValue; // 关键值
@@ -144,17 +146,21 @@ public class ReportMemo {
 
 	}
 
-	public ReportMemo(int id, String keyValue, Date keyDate, String memo,
-			Boolean isEnabled, String memoBy, List<Postscript> postscripts) {
+	public ReportMemo(int id, String memo, String keyValue, Boolean isEnabled, Date keyDate,
+			String memoBy, String period, Indicator indicator) {  
+		
+				
 
 		this.id = id;
 		this.keyDate = keyDate;
 		this.keyValue = keyValue;
 		this.memo = memo;
 		this.isEnabled = isEnabled;
+		this.indicator = indicator;
+		this.period = period;
 		this.memoBy = memoBy;
 
-		this.postscripts = postscripts;
+		//this.postscripts = (List<Postscript>) postscripts;
 	}
 
 	public String toJSON() {

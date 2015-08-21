@@ -259,7 +259,7 @@ require.config({
         var config = this;
 
         var element = url.slice((config.baseUrl).length);
-        if (config.urlMap[element] != undefined) {
+        if (config.urlMap[element] !== undefined) {
 
 
             return config.urlMap[element];
@@ -277,11 +277,11 @@ require.config({
 require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     'text!template/slide-item.hbs', 'text!template/slide.hbs', 'collection/indicators', 'jquery', 'bootstrap',
     'handlebars', 'collection/menus',
-    'collection/reportMemos', 'collection/indicatorSets', 'backbone', 'jquery-cookie',
+    'collection/reportMemos', 'collection/indicatorSets',  'backbone', 'jquery-cookie',
     'jquery-fullscreen', 'bootstrap-select'
 ], function(menuSrc, slideIndicatorSrc,
     slideItemSrc, slideSrc, Indicators, jquery, bootstrap, Handlebars, MenuCollection,
-    ReportMemoCollection, IndicatorSets, Backbone) {
+    ReportMemoCollection, IndicatorSets,  Backbone) {
     Handlebars.registerHelper('substring', function(passedString,
         options) {
 
@@ -294,7 +294,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
     Handlebars.registerHelper('getCurrentTime',
         function(date, options) {
 
-            return new Handlebars.SafeString(+new Date);
+            return new Handlebars.SafeString(+new Date());
         });
 
     if (!Array.prototype.indexOf) {
@@ -574,7 +574,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
             if (id !== undefined) {
                 var win = $(menuItem).data('data-window');
-                if (win != undefined && !win.closed) {
+                if (win !== undefined && !win.closed) {
                     win.focus();
                 } else {
 
@@ -654,7 +654,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         if (event !== undefined && event.target) {
             indicatorSet = $(event.target).attr('data-indicatorSet-id');
 
-            if (indicatorSet == undefined) {
+            if (indicatorSet === undefined) {
 
                 indicatorSet = $(event.target).val();
             }
@@ -663,6 +663,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         } else {
             return;
         }
+        var period  = $('#periodH').val();
 
         memos.fetch({
 
@@ -670,7 +671,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
                 node: 900,
                 enabled: true,
                 method: "getMemoList",
-                indicatorSet: indicatorSet
+                indicatorSet: indicatorSet,
+                period: period
             },
             success: initSlide
         });
@@ -695,37 +697,42 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
             $('#indicatorH').selectpicker('hide');
             $('#indicatorSetH').selectpicker('hide');
+            $('#periodH').selectpicker('hide');            
         } else {
 
             $('#indicatorH').selectpicker('show');
             $('#indicatorSetH').selectpicker('show');
+            $('#periodH').selectpicker('show');            
 
         }
 
-    }
+    };
 
     var loadSlideItem = function(event) {
 
 
-
+        
+            updatePeriodHValue(event);
+        
         if (event !== undefined && event.target) {
-            newIndicator = $(event.target).attr('data-indicator-id');
+            //newIndicator = $(event.target).attr('data-indicator-id');
 
-            if (newIndicator == undefined) {
+            //if (newIndicator === undefined) {
 
-                newIndicator = $(event.target).val();
-            }
-
+            //    newIndicator = $(event.target).val();
+            //}
+            newIndicator = $('#indicatorH').val();
 
 
         } else {
             newIndicator = 0;
 
         }
+        hideIndicatorSelectPicker(false);
 
-        if (newIndicator == 0 || newIndicator === undefined) {
+        if (newIndicator === 0 || newIndicator === undefined) {
 
-            hideIndicatorSelectPicker(false);
+            
             resetSelectPicker();
 
         }
@@ -738,14 +745,17 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
             indicator = newIndicator;
         }
-
+        var indicatorSet = $('#indicatorSetH').val();
+        var period  = $('#periodH').val();
         memos.fetch({
 
             data: {
                 node: 900,
                 enabled: true,
                 method: "getMemoList",
-                indicator: indicator
+                indicator: indicator,
+                indicatorSet: indicatorSet,
+                period: period
             },
             success: initSlide
         });
@@ -835,15 +845,15 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     };
     var indicators = new Indicators();
+    
 
     var resetSelectPicker = function() {
 
 
         //$('#indicatorH').selectpicker('val', 0);
         //$('#indicatorSetH').selectpicker('val', 0);
-        $('#indicatorSetH').val(0)
+        $('#indicatorSetH').val(0);
         $('#indicatorSetH').selectpicker('refresh');
-
 
 
         indicators.on('sync', updateIndicatorHOptions, indicators);
@@ -853,13 +863,47 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
                 indicatorSet: 0
 
             }
-        })
+        });
 
 
 
 
     };
+    var updatePeriodHOptions = function(results){
 
+
+        var preMenu = "";
+        var $level1 = $('#periodH');
+        $level1.empty();
+
+        $level1.append($('<option >', {
+            value: 0,
+            text: '全部期间'
+        }));
+
+
+        results = $.parseJSON(results);
+        results.forEach(function(value, idx) {
+
+
+            $level1.append($('<option>', {
+                selected: idx === 0,
+                "data-default-value": idx === 0,
+                value: value,
+                "data-period": value,
+                text: value
+            }));
+
+
+            //$level1.append('<li><a href="#sliderTab" data-indicatorSet-id="' + value.get('id') + '">' + value.get('name') + '</a></li>');
+
+        });
+
+        $level1.selectpicker('refresh');
+        //$level1.on('click', 'a[data-period]', loadSlideItem);        
+
+
+    };
     var currentView = null;
 
     var LoadReportMemoList = function() {
@@ -942,6 +986,8 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
         $level1.selectpicker('refresh');
 
+
+
     };
 
 
@@ -981,7 +1027,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         $level1.on('click', 'a[data-indicator-id]', loadSlideItem);
 
 
-    }
+    };
 
     var updateIndicatorsOptions = function(event) {
 
@@ -1102,8 +1148,20 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
         indicatorSets.fetch();
 
 
+        //$('periodH').val(0);
+        //$('periodH').selectpicker('refresh');
+        $.get('reportMemo.do?method=getPeriods', function(result){
+            updatePeriodHOptions(result);
+            loadSlideItem();
+        });
+        
+
+
+
         $('#indicatorSetH').on('change', loadSlideItemByIndicatorSet);
+        //$('#indicatorH').on('change', updatePeriodHValue);
         $('#indicatorH').on('change', loadSlideItem);
+        $('#periodH').on('change', loadSlideItem);
         $('#indicatorSetH').on('change', function(event) {
 
             indicators.fetch({
@@ -1123,6 +1181,29 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
     };
 
+    var updatePeriodHValue = function(event){
+
+        if((event && event.target && event.target.id=="periodH")){
+
+            if ($('#periodH').val()!=="0"){
+                return;
+            }
+        }
+
+        var value = 0;
+        if ($('#indicatorH').val()==="0"||$('#indicatorH').val()===null||$('#indicatorH').val()===undefined){
+            var ele = $('#periodH>option[data-default-value=true]');
+            if(ele){
+                 value =  ele.val();
+            }
+
+
+        }
+        $('#periodH').val(value);
+
+        $('#periodH').selectpicker('refresh');
+
+    };
     loadAllIndicatorsToSelect();
 
     $('#reportMemoLink').on('click', LoadReportMemoList);
@@ -1134,7 +1215,7 @@ require(['text!template/menu.hbs', 'text!template/slide-indicator.hbs',
 
 
     //loadMenuItem();
-    loadSlideItem();
+    //loadSlideItem();
     initDashboard();
 
 
