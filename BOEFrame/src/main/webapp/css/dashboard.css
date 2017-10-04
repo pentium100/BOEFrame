@@ -86,6 +86,7 @@ a.list-group-item {
     background-color: #53534F;
     padding-left: 10px;
     padding-right: 10px;
+    white-space: pre-wrap;
     font-family: "Microsoft Yahei", "微软雅黑", "SimSun", "宋体", "Arial Narrow", serif
 }
 .tab-pane {

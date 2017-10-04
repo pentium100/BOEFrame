@@ -17,8 +17,8 @@ public class SAPConnect {
                   "rfcuser",           // userid
                   "]c68sUY$)z[yU>ZNsK+\\YMSUVnYX9]tHCABC&<Ju",               // password
                   "zh",                 // language
-                  "172.16.10.27",         // server host name
-                  "00");                // system number
+                  "172.16.10.24",         // server host name
+                  "01");                // system number
 		  mConnection.connect();
 		  return mConnection;
 	  }
@@ -29,7 +29,7 @@ public class SAPConnect {
 	      if (pool == null) {
 	        Properties logonProperties = new Properties();
 	        
-	        logonProperties.put("jco.client.ashost","172.16.10.27"); 
+	        logonProperties.put("jco.client.ashost","172.16.10.24"); 
 	        logonProperties.put("jco.client.client","800");   
 	        logonProperties.put("jco.client.passwd","]c68sUY$)z[yU>ZNsK+\\YMSUVnYX9]tHCABC&<Ju"); 
 	        logonProperties.put("jco.client.sysnr","01");        
