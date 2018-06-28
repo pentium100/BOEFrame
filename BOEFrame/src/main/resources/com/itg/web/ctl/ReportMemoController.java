@@ -170,7 +170,7 @@ public class ReportMemoController {
 			ModelMap map,
 			HttpServletRequest request) {
 
-		List<String> periods = reportMemoDAO.getPeriods(10);
+		List<String> periods = reportMemoDAO.getPeriods(13);
 		List<String> periods2 = new ArrayList<String>(); 
 		for(String period:periods){
 			
