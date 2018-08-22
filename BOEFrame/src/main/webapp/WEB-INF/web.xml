@@ -130,7 +130,7 @@
 
 		<auth-constraint>
 			<description>These roles are allowed access</description>
-			<role-name>CN=ITG-BOE,OU=users,OU=IT,OU=9F,OU=itg,DC=itg,DC=net</role-name>
+			<role-name>CN=ITG-BOE,OU=IT,OU=26F,OU=itg,DC=itg,DC=net</role-name>
 			<role-name>admin</role-name>
 		</auth-constraint>
 	</security-constraint>
